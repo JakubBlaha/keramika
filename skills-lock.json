@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"skills": {
+		"cucumber-gherkin": {
+			"source": "el-feo/ai-context",
+			"sourceType": "github",
+			"skillPath": "plugins/ruby-rails/skills/cucumber-gherkin/SKILL.md",
+			"computedHash": "cb66eb8475078648059ebbbd797af112f9eee063938afcf6c499e6fa5f4cd0fc"
+		},
+		"firebase-basics": {
+			"source": "firebase/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/firebase-basics/SKILL.md",
+			"computedHash": "3a41bf302bfce4dac272575c51a02d0fc1bdac8dcb6cb5496103301b68ffbb67"
+		},
+		"firebase-firestore": {
+			"source": "firebase/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/firebase-firestore/SKILL.md",
+			"computedHash": "f00c7c9eceafeec9c9ade9de7afefeed08fa63925a5b1ac0091057cab0249a4d"
+		},
+		"skill-creator": {
+			"source": "anthropics/skills",
+			"sourceType": "github",
+			"skillPath": "skills/skill-creator/SKILL.md",
+			"computedHash": "5ea13a6d9f0d4bb694405d79acd00cadec0d21bb138c4dd10fcf3c500cb835c2"
+		}
+	}
+}

@@ -1,0 +1,48 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - button "Menu" [ref=e6]
+      - link "Lada Bartoníková keramika" [ref=e7] [cursor=pointer]:
+        - /url: /
+      - link "Košík" [ref=e8] [cursor=pointer]:
+        - /url: /kosik
+  - main [ref=e14]:
+    - heading "404" [level=1] [ref=e15]
+    - paragraph [ref=e16]: Not Found
+  - contentinfo [ref=e17]:
+    - generic [ref=e18]:
+      - generic [ref=e19]: Lada Bartoníková Ruční keramika z Brna
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - heading "Obchod" [level=4] [ref=e22]
+          - link "Všechny produkty" [ref=e23] [cursor=pointer]:
+            - /url: /produkty
+          - link "Andělé" [ref=e24] [cursor=pointer]:
+            - /url: /produkty/andele
+          - link "Zvířátka" [ref=e25] [cursor=pointer]:
+            - /url: /produkty/zviratka
+          - link "Postavičky" [ref=e26] [cursor=pointer]:
+            - /url: /produkty/postavicky
+        - generic [ref=e27]:
+          - heading "Informace" [level=4] [ref=e28]
+          - link "O mně" [ref=e29] [cursor=pointer]:
+            - /url: /o-nas
+          - link "Obchodní podmínky" [ref=e30] [cursor=pointer]:
+            - /url: /obchodni-podminky
+          - link "Ochrana údajů" [ref=e31] [cursor=pointer]:
+            - /url: /ochrana-osobnich-udaju
+          - link "Reklamace" [ref=e32] [cursor=pointer]:
+            - /url: /reklamace
+        - generic [ref=e33]:
+          - heading "Kontakt" [level=4] [ref=e34]
+          - link "ahoj@ladakeramika.cz" [ref=e35] [cursor=pointer]:
+            - /url: mailto:ahoj@ladakeramika.cz
+          - link "+420 776 384 159" [ref=e36] [cursor=pointer]:
+            - /url: tel:+420776384159
+          - text: Brno, Česká republika
+      - generic [ref=e37]:
+        - link "Instagram" [ref=e38] [cursor=pointer]:
+          - /url: https://instagram.com
+        - link "Facebook" [ref=e39] [cursor=pointer]:
+          - /url: https://facebook.com
+      - paragraph [ref=e40]: © 2026 Lada Bartoníková · Vyrobeno s láskou v Brně

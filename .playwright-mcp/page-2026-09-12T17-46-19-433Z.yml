@@ -1,0 +1,103 @@
+- generic [ref=f26e3]:
+    - banner [ref=f26e4]:
+        - generic [ref=f26e5]:
+            - button "Menu" [ref=f26e6] [cursor=pointer]
+            - link "Lada Bartoníková keramika" [ref=f26e10] [cursor=pointer]:
+                - /url: /
+                - generic [ref=f26e11]: Lada Bartoníková
+                - generic [ref=f26e12]: keramika
+            - link "Košík" [ref=f26e13] [cursor=pointer]:
+                - /url: /kosik
+    - main [ref=f26e19]:
+        - generic [ref=f26e22]:
+            - generic [ref=f26e23]: Ruční keramika z Brna
+            - heading "Figurky, které vznikly rukama" [level=1] [ref=f26e24]: Figurky, kterévznikly rukama
+            - paragraph [ref=f26e25]: Andělé, pejsci, kočičky a další zvířátka. Každou figurku modeluji kus po kusu ve svém malém ateliéru v Brně - pro radost, jako dárek i pro potěšení duše.
+            - link "Prohlédnout produkty" [ref=f26e26] [cursor=pointer]:
+                - /url: /produkty
+        - generic [ref=f26e27]:
+            - generic [ref=f26e28]:
+                - heading "Ručně modelováno" [level=3] [ref=f26e29]
+                - paragraph [ref=f26e30]: Každou figurku modeluji ručně ve svém ateliéru v Brně. Žádná sériová výroba.
+            - generic [ref=f26e31]:
+                - heading "Vlastní motivy" [level=3] [ref=f26e32]
+                - paragraph [ref=f26e33]: Andělé, pejsci, kočičky a další zvířátka podle vlastních návrhů.
+            - generic [ref=f26e34]:
+                - heading "Originální kusy" [level=3] [ref=f26e35]
+                - paragraph [ref=f26e36]: Díky ruční práci je každá figurka jedinečná. Žádné dvě nejsou stejné.
+        - generic [ref=f26e37]:
+            - generic [ref=f26e38]:
+                - generic [ref=f26e39]: Vybrané kousky
+                - heading "Novinky z ateliéru" [level=2] [ref=f26e40]
+            - generic [ref=f26e41]:
+                - link "Anděl Strážce Kamenina · 12 cm 390 Kč" [ref=f26e42] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=f26e44]:
+                        - heading "Anděl Strážce" [level=3] [ref=f26e45]
+                        - generic [ref=f26e46]: Kamenina · 12 cm
+                        - generic [ref=f26e47]: 390 Kč
+                - link "Pejsek Ňafík Kamenina · 9 cm 320 Kč" [ref=f26e48] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=f26e50]:
+                        - heading "Pejsek Ňafík" [level=3] [ref=f26e51]
+                        - generic [ref=f26e52]: Kamenina · 9 cm
+                        - generic [ref=f26e53]: 320 Kč
+                - link "Kočička Micka Kamenina · 10 cm 340 Kč" [ref=f26e54] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=f26e56]:
+                        - heading "Kočička Micka" [level=3] [ref=f26e57]
+                        - generic [ref=f26e58]: Kamenina · 10 cm
+                        - generic [ref=f26e59]: 340 Kč
+                - link "Andílek malý Kamenina · 7 cm 250 Kč" [ref=f26e60] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=f26e62]:
+                        - heading "Andílek malý" [level=3] [ref=f26e63]
+                        - generic [ref=f26e64]: Kamenina · 7 cm
+                        - generic [ref=f26e65]: 250 Kč
+            - link "Všechny produkty" [ref=f26e67] [cursor=pointer]:
+                - /url: /produkty
+        - generic [ref=f26e70]:
+            - generic [ref=f26e71]: O mně
+            - heading "Ahoj, jsem Lada" [level=2] [ref=f26e72]
+            - paragraph [ref=f26e73]: Keramice se věnuji řadu let a nejvíc mě baví modelovat figurky - anděly, pejsky a kočičky. Fascinuje mě, jak z kusu hlíny vznikne malá bytost s vlastním výrazem. Každou z nich tvořím ručně ve svém ateliéru v Brně.
+            - link "Můj příběh" [ref=f26e74] [cursor=pointer]:
+                - /url: /o-nas
+    - contentinfo [ref=f26e75]:
+        - generic [ref=f26e76]:
+            - generic [ref=f26e77]:
+                - generic [ref=f26e78]: Lada Bartoníková
+                - generic [ref=f26e79]: Ruční keramické figurky z Brna
+            - generic [ref=f26e80]:
+                - generic [ref=f26e81]:
+                    - heading "Obchod" [level=4] [ref=f26e82]
+                    - link "Všechny produkty" [ref=f26e83] [cursor=pointer]:
+                        - /url: /produkty
+                    - link "Andělé" [ref=f26e84] [cursor=pointer]:
+                        - /url: /produkty/andele
+                    - link "Pejsci" [ref=f26e85] [cursor=pointer]:
+                        - /url: /produkty/pejsci
+                    - link "Kočičky" [ref=f26e86] [cursor=pointer]:
+                        - /url: /produkty/kocicky
+                - generic [ref=f26e87]:
+                    - heading "Informace" [level=4] [ref=f26e88]
+                    - link "O mně" [ref=f26e89] [cursor=pointer]:
+                        - /url: /o-nas
+                    - link "Obchodní podmínky" [ref=f26e90] [cursor=pointer]:
+                        - /url: /obchodni-podminky
+                    - link "Ochrana údajů" [ref=f26e91] [cursor=pointer]:
+                        - /url: /ochrana-osobnich-udaju
+                    - link "Reklamace" [ref=f26e92] [cursor=pointer]:
+                        - /url: /reklamace
+                - generic [ref=f26e93]:
+                    - heading "Kontakt" [level=4] [ref=f26e94]
+                    - link "ahoj@ladakeramika.cz" [ref=f26e95] [cursor=pointer]:
+                        - /url: mailto:ahoj@ladakeramika.cz
+                    - link "+420 776 384 159" [ref=f26e96] [cursor=pointer]:
+                        - /url: tel:+420776384159
+                    - generic [ref=f26e97]: Brno, Česká republika
+            - generic [ref=f26e98]:
+                - link "Instagram" [ref=f26e99] [cursor=pointer]:
+                    - /url: https://instagram.com
+                - link "Facebook" [ref=f26e100] [cursor=pointer]:
+                    - /url: https://facebook.com
+            - paragraph [ref=f26e101]: © 2026 Lada Bartoníková · Vyrobeno s láskou v Brně

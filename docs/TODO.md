@@ -1,0 +1,154 @@
+# Keramika E-shop — Implementation TODO
+
+Status snapshot and roadmap to a shippable e-shop. Grounded in the testable
+requirements in `docs/requirements/`, reflecting the decisions made since
+(Tailwind v4, Paraglide i18n cs/en).
+
+> Testable, per-behavior requirements live in `docs/requirements/` (IDs like
+> `REQ-CATALOG-001`). Capture new requirements with the `requirements-authoring`
+> skill. This TODO stays as the high-level roadmap.
+
+Legend: [x] done · [~] partial · [ ] not started
+
+---
+
+## 0. Foundations (mostly done)
+
+- [x] SvelteKit + Svelte 5 (runes) project
+- [x] Tailwind CSS v4 wired in (`@tailwindcss/vite`), tokens in `layout.css`
+- [x] Paraglide i18n: `cs` (no prefix) + `en` (`/en`), reroute hooks, lang switcher
+- [x] Prerendering configured (both locales), 404s ignored for unbuilt routes
+- [x] Demo/template scaffolding removed (sverdle, demo about, demo images)
+- [ ] Decide + install the final adapter (static vs. node) — see section 9
+
+---
+
+## 1. Data model & catalog
+
+The spec (section 6) defines a richer product model than the current placeholder.
+
+- [x] `src/lib/catalog.ts` exists with categories + products
+- [x] Extended `Product` model: `description`, `size`, `material`, `care`
+      (copy via Paraglide). Still to add: `images[]`, `glaze?`, `weight?`,
+      `featured?`
+- [x] Product-as-blueprint model: each `Product` has unique `instances`
+      (each `ProductInstance` sold once). Helpers `availableCount`,
+      `totalCount`. Detail page has an instance picker; listings show
+      "last piece"/"sold out" badges
+- [ ] Per-instance photos and per-instance notes/price (currently placeholder swatches)
+- [ ] Enforce stock at cart/checkout: an instance can only be in one cart/order
+- [ ] Extend `Category` with any needed metadata (hero image, sort order)
+- [x] Copy-heavy fields (name/description/care) go through Paraglide (cs/en);
+      language-neutral data (price, slug, size, swatch) stays in the catalog
+- [ ] Add a real product set (replace placeholder items) + real images
+- [x] Helper functions: `getProduct(slug)`, `getRelated(slug)`, `allProducts()`
+
+---
+
+## 2. Pages / routes
+
+Per the spec page map. Existing routes marked done.
+
+- [x] `/` Homepage (hero, values, featured, about teaser)
+- [x] `/produkty` Category chooser
+- [x] `/produkty/[category]` Product listing for a category
+- [ ] `/produkty` — add "VŠE / All products" view (grid of all products, not just categories)
+- [x] `/produkt/[slug]` Product detail page (gallery, price, specs,
+      accordions, quantity + add-to-cart placeholder, related products)
+- [ ] `/o-nas` About / story page (hero, story, process, values)
+- [ ] `/kontakt` Contact page (info, contact form, optional map)
+- [ ] `/kosik` Cart page (items, summary, empty state)
+- [ ] `/objednavka` Checkout (order summary, billing, shipping, payment, T&C, confirm)
+- [ ] `/obchodni-podminky` Terms & conditions (legal content)
+- [ ] `/ochrana-osobnich-udaju` Privacy policy (legal content)
+- [ ] `/reklamace` Returns & complaints (legal content)
+- [ ] Ensure every route prerenders (or has correct entries()) for both locales
+
+Note: Header nav already links to `/produkty`, `/o-nas`, `/kontakt`, and the
+cart icon links to `/kosik` — those targets still need to exist.
+
+---
+
+## 3. Shared components
+
+- [ ] `ProductCard` component (image, name, material·size, price) — reused on
+      homepage, category, all-products, related
+- [ ] `ProductGrid` responsive wrapper (2 / 3 / 4 cols per breakpoint)
+- [ ] Image component/placeholder strategy (until real photos exist)
+- [ ] Accordion component (product detail sections)
+- [ ] Quantity selector
+- [ ] Breadcrumbs (optional, e.g. Produkty / Kategorie / Produkt)
+- [ ] Form field components (input, textarea, radio group) for contact/checkout
+
+---
+
+## 4. Filtering (spec section 5)
+
+- [ ] Category tabs on `/produkty` (VŠE + categories, mutually exclusive)
+- [ ] Size filter (Malé / Střední / Velké, multi-select pills)
+- [ ] Material filter (Kamenina / Porcelán / Hrnčířská hlína, multi-select)
+- [ ] Color/Glaze filter (define once product range is known)
+- [ ] URL-synced filter state (query params) so views are shareable/prerender-friendly
+
+---
+
+## 5. Cart & checkout (client-side MVP)
+
+- [ ] Cart store (Svelte store persisted to `localStorage`)
+- [ ] Add to cart / update quantity / remove item
+- [ ] Cart count badge in header
+- [ ] Cart page wiring (subtotal, shipping estimate, total, empty state)
+- [ ] Checkout form + validation
+- [ ] Order submission strategy (email/webhook/serverless — no backend yet)
+- [ ] Order confirmation / thank-you page
+
+---
+
+## 6. Internationalization
+
+- [ ] Audit every new page: all copy via `m.*()`, keys in BOTH cs.json and en.json
+- [ ] Localize all internal links via `localizeHref`
+- [ ] Decide on translated slugs vs. shared slugs (currently shared, e.g. `/produkty`)
+- [ ] Currency/number formatting per locale (CZK)
+
+---
+
+## 7. Design & responsiveness
+
+- [ ] Desktop layout (spec is currently mobile-first); apply 3/4-col grids at md/lg
+- [ ] Header desktop layout (inline nav instead of only hamburger)
+- [ ] Consistent spacing/typography scale via tokens
+- [ ] Hover animations on cards (subtle zoom / second image)
+- [ ] Accessibility pass (focus states, alt text, aria, keyboard nav, color contrast)
+
+---
+
+## 8. Content & assets
+
+- [ ] Real product photography (square, neutral background)
+- [ ] About page copy + workshop photos
+- [ ] Legal page copy (terms, privacy, complaints) — likely needs real/legal text
+- [ ] Favicon / social share (OG) images
+- [ ] SEO: per-page `<title>`/description, sitemap, robots.txt (robots exists)
+
+---
+
+## 9. Build, deploy, quality
+
+- [ ] Choose adapter (static if no server needed; node/serverless if order handling needs a server)
+- [ ] CI: run `pnpm check`, `pnpm lint`, `pnpm build`
+- [ ] Analytics / cookie consent (if required by privacy policy)
+- [ ] Performance check (image sizes, lazy loading)
+- [ ] Final cross-browser / mobile QA
+
+---
+
+## Suggested next steps (order)
+
+1. Extend the product data model + add a real-ish catalog (section 1).
+2. Build `ProductCard`/`ProductGrid` and refactor homepage + listing to use them (section 3).
+3. Add the "all products" view + basic category filtering on `/produkty` (sections 2, 4).
+4. Build `/produkt/[slug]` product detail (section 2/3).
+5. Add cart store + `/kosik`, then `/objednavka` (section 5).
+6. Fill in `/o-nas`, `/kontakt`, and legal pages (sections 2, 8).
+7. Desktop/responsive + a11y polish, then pick adapter and ship (sections 7, 9).

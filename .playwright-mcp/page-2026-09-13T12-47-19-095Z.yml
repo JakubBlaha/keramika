@@ -1,0 +1,107 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - button "Menu" [ref=e6] [cursor=pointer]
+      - link "Lada Bartoníková keramika" [ref=e10] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e11]: Lada Bartoníková
+        - generic [ref=e12]: keramika
+      - link "Košík" [ref=e13] [cursor=pointer]:
+        - /url: /kosik
+  - main [ref=e19]:
+    - generic [ref=e22]:
+      - generic [ref=e23]: Ruční keramika z Brna
+      - heading "Keramika, která vznikla rukama" [level=1] [ref=e24]: Keramika, kterávznikla rukama
+      - paragraph [ref=e25]: Andělé, zvířátka, postavičky a další kousky do domácnosti. Každý kus tvořím ručně ve svém malém ateliéru v Brně - pro radost, jako dárek i pro potěšení duše.
+      - link "Prohlédnout produkty" [ref=e26] [cursor=pointer]:
+        - /url: /produkty
+    - generic [ref=e27]:
+      - generic [ref=e28]:
+        - heading "Ručně tvořeno" [level=3] [ref=e29]
+        - paragraph [ref=e30]: Každý kus tvořím ručně ve svém ateliéru v Brně. Žádná sériová výroba.
+      - generic [ref=e31]:
+        - heading "Vlastní tvorba" [level=3] [ref=e32]
+        - paragraph [ref=e33]: Andělé, zvířátka i postavičky podle vlastních návrhů.
+      - generic [ref=e34]:
+        - heading "Originální kusy" [level=3] [ref=e35]
+        - paragraph [ref=e36]: Díky ruční práci je každý kus jedinečný. Žádné dva nejsou stejné.
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e39]: Vybrané kousky
+        - heading "Novinky z ateliéru" [level=2] [ref=e40]
+      - generic [ref=e41]:
+        - link "Anděl Anděl Kamenina · ruční práce 390 Kč" [ref=e42] [cursor=pointer]:
+          - /url: /produkt/andel
+          - img "Anděl" [ref=e44]
+          - generic [ref=e45]:
+            - heading "Anděl" [level=3] [ref=e46]
+            - generic [ref=e47]: Kamenina · ruční práce
+            - generic [ref=e48]: 390 Kč
+        - link "Ptáček Ptáček Kamenina · ruční práce 320 Kč" [ref=e49] [cursor=pointer]:
+          - /url: /produkt/ptacek
+          - img "Ptáček" [ref=e51]
+          - generic [ref=e52]:
+            - heading "Ptáček" [level=3] [ref=e53]
+            - generic [ref=e54]: Kamenina · ruční práce
+            - generic [ref=e55]: 320 Kč
+        - link "Kočička Kočička Kamenina · ruční práce 340 Kč" [ref=e56] [cursor=pointer]:
+          - /url: /produkt/kocicka
+          - img "Kočička" [ref=e58]
+          - generic [ref=e59]:
+            - heading "Kočička" [level=3] [ref=e60]
+            - generic [ref=e61]: Kamenina · ruční práce
+            - generic [ref=e62]: 340 Kč
+        - link "Rybka Rybka Kamenina · ruční práce 300 Kč" [ref=e63] [cursor=pointer]:
+          - /url: /produkt/rybka
+          - img "Rybka" [ref=e65]
+          - generic [ref=e66]:
+            - heading "Rybka" [level=3] [ref=e67]
+            - generic [ref=e68]: Kamenina · ruční práce
+            - generic [ref=e69]: 300 Kč
+      - link "Všechny produkty" [ref=e71] [cursor=pointer]:
+        - /url: /produkty
+    - generic [ref=e74]:
+      - generic [ref=e75]: O mně
+      - heading "Ahoj, jsem Lada" [level=2] [ref=e76]
+      - paragraph [ref=e77]: Keramice se věnuji řadu let a nejvíc mě baví tvořit dekorativní kousky. Fascinuje mě, jak z kusu hlíny vznikne věc s vlastním charakterem. Každý kus tvořím ručně ve svém ateliéru v Brně.
+      - link "Můj příběh" [ref=e78] [cursor=pointer]:
+        - /url: /o-nas
+  - contentinfo [ref=e79]:
+    - generic [ref=e80]:
+      - generic [ref=e81]:
+        - generic [ref=e82]: Lada Bartoníková
+        - generic [ref=e83]: Ruční keramika z Brna
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - heading "Obchod" [level=4] [ref=e86]
+          - link "Všechny produkty" [ref=e87] [cursor=pointer]:
+            - /url: /produkty
+          - link "Andělé" [ref=e88] [cursor=pointer]:
+            - /url: /produkty/andele
+          - link "Zvířátka" [ref=e89] [cursor=pointer]:
+            - /url: /produkty/zviratka
+          - link "Postavičky" [ref=e90] [cursor=pointer]:
+            - /url: /produkty/postavicky
+        - generic [ref=e91]:
+          - heading "Informace" [level=4] [ref=e92]
+          - link "O mně" [ref=e93] [cursor=pointer]:
+            - /url: /o-nas
+          - link "Obchodní podmínky" [ref=e94] [cursor=pointer]:
+            - /url: /obchodni-podminky
+          - link "Ochrana údajů" [ref=e95] [cursor=pointer]:
+            - /url: /ochrana-osobnich-udaju
+          - link "Reklamace" [ref=e96] [cursor=pointer]:
+            - /url: /reklamace
+        - generic [ref=e97]:
+          - heading "Kontakt" [level=4] [ref=e98]
+          - link "ahoj@ladakeramika.cz" [ref=e99] [cursor=pointer]:
+            - /url: mailto:ahoj@ladakeramika.cz
+          - link "+420 776 384 159" [ref=e100] [cursor=pointer]:
+            - /url: tel:+420776384159
+          - generic [ref=e101]: Brno, Česká republika
+      - generic [ref=e102]:
+        - link "Instagram" [ref=e103] [cursor=pointer]:
+          - /url: https://instagram.com
+        - link "Facebook" [ref=e104] [cursor=pointer]:
+          - /url: https://facebook.com
+      - paragraph [ref=e105]: © 2026 Lada Bartoníková · Vyrobeno s láskou v Brně

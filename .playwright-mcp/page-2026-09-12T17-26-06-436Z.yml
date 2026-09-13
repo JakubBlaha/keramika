@@ -1,0 +1,110 @@
+- generic [ref=e3]:
+    - banner [ref=e4]:
+        - generic [ref=e5]:
+            - button "Menu" [expanded] [active] [ref=e6] [cursor=pointer]
+            - link "Lada Bartoníková keramika" [ref=e10] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e11]: Lada Bartoníková
+                - generic [ref=e12]: keramika
+            - link "Košík" [ref=e13] [cursor=pointer]:
+                - /url: /kosik
+        - navigation [ref=e103]:
+            - link "Produkty" [ref=e104] [cursor=pointer]:
+                - /url: /produkty
+            - link "O mně" [ref=e105] [cursor=pointer]:
+                - /url: /o-nas
+            - link "Kontakt" [ref=e106] [cursor=pointer]:
+                - /url: /kontakt
+    - main [ref=e19]:
+        - generic [ref=e22]:
+            - generic [ref=e23]: Ruční keramika
+            - heading "Krása, která vznikla rukama" [level=1] [ref=e24]: Krása, kterávznikla rukama
+            - paragraph [ref=e25]: Originální keramika vyráběná kus po kusu v malém ateliéru na Moravě. Pro každodenní chvíle, které si zaslouží něco výjimečného.
+            - link "Prohlédnout produkty" [ref=e26] [cursor=pointer]:
+                - /url: /produkty
+        - generic [ref=e27]:
+            - generic [ref=e28]:
+                - heading "Ručně vyráběno" [level=3] [ref=e29]
+                - paragraph [ref=e30]: Každý kus vzniká na hrnčířském kruhu v mém ateliéru. Žádná sériová výroba.
+            - generic [ref=e31]:
+                - heading "Místní materiály" [level=3] [ref=e32]
+                - paragraph [ref=e33]: Pracuji s kameninou a hlínou z českých ložisek. Přírodní, pevná, poctivá.
+            - generic [ref=e34]:
+                - heading "Originální kusy" [level=3] [ref=e35]
+                - paragraph [ref=e36]: Díky ruční práci je každý výrobek jedinečný. Žádné dva nejsou stejné.
+        - generic [ref=e37]:
+            - generic [ref=e38]:
+                - generic [ref=e39]: Vybrané kousky
+                - heading "Novinky z ateliéru" [level=2] [ref=e40]
+            - generic [ref=e41]:
+                - link "Miska Ranní mlha Kamenina · 14 cm 390 Kč" [ref=e42] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=e44]:
+                        - heading "Miska Ranní mlha" [level=3] [ref=e45]
+                        - generic [ref=e46]: Kamenina · 14 cm
+                        - generic [ref=e47]: 390 Kč
+                - link "Hrnek Espresso Porcelán · 90 ml 290 Kč" [ref=e48] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=e50]:
+                        - heading "Hrnek Espresso" [level=3] [ref=e51]
+                        - generic [ref=e52]: Porcelán · 90 ml
+                        - generic [ref=e53]: 290 Kč
+                - link "Váza Duna Kamenina · 22 cm 890 Kč" [ref=e54] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=e56]:
+                        - heading "Váza Duna" [level=3] [ref=e57]
+                        - generic [ref=e58]: Kamenina · 22 cm
+                        - generic [ref=e59]: 890 Kč
+                - link "Talíř Písek Kamenina · 26 cm 450 Kč" [ref=e60] [cursor=pointer]:
+                    - /url: /produkty
+                    - generic [ref=e62]:
+                        - heading "Talíř Písek" [level=3] [ref=e63]
+                        - generic [ref=e64]: Kamenina · 26 cm
+                        - generic [ref=e65]: 450 Kč
+            - link "Všechny produkty" [ref=e67] [cursor=pointer]:
+                - /url: /produkty
+        - generic [ref=e70]:
+            - generic [ref=e71]: O mně
+            - heading "Ahoj, jsem Lada" [level=2] [ref=e72]
+            - paragraph [ref=e73]: Keramice se věnuji přes deset let. Fascinuje mě, jak se z kusu hlíny stane věc, která vydrží generace. Ve svém ateliéru tvořím misky, hrnky a vázy s důrazem na jednoduchost a dotek.
+            - link "Můj příběh" [ref=e74] [cursor=pointer]:
+                - /url: /o-nas
+    - contentinfo [ref=e75]:
+        - generic [ref=e76]:
+            - generic [ref=e77]:
+                - generic [ref=e78]: Lada Bartoníková
+                - generic [ref=e79]: Ruční keramika z Moravy
+            - generic [ref=e80]:
+                - generic [ref=e81]:
+                    - heading "Obchod" [level=4] [ref=e82]
+                    - link "Všechny produkty" [ref=e83] [cursor=pointer]:
+                        - /url: /produkty
+                    - link "Misky" [ref=e84] [cursor=pointer]:
+                        - /url: /produkty/misky
+                    - link "Hrnky" [ref=e85] [cursor=pointer]:
+                        - /url: /produkty/hrnky
+                    - link "Vázy" [ref=e86] [cursor=pointer]:
+                        - /url: /produkty/vazy
+                - generic [ref=e87]:
+                    - heading "Informace" [level=4] [ref=e88]
+                    - link "O mně" [ref=e89] [cursor=pointer]:
+                        - /url: /o-nas
+                    - link "Obchodní podmínky" [ref=e90] [cursor=pointer]:
+                        - /url: /obchodni-podminky
+                    - link "Ochrana údajů" [ref=e91] [cursor=pointer]:
+                        - /url: /ochrana-osobnich-udaju
+                    - link "Reklamace" [ref=e92] [cursor=pointer]:
+                        - /url: /reklamace
+                - generic [ref=e93]:
+                    - heading "Kontakt" [level=4] [ref=e94]
+                    - link "ahoj@ladakeramika.cz" [ref=e95] [cursor=pointer]:
+                        - /url: mailto:ahoj@ladakeramika.cz
+                    - link "+420 600 000 000" [ref=e96] [cursor=pointer]:
+                        - /url: tel:+420600000000
+                    - generic [ref=e97]: Brno, Česká republika
+            - generic [ref=e98]:
+                - link "Instagram" [ref=e99] [cursor=pointer]:
+                    - /url: https://instagram.com
+                - link "Facebook" [ref=e100] [cursor=pointer]:
+                    - /url: https://facebook.com
+            - paragraph [ref=e101]: © 2026 Lada Bartoníková · Vyrobeno s láskou

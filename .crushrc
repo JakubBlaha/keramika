@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Project-local Crush config for the keramika repo.
+
+# Playwright MCP: lets the agent drive a real browser to browse the app.
+# The user runs the dev server separately on http://localhost:5174.
+mcp add playwright --type stdio --command npx --args -y --args @playwright/mcp@latest --args --browser --args chromium
+
+# Local Ollama (NXP Veritas box), OpenAI-compatible endpoint.
+provider add ollama \
+  --type openai-compat \
+  --name "Ollama (Veritas)" \
+  --base-url "http://veritas.vnv.nxp.com:11434/v1" \
+  --api-key "ollama"
+
+model add ollama/lfm2.5:latest \
+  --name "LFM 2.5" \
+  --context-window 32768 \
+  --default-max-tokens 8192
+
+model large ollama/lfm2.5:latest
+model small ollama/lfm2.5:latest
