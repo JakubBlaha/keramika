@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { allProducts, coverImage } from '$lib/catalog';
+	import { allProducts } from '$lib/catalog';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
+	import ProductGrid from '$lib/components/ProductGrid.svelte';
 
 	// Draft homepage - placeholder content, no real data/logic yet.
 	const values = $derived([
@@ -60,32 +61,7 @@
 		<h2 class="text-[2rem]">{m.featured_heading()}</h2>
 	</header>
 
-	<div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-		{#each featured as p (p.slug)}
-			<a
-				href={localizeHref('/produkt/' + p.slug)}
-				class="group flex flex-col transition duration-200"
-			>
-				<div
-					class="aspect-square w-full overflow-hidden rounded-[4px] bg-bg-alt outline-2 outline-offset-2 outline-transparent transition-[outline-color] duration-200 group-hover:outline-accent"
-				>
-					<img
-						src={coverImage(p)}
-						alt={p.name()}
-						class="h-full w-full object-cover"
-						loading="lazy"
-					/>
-				</div>
-				<div class="flex flex-col gap-[0.15rem] px-[0.1rem] py-[0.6rem]">
-					<h3 class="text-[1.05rem] font-medium">{p.name()}</h3>
-					<span class="text-[0.78rem] tracking-[0.02em] text-ink-soft">{p.meta()}</span>
-					<span class="mt-[0.2rem] text-[0.95rem] text-accent-dark"
-						>{m.price_czk({ amount: p.price })}</span
-					>
-				</div>
-			</a>
-		{/each}
-	</div>
+	<ProductGrid products={featured} cols={4} />
 
 	<div class="flex justify-center pt-10">
 		<a href={localizeHref('/produkty')} class="btn btn-outline">{m.featured_cta()}</a>
