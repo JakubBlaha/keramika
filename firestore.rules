@@ -31,9 +31,18 @@ service cloud.firestore {
       }
     }
 
+    // Orders (reservations) placed through checkout (REQ-CHECKOUT-010).
+    // Anyone can create an order (checkout has no auth), but only admins can
+    // read the list/detail or update its status (REQ-API-012..015).
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
     // Everything else is closed by default.
     match /{document=**} {
       allow read, write: if false;
     }
+
   }
 }

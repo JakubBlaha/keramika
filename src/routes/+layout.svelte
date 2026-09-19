@@ -3,8 +3,26 @@
 	import './layout.css';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
+	import { EMAIL_REVERSED, PHONE_REVERSED, decodeContact, formatPhone } from '$lib/contact';
+	import { PUBLIC_FIREBASE_EMULATOR } from '$env/static/public';
 
 	let { children } = $props();
+
+	// Expose whether the Firebase client is wired to the local emulator so the
+	// e2e checkout tests (which submit real reservations) can detect it. No
+	// effect in normal use; the flag is empty in production builds.
+	$effect(() => {
+		document.documentElement.dataset.firebaseEmulator =
+			PUBLIC_FIREBASE_EMULATOR === 'true' ? 'true' : 'false';
+	});
+
+	// Contact details are only decoded + revealed after an explicit click, so
+	// the plaintext never appears in the prerendered HTML (see $lib/contact.ts).
+	let emailRevealed = $state(false);
+	let phoneRevealed = $state(false);
+
+	const email = $derived(decodeContact(EMAIL_REVERSED));
+	const phone = $derived(decodeContact(PHONE_REVERSED));
 </script>
 
 <div class="flex min-h-screen flex-col">
@@ -12,41 +30,18 @@
 	<main class="w-full flex-1">{@render children()}</main>
 
 	<footer class="mt-16 bg-ink text-bg">
-		<div class="mx-auto flex max-w-site flex-col gap-10 px-4 py-10">
-			<div class="flex flex-col gap-1">
+		<div class="mx-auto flex max-w-site flex-col divide-y divide-accent/40 px-4 py-10">
+			<div class="flex flex-col gap-1 pb-8">
 				<span class="font-display text-2xl">{m.brand_name()}</span>
 				<span class="text-[0.8rem] tracking-[0.12em] text-accent uppercase"
 					>{m.brand_tagline_full()}</span
 				>
 			</div>
 
-			<div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-				<div class="flex flex-col gap-2">
-					<h4 class="mb-1 font-body text-[0.72rem] tracking-[0.2em] text-accent uppercase">
-						{m.footer_col_shop()}
-					</h4>
-					<a
-						href={localizeHref('/produkty')}
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>{m.footer_link_all_products()}</a
-					>
-					<a
-						href={localizeHref('/produkty/andele')}
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>{m.footer_link_angels()}</a
-					>
-					<a
-						href={localizeHref('/produkty/zviratka')}
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>{m.footer_link_animals()}</a
-					>
-					<a
-						href={localizeHref('/produkty/postavicky')}
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>{m.footer_link_figures()}</a
-					>
-				</div>
-				<div class="flex flex-col gap-2">
+			<div
+				class="flex flex-col gap-6 divide-y divide-accent/40 py-8 sm:flex-row sm:justify-between sm:divide-x sm:divide-y-0"
+			>
+				<div class="flex flex-col gap-2 pb-6 sm:pr-8 sm:pb-0">
 					<h4 class="mb-1 font-body text-[0.72rem] tracking-[0.2em] text-accent uppercase">
 						{m.footer_col_info()}
 					</h4>
@@ -60,47 +55,47 @@
 						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
 						>{m.footer_link_terms()}</a
 					>
-					<a
-						href={localizeHref('/ochrana-osobnich-udaju')}
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>{m.footer_link_privacy()}</a
-					>
-					<a
-						href={localizeHref('/reklamace')}
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>{m.footer_link_complaints()}</a
-					>
 				</div>
-				<div class="flex flex-col gap-2">
+
+				<div class="flex flex-col gap-2 pt-6 sm:pt-0 sm:pl-8">
 					<h4 class="mb-1 font-body text-[0.72rem] tracking-[0.2em] text-accent uppercase">
 						{m.footer_col_contact()}
 					</h4>
-					<a
-						href="mailto:ahoj@ladakeramika.cz"
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>ahoj@ladakeramika.cz</a
-					>
-					<a
-						href="tel:+420776384159"
-						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-						>+420 776 384 159</a
-					>
+					{#if emailRevealed}
+						<a
+							href={'mailto:' + email}
+							class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white">{email}</a
+						>
+					{:else}
+						<button
+							type="button"
+							class="cursor-pointer border-none bg-transparent p-0 text-left text-[0.9rem] text-[#d8cfc4] underline transition-colors hover:text-white"
+							onclick={() => (emailRevealed = true)}
+						>
+							{m.footer_show_email()}
+						</button>
+					{/if}
+					{#if phoneRevealed}
+						<a
+							href={'tel:' + phone}
+							class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
+							>{formatPhone(phone)}</a
+						>
+					{:else}
+						<button
+							type="button"
+							class="cursor-pointer border-none bg-transparent p-0 text-left text-[0.9rem] text-[#d8cfc4] underline transition-colors hover:text-white"
+							onclick={() => (phoneRevealed = true)}
+						>
+							{m.footer_show_phone()}
+						</button>
+					{/if}
+
 					<span class="text-[0.9rem] text-[#d8cfc4]">{m.footer_location()}</span>
 				</div>
 			</div>
 
-			<div class="flex gap-6 text-[0.82rem] tracking-[0.14em] uppercase">
-				<a
-					href="https://instagram.com"
-					class="text-[#d8cfc4] hover:text-white"
-					aria-label="Instagram">Instagram</a
-				>
-				<a href="https://facebook.com" class="text-[#d8cfc4] hover:text-white" aria-label="Facebook"
-					>Facebook</a
-				>
-			</div>
-
-			<p class="border-t border-white/10 pt-6 text-[0.78rem] text-[#9a8f83]">
+			<p class="pt-6 text-[0.78rem] text-[#9a8f83]">
 				{m.footer_copy({ year: new Date().getFullYear() })}
 			</p>
 		</div>

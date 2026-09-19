@@ -10,6 +10,7 @@
 // instances so they become available again (REQ-ADMIN-022).
 
 import {
+	addDoc,
 	collection,
 	doc,
 	getDoc,
@@ -24,6 +25,7 @@ import { getFirebase } from '$lib/firebase';
 
 // Lifecycle status of an order.
 // - new: just placed, awaiting handling by the shop.
+
 // - resolved: the buyer picked up and paid; the reservation is done.
 // - cancelled: the reservation was cancelled; instances are released.
 export type OrderStatus = 'new' | 'resolved' | 'cancelled';
@@ -143,4 +145,34 @@ export async function setOrderStatus(id: string, status: OrderStatus): Promise<v
 // Number of items in an order, for compact list display.
 export function itemCount(order: Order): number {
 	return order.items.length;
+}
+
+// ---------------------------------------------------------------------------
+// Placing a reservation from checkout (REQ-CHECKOUT-010)
+//
+// Checkout runs entirely client-side (no backend catalog yet, see
+// src/lib/catalog.ts), so the order is written directly to Firestore with the
+// client SDK. Firestore rules (firestore.rules) allow anyone to create an
+// order but restrict reading/updating to admins, matching the write-once,
+// admin-managed lifecycle used elsewhere in this module.
+// ---------------------------------------------------------------------------
+
+export type PlaceOrderInput = {
+	contact: OrderContact;
+	items: OrderItem[];
+	// Order total in CZK, language-neutral string.
+	total: string;
+};
+
+// Creates a new order with status "new". Returns the new order's id, used as
+// its reference on the confirmation page (REQ-CHECKOUT-006).
+export async function placeOrder(input: PlaceOrderInput): Promise<{ id: string }> {
+	const ref = await addDoc(collection(db(), ORDERS_COLLECTION), {
+		status: 'new',
+		createdAt: serverTimestamp(),
+		contact: input.contact,
+		items: input.items,
+		total: input.total
+	});
+	return { id: ref.id };
 }

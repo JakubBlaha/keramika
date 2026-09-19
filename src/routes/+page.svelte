@@ -21,14 +21,16 @@
 </svelte:head>
 
 <!-- Hero -->
-<section class="flex flex-col">
+<section
+	class="flex flex-col md:mx-auto md:max-w-site md:flex-row md:items-center md:gap-10 md:px-4 md:pt-6"
+>
 	<div
-		class="aspect-[4/3] w-full bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.4),transparent_55%),linear-gradient(150deg,#d9b79f,#c4785a_55%,#a75f42)]"
+		class="aspect-[4/3] w-full bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.4),transparent_55%),linear-gradient(150deg,#d9b79f,#c4785a_55%,#a75f42)] md:order-2 md:aspect-square md:flex-1 md:rounded-[4px]"
 		aria-hidden="true"
 	></div>
-	<div class="flex flex-col gap-4 px-4 pt-10 pb-6">
+	<div class="flex flex-col gap-4 px-4 pt-10 pb-6 md:order-1 md:flex-1 md:px-0 md:py-0">
 		<span class="eyebrow">{m.hero_eyebrow()}</span>
-		<h1 class="text-[2.6rem] font-medium">
+		<h1 class="text-[2.6rem] font-medium md:text-[3.4rem]">
 			{m.hero_heading_line1()}<br />{m.hero_heading_line2()}
 		</h1>
 		<p class="max-w-[34rem] text-ink-soft">
@@ -39,14 +41,16 @@
 </section>
 
 <!-- Value propositions -->
-<section class="flex flex-col gap-6 bg-bg-alt px-4 py-10">
-	{#each values as v (v.title)}
-		<div class="flex flex-col gap-[0.4rem]">
-			<h3 class="text-[1.4rem]">{v.title}</h3>
+<section class="bg-bg-alt px-4 py-10 md:py-16">
+	<div class="mx-auto grid max-w-site gap-6 md:grid-cols-3 md:gap-10">
+		{#each values as v (v.title)}
+			<div class="flex flex-col gap-[0.4rem]">
+				<h3 class="text-[1.4rem]">{v.title}</h3>
 
-			<p class="text-[0.95rem] text-ink-soft">{v.text}</p>
-		</div>
-	{/each}
+				<p class="text-[0.95rem] text-ink-soft">{v.text}</p>
+			</div>
+		{/each}
+	</div>
 </section>
 
 <!-- Featured products -->
@@ -56,17 +60,19 @@
 		<h2 class="text-[2rem]">{m.featured_heading()}</h2>
 	</header>
 
-	<div class="grid grid-cols-2 gap-4">
+	<div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
 		{#each featured as p (p.slug)}
 			<a
 				href={localizeHref('/produkt/' + p.slug)}
 				class="group flex flex-col transition duration-200"
 			>
-				<div class="aspect-square w-full overflow-hidden rounded-[4px] bg-bg-alt">
+				<div
+					class="aspect-square w-full overflow-hidden rounded-[4px] bg-bg-alt outline-2 outline-offset-2 outline-transparent transition-[outline-color] duration-200 group-hover:outline-accent"
+				>
 					<img
 						src={coverImage(p)}
 						alt={p.name()}
-						class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.015] group-hover:brightness-[0.98]"
+						class="h-full w-full object-cover"
 						loading="lazy"
 					/>
 				</div>

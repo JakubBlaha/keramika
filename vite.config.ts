@@ -1,5 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { defineConfig } from 'vite';
@@ -19,10 +19,14 @@ export default defineConfig({
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 
-			// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-			// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-			// See https://svelte.dev/docs/kit/adapters for more information about adapters.
-			adapter: adapter(),
+			// Deploying to Vercel. Most public routes are prerendered (see
+			// `export const prerender = true` in their +page.ts); the write API
+			// under /api/* and the admin UI under /admin/* are dynamic
+			// (prerender = false) and run as Vercel serverless functions.
+			// The runtime is pinned explicitly because adapter-vercel otherwise
+			// infers it from the local Node version at build time, which breaks
+			// on Node versions newer than what Vercel currently supports.
+			adapter: adapter({ runtime: 'nodejs22.x' }),
 
 			prerender: {
 				// The crawler starts from "/" (Czech). Seed the English locale root so
@@ -30,7 +34,7 @@ export default defineConfig({
 				entries: ['*', '/en'],
 
 				// The homepage links to shop/legal routes that are not built yet
-				// (o-nas, objednavka, ...). Ignore those missing links during
+				// (o-nas, obchodni-podminky, ...). Ignore those missing links during
 				// prerender instead of failing the build.
 
 				handleHttpError: ({ status, path, referrer, message }) => {

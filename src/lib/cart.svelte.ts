@@ -47,6 +47,11 @@ function loadInitial(): CartLine[] {
 class CartStore {
 	lines = $state<CartLine[]>(loadInitial());
 
+	// Stack of recently removed lines (with the index they were removed from) so
+	// the cart page can offer a multi-step undo (REQ-CART-005). Not persisted:
+	// undo is only meaningful within the current session/page.
+	#removed = $state<{ line: CartLine; index: number }[]>([]);
+
 	#persist() {
 		if (!browser) return;
 		try {
@@ -69,14 +74,39 @@ class CartStore {
 		this.#persist();
 	}
 
-	// Remove an instance from the cart (REQ-CART-005).
+	// Remove an instance from the cart (REQ-CART-005), remembering where it was
+	// so it can be restored via undo().
 	remove(instanceId: string): void {
-		this.lines = this.lines.filter((l) => l.instanceId !== instanceId);
+		const index = this.lines.findIndex((l) => l.instanceId === instanceId);
+		if (index === -1) return;
+		const [line] = this.lines.splice(index, 1);
+		this.lines = [...this.lines];
+		this.#removed = [...this.#removed, { line, index }];
+		this.#persist();
+	}
+
+	// Whether there is a removal that can be undone.
+	get canUndo(): boolean {
+		return this.#removed.length > 0;
+	}
+
+	// Restore the most recently removed line to its original position. Can be
+	// called repeatedly to undo multiple removals in a row.
+	undo(): void {
+		const last = this.#removed.at(-1);
+		if (!last) return;
+		this.#removed = this.#removed.slice(0, -1);
+		// Skip if the instance was re-added in the meantime.
+		if (this.has(last.line.instanceId)) return;
+		const next = [...this.lines];
+		next.splice(Math.min(last.index, next.length), 0, last.line);
+		this.lines = next;
 		this.#persist();
 	}
 
 	clear(): void {
 		this.lines = [];
+		this.#removed = [];
 		this.#persist();
 	}
 

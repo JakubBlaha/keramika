@@ -17,12 +17,12 @@ test.describe('i18n', () => {
 		// Czech products page: no locale prefix.
 		await page.goto('/produkty');
 		expect(new URL(page.url()).pathname).toBe('/produkty');
-		await expect(page.getByRole('heading', { name: 'Co hledáte?' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Nabídka' })).toBeVisible();
 
 		// English equivalent: /en prefix.
 		await page.goto('/en/produkty');
 		expect(new URL(page.url()).pathname).toBe('/en/produkty');
-		await expect(page.getByRole('heading', { name: 'What are you looking for?' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Our offer' })).toBeVisible();
 	});
 
 	test('REQ-I18N-002 - every base (cs) key exists in en', async () => {

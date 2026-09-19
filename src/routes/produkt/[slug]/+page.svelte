@@ -263,11 +263,13 @@
 						href={localizeHref('/produkt/' + p.slug)}
 						class="group flex flex-col transition duration-200"
 					>
-						<div class="relative aspect-square w-full overflow-hidden rounded-[4px] bg-bg-alt">
+						<div
+							class="relative aspect-square w-full overflow-hidden rounded-[4px] bg-bg-alt outline-2 outline-offset-2 outline-transparent transition-[outline-color] duration-200 group-hover:outline-accent"
+						>
 							<img
 								src={coverImage(p)}
 								alt={p.name()}
-								class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.015] group-hover:brightness-[0.98]"
+								class="h-full w-full object-cover"
 								loading="lazy"
 							/>
 							{#if availableCount(p) === 0}

@@ -3,6 +3,7 @@
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
 	import { page } from '$app/state';
 	import { cart } from '$lib/cart.svelte';
+	import { fade, slide } from 'svelte/transition';
 
 	let menuOpen = $state(false);
 
@@ -22,28 +23,43 @@
 </script>
 
 <header class="sticky top-0 z-50 border-b border-line bg-bg">
-	<div class="grid grid-cols-[2.5rem_1fr_2.5rem] items-center px-4 py-3">
-		<button
-			class="group inline-flex h-10 w-10 cursor-pointer flex-col justify-center gap-[5px] border-none bg-transparent p-2"
-			aria-label={m.a11y_menu()}
-			aria-expanded={menuOpen}
-			onclick={() => (menuOpen = !menuOpen)}
-		>
-			<span
-				class="block h-px w-full bg-ink transition-transform duration-200 ease-in"
-				class:translate-y-[6.5px]={menuOpen}
-				class:rotate-45={menuOpen}
-			></span>
-			<span
-				class="block h-px w-full bg-ink transition-opacity duration-200 ease-in"
-				class:opacity-0={menuOpen}
-			></span>
-			<span
-				class="block h-px w-full bg-ink transition-transform duration-200 ease-in"
-				class:-translate-y-[6.5px]={menuOpen}
-				class:-rotate-45={menuOpen}
-			></span>
-		</button>
+	<div
+		class="mx-auto grid max-w-site grid-cols-[2.5rem_1fr_2.5rem] items-center px-4 py-3 md:grid-cols-3"
+	>
+		<div class="flex items-center gap-1">
+			<button
+				class="group inline-flex h-10 w-10 cursor-pointer flex-col justify-center gap-[5px] border-none bg-transparent p-2 md:hidden"
+				aria-label={m.a11y_menu()}
+				aria-expanded={menuOpen}
+				onclick={() => (menuOpen = !menuOpen)}
+			>
+				<span
+					class="block h-px w-full bg-ink transition-transform duration-200 ease-in"
+					class:translate-y-[6.5px]={menuOpen}
+					class:rotate-45={menuOpen}
+				></span>
+				<span
+					class="block h-px w-full bg-ink transition-opacity duration-200 ease-in"
+					class:opacity-0={menuOpen}
+				></span>
+				<span
+					class="block h-px w-full bg-ink transition-transform duration-200 ease-in"
+					class:-translate-y-[6.5px]={menuOpen}
+					class:-rotate-45={menuOpen}
+				></span>
+			</button>
+
+			<!-- Desktop inline nav -->
+			<nav class="hidden items-center gap-6 md:flex">
+				{#each nav as item (item.href)}
+					<a
+						href={localizeHref(item.href)}
+						class="text-[0.9rem] tracking-[0.04em] transition-colors hover:text-accent-dark"
+						>{item.label}</a
+					>
+				{/each}
+			</nav>
+		</div>
 
 		<a
 			href={localizeHref('/')}
@@ -57,36 +73,71 @@
 			>
 		</a>
 
-		<a
-			href={localizeHref('/cart')}
-			class="relative inline-flex items-center justify-end text-ink"
-			aria-label={m.a11y_cart()}
-		>
-			<svg
-				width="22"
-				height="22"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="1.4"
+		<div class="flex items-center justify-end gap-3">
+			<!-- Language switcher with a globe icon so it reads as a language selector -->
+			<a
+				href={switchHref}
+				class="hidden items-center gap-1.5 text-[0.8rem] tracking-[0.06em] text-accent-dark transition-colors hover:text-ink md:inline-flex"
+				data-sveltekit-reload
+				aria-label={switchLabel}
 			>
-				<path d="M6 6h15l-1.5 9h-12z" />
-				<circle cx="9" cy="20" r="1.4" />
-				<circle cx="18" cy="20" r="1.4" />
-				<path d="M6 6L5 3H2" />
-			</svg>
-			{#if cart.count > 0}
-				<span
-					class="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-dark px-1 text-[0.6rem] leading-none text-bg"
+				<svg
+					width="18"
+					height="18"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.4"
+					aria-hidden="true"
 				>
-					{cart.count}
-				</span>
-			{/if}
-		</a>
+					<circle cx="12" cy="12" r="9" />
+					<path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" />
+				</svg>
+				<span class="uppercase">{otherLocale}</span>
+			</a>
+
+			<a
+				href={localizeHref('/cart')}
+				class="relative inline-flex items-center justify-end text-ink"
+				aria-label={m.a11y_cart()}
+			>
+				<svg
+					width="22"
+					height="22"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.4"
+				>
+					<path d="M6 6h15l-1.5 9h-12z" />
+					<circle cx="9" cy="20" r="1.4" />
+					<circle cx="18" cy="20" r="1.4" />
+					<path d="M6 6L5 3H2" />
+				</svg>
+				{#if cart.count > 0}
+					<span
+						class="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-dark px-1 text-[0.6rem] leading-none text-bg"
+					>
+						{cart.count}
+					</span>
+				{/if}
+			</a>
+		</div>
 	</div>
 
 	{#if menuOpen}
-		<nav class="flex flex-col border-t border-line py-2">
+		<!-- Dim the rest of the page while the mobile menu is open. -->
+		<button
+			class="fixed inset-0 top-[var(--header-h,3.75rem)] z-40 cursor-default border-none bg-ink/40 md:hidden"
+			aria-label={m.a11y_menu_close()}
+			transition:fade={{ duration: 200 }}
+			onclick={() => (menuOpen = false)}
+		></button>
+
+		<nav
+			class="absolute inset-x-0 top-full z-50 flex flex-col border-t border-line bg-bg py-2 md:hidden"
+			transition:slide={{ duration: 250 }}
+		>
 			{#each nav as item (item.href)}
 				<a
 					href={localizeHref(item.href)}
@@ -96,9 +147,23 @@
 			{/each}
 			<a
 				href={switchHref}
-				class="border-b border-line px-6 py-[0.85rem] text-[0.95rem] tracking-[0.04em] text-accent last:border-b-0"
+				class="flex items-center gap-2 border-b border-line px-6 py-[0.85rem] text-[0.95rem] tracking-[0.04em] text-accent last:border-b-0"
 				data-sveltekit-reload
-				onclick={() => (menuOpen = false)}>{switchLabel}</a
+				onclick={() => (menuOpen = false)}
+			>
+				<svg
+					width="18"
+					height="18"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.4"
+					aria-hidden="true"
+				>
+					<circle cx="12" cy="12" r="9" />
+					<path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" />
+				</svg>
+				{switchLabel}</a
 			>
 		</nav>
 	{/if}

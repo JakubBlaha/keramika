@@ -19,7 +19,7 @@ Legend: [x] done · [~] partial · [ ] not started
 - [x] Paraglide i18n: `cs` (no prefix) + `en` (`/en`), reroute hooks, lang switcher
 - [x] Prerendering configured (both locales), 404s ignored for unbuilt routes
 - [x] Demo/template scaffolding removed (sverdle, demo about, demo images)
-- [ ] Decide + install the final adapter (static vs. node) — see section 9
+- [x] Decide + install the final adapter — deploying to Vercel via `@sveltejs/adapter-vercel` (pinned `nodejs22.x` runtime)
 
 ---
 
@@ -55,17 +55,19 @@ Per the spec page map. Existing routes marked done.
 - [ ] `/produkty` — add "VŠE / All products" view (grid of all products, not just categories)
 - [x] `/produkt/[slug]` Product detail page (gallery, price, specs,
       accordions, quantity + add-to-cart placeholder, related products)
-- [ ] `/o-nas` About / story page (hero, story, process, values)
-- [ ] `/kontakt` Contact page (info, contact form, optional map)
-- [ ] `/kosik` Cart page (items, summary, empty state)
-- [ ] `/objednavka` Checkout (order summary, billing, shipping, payment, T&C, confirm)
+- [x] `/o-nas` About / story page (hero, story, process, values)
+- [x] `/kontakt` Contact page (email/phone click-to-reveal, pickup location)
+
+- [x] `/cart` Cart page (items, summary, empty state)
+- [x] `/checkout` Checkout (order summary, contact info, pickup/payment notice, T&C, confirm)
 - [ ] `/obchodni-podminky` Terms & conditions (legal content)
+
 - [ ] `/ochrana-osobnich-udaju` Privacy policy (legal content)
 - [ ] `/reklamace` Returns & complaints (legal content)
 - [ ] Ensure every route prerenders (or has correct entries()) for both locales
 
-Note: Header nav already links to `/produkty`, `/o-nas`, `/kontakt`, and the
-cart icon links to `/kosik` — those targets still need to exist.
+Note: Header nav links to `/produkty`, `/o-nas`, `/kontakt`, and the cart
+icon links to `/cart` — all of these now exist.
 
 ---
 
@@ -135,7 +137,8 @@ cart icon links to `/kosik` — those targets still need to exist.
 
 ## 9. Build, deploy, quality
 
-- [ ] Choose adapter (static if no server needed; node/serverless if order handling needs a server)
+- [x] Choose adapter — `@sveltejs/adapter-vercel`, targeting Vercel serverless functions for `/api/*` and `/admin/*`
+
 - [ ] CI: run `pnpm check`, `pnpm lint`, `pnpm build`
 - [ ] Analytics / cookie consent (if required by privacy policy)
 - [ ] Performance check (image sizes, lazy loading)
@@ -149,6 +152,7 @@ cart icon links to `/kosik` — those targets still need to exist.
 2. Build `ProductCard`/`ProductGrid` and refactor homepage + listing to use them (section 3).
 3. Add the "all products" view + basic category filtering on `/produkty` (sections 2, 4).
 4. Build `/produkt/[slug]` product detail (section 2/3).
-5. Add cart store + `/kosik`, then `/objednavka` (section 5).
-6. Fill in `/o-nas`, `/kontakt`, and legal pages (sections 2, 8).
-7. Desktop/responsive + a11y polish, then pick adapter and ship (sections 7, 9).
+5. Add cart store + `/cart`, then `/checkout` (section 5).
+6. Fill in remaining legal pages (`/ochrana-osobnich-udaju`, `/reklamace`) (sections 2, 8).
+
+7. Desktop/responsive + a11y polish, then ship on Vercel (sections 7, 9).

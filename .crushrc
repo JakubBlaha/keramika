@@ -19,3 +19,18 @@ model add ollama/lfm2.5:latest \
 
 model large ollama/lfm2.5:latest
 model small ollama/lfm2.5:latest
+
+# Token minimization.
+# Auto-compact long conversations instead of carrying full history.
+option auto-summarize true
+# Skip anonymous usage metrics.
+option metrics false
+# Trim git attribution trailers from commits.
+option attribution-trailer-style none
+option attribution-generated-with false
+
+# Disable skills we don't need this project to keep the system prompt lean.
+# (The `question` tool stays enabled so the agent can still ask.)
+option disable-skill skill-creator
+option disable-skill vero-budget
+option disable-skill find-skills

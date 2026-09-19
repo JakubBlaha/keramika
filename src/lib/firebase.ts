@@ -9,9 +9,9 @@
 // hiding these identifiers.
 
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
-import { getFirestore, type Firestore } from 'firebase/firestore';
-import { getStorage, type FirebaseStorage } from 'firebase/storage';
+import { getAuth, connectAuthEmulator, type Auth } from 'firebase/auth';
+import { getFirestore, connectFirestoreEmulator, type Firestore } from 'firebase/firestore';
+import { getStorage, connectStorageEmulator, type FirebaseStorage } from 'firebase/storage';
 import { browser } from '$app/environment';
 import {
 	PUBLIC_FIREBASE_API_KEY,
@@ -19,7 +19,8 @@ import {
 	PUBLIC_FIREBASE_PROJECT_ID,
 	PUBLIC_FIREBASE_STORAGE_BUCKET,
 	PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-	PUBLIC_FIREBASE_APP_ID
+	PUBLIC_FIREBASE_APP_ID,
+	PUBLIC_FIREBASE_EMULATOR
 } from '$env/static/public';
 
 const firebaseConfig = {
@@ -56,6 +57,16 @@ export function getFirebase(): FirebaseServices {
 		db: getFirestore(app),
 		storage: getStorage(app)
 	};
+
+	// When PUBLIC_FIREBASE_EMULATOR is set (e.g. during e2e tests), point every
+	// service at the local Firebase emulator suite instead of the real backend.
+	// This keeps tests that exercise real writes (checkout -> Firestore) hermetic
+	// and offline. The default ports match firebase.json.
+	if (PUBLIC_FIREBASE_EMULATOR === 'true') {
+		connectAuthEmulator(services.auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+		connectFirestoreEmulator(services.db, '127.0.0.1', 8080);
+		connectStorageEmulator(services.storage, '127.0.0.1', 9199);
+	}
 
 	return services;
 }

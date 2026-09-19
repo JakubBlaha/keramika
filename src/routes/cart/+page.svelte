@@ -53,6 +53,21 @@
 		<h1 class="text-[2rem]">{m.cart_heading()}</h1>
 	</header>
 
+	{#if cart.canUndo}
+		<div
+			class="mb-6 flex items-center justify-between gap-4 rounded-[4px] border border-line bg-bg-alt px-4 py-3"
+		>
+			<span class="text-[0.9rem] text-ink-soft">{m.cart_removed_notice()}</span>
+			<button
+				type="button"
+				class="shrink-0 cursor-pointer border-none bg-transparent p-0 text-[0.9rem] font-medium text-accent-dark underline hover:text-accent"
+				onclick={() => cart.undo()}
+			>
+				{m.cart_undo()}
+			</button>
+		</div>
+	{/if}
+
 	{#if isEmpty}
 		<div class="flex flex-col items-start gap-4 border-y border-line py-10">
 			<p class="text-ink-soft">{m.cart_empty_text()}</p>
@@ -132,7 +147,7 @@
 						<dd class="text-accent-dark">{m.price_czk({ amount: String(total) })}</dd>
 					</div>
 				</dl>
-				<a href={localizeHref('/objednavka')} class="mt-2 btn btn-primary text-center">
+				<a href={localizeHref('/checkout')} class="mt-2 btn btn-primary text-center">
 					{m.cart_checkout_cta()}
 				</a>
 			</aside>

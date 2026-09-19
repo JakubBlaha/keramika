@@ -53,6 +53,18 @@
 							{m.admin_nav_dashboard()}
 						</a>
 						<a
+							href={localizeHref('/admin/produkty')}
+							class="text-ink-soft transition-colors hover:text-accent-dark"
+						>
+							{m.admin_nav_products()}
+						</a>
+						<a
+							href={localizeHref('/admin/kategorie')}
+							class="text-ink-soft transition-colors hover:text-accent-dark"
+						>
+							{m.admin_nav_categories()}
+						</a>
+						<a
 							href={localizeHref('/admin/objednavky')}
 							class="text-ink-soft transition-colors hover:text-accent-dark"
 						>

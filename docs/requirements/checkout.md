@@ -1,6 +1,6 @@
 # CHECKOUT requirements
 
-The checkout page `/objednavka` and order confirmation. Not built yet.
+The checkout page `/checkout` and order confirmation.
 
 For now the site acts as a reservation system: the only fulfillment is pickup in
 store and the only payment is in store on pickup. There is no online payment and
@@ -9,19 +9,19 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
 
 ### REQ-CHECKOUT-001 - Order summary
 
-- Status: draft
+- Status: verified
 - Priority: must
 - Source: spec
 - Description: Checkout shows a summary of the ordered items.
 - Acceptance:
   - Given a non-empty cart
-  - When `/objednavka` renders
+  - When `/checkout` renders
   - Then a summary lists the ordered items and the total
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-001 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-001
 
 ### REQ-CHECKOUT-002 - Contact information form
 
-- Status: draft
+- Status: verified
 - Priority: must
 - Source: spec / user, 2026-09-12
 - Description: Checkout collects the buyer's contact details needed to hold and hand over a reservation. Because fulfillment is in-store pickup only (REQ-CHECKOUT-007), a shipping/billing address is not required.
@@ -29,7 +29,7 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given the checkout page
   - When it renders
   - Then fields for name, email and phone are present and required, and no shipping/billing address field is required
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-002 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-002
 
 ### REQ-CHECKOUT-003 - Shipping method selection
 
@@ -57,7 +57,7 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
 
 ### REQ-CHECKOUT-005 - Terms acceptance required
 
-- Status: draft
+- Status: verified
 - Priority: must
 - Source: spec
 - Description: The order cannot be placed without agreeing to the terms and conditions.
@@ -65,11 +65,11 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given the checkout page with the terms checkbox unchecked
   - When the buyer tries to place the order
   - Then submission is blocked until the terms checkbox is checked
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-005 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-005
 
 ### REQ-CHECKOUT-006 - Order confirmation
 
-- Status: draft
+- Status: verified
 - Priority: should
 - Source: spec
 - Description: After a successful order, a thank-you/confirmation page is shown.
@@ -77,11 +77,11 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given a valid, submitted order
   - When submission succeeds
   - Then a confirmation page is shown to the buyer
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-006 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-006 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
 
 ### REQ-CHECKOUT-007 - Pickup in store is the only fulfillment
 
-- Status: draft
+- Status: verified
 - Priority: must
 - Source: user, 2026-09-12
 - Description: The only fulfillment method is pickup in store; no shipping is offered.
@@ -89,11 +89,11 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given the checkout page
   - When it renders
   - Then pickup in store is presented as the fulfillment method, and no shipping method or delivery-address option is offered
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-007 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-007
 
 ### REQ-CHECKOUT-008 - Pay in store is the only payment
 
-- Status: draft
+- Status: verified
 - Priority: must
 - Source: user, 2026-09-12
 - Description: The only payment method is payment in store on pickup; no online payment is taken.
@@ -101,11 +101,11 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given the checkout page
   - When it renders
   - Then payment in store on pickup is presented as the payment method, and no online payment step (card, transfer, gateway) is offered
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-008 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-008
 
 ### REQ-CHECKOUT-009 - Site is a reservation, not a paid sale
 
-- Status: draft
+- Status: verified
 - Priority: must
 - Source: user, 2026-09-12
 - Description: Completing checkout creates a reservation of the selected instances rather than a paid purchase; the copy makes clear payment happens in store on pickup.
@@ -113,11 +113,11 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given a non-empty cart at checkout
   - When the buyer reviews the order details
   - Then the flow is labelled as a reservation and states that payment is due in store on pickup, with no money collected online
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-009 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-009
 
 ### REQ-CHECKOUT-010 - Place the reservation
 
-- Status: draft
+- Status: verified
 - Priority: must
 - Source: user, 2026-09-12
 - Description: With valid contact details and terms accepted, the buyer can submit the checkout to place the reservation.
@@ -125,4 +125,4 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given a non-empty cart, valid contact details (REQ-CHECKOUT-002) and accepted terms (REQ-CHECKOUT-005)
   - When the buyer submits the checkout
   - Then the reservation is placed, the reserved instances become unavailable to others (REQ-CATALOG-003, REQ-CART-004), and the confirmation page (REQ-CHECKOUT-006) is shown
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-010 (todo)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-010 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
