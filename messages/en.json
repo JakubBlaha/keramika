@@ -182,5 +182,19 @@
 	"admin_order_cancel_hint": "Cancelling an order releases its reserved pieces so they become available again.",
 
 	"lang_switch_to_en": "English",
-	"lang_switch_to_cs": "Čeština"
+	"lang_switch_to_cs": "Čeština",
+
+	"cart_title": "Cart · Lada Bartoníková",
+	"cart_meta_description": "Review the pieces in your cart and proceed to your reservation.",
+	"cart_eyebrow": "Your selection",
+	"cart_heading": "Cart",
+	"cart_empty_text": "Your cart is empty.",
+	"cart_empty_cta": "Browse products",
+	"cart_remove_line": "Remove {title} from the cart",
+	"cart_summary_heading": "Summary",
+	"cart_summary_subtotal": "Subtotal",
+	"cart_summary_shipping": "Shipping",
+	"cart_summary_shipping_pickup": "Personal pickup",
+	"cart_summary_total": "Total",
+	"cart_checkout_cta": "Proceed to reservation"
 }

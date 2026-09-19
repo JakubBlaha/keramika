@@ -2,6 +2,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
 	import { page } from '$app/state';
+	import { cart } from '$lib/cart.svelte';
 
 	let menuOpen = $state(false);
 
@@ -57,8 +58,8 @@
 		</a>
 
 		<a
-			href={localizeHref('/kosik')}
-			class="inline-flex items-center justify-end text-ink"
+			href={localizeHref('/cart')}
+			class="relative inline-flex items-center justify-end text-ink"
 			aria-label={m.a11y_cart()}
 		>
 			<svg
@@ -74,6 +75,13 @@
 				<circle cx="18" cy="20" r="1.4" />
 				<path d="M6 6L5 3H2" />
 			</svg>
+			{#if cart.count > 0}
+				<span
+					class="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-dark px-1 text-[0.6rem] leading-none text-bg"
+				>
+					{cart.count}
+				</span>
+			{/if}
 		</a>
 	</div>
 

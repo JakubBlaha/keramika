@@ -30,8 +30,9 @@ export default defineConfig({
 				entries: ['*', '/en'],
 
 				// The homepage links to shop/legal routes that are not built yet
-				// (produkty, kosik, o-nas, ...). Ignore those missing links during
+				// (o-nas, objednavka, ...). Ignore those missing links during
 				// prerender instead of failing the build.
+
 				handleHttpError: ({ status, path, referrer, message }) => {
 					if (status === 404) return;
 					throw new Error(`${status} ${path} (linked from ${referrer}): ${message}`);

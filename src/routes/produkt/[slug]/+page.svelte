@@ -7,6 +7,7 @@
 		coverImage,
 		type ProductInstance
 	} from '$lib/catalog';
+	import { cart } from '$lib/cart.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
 
@@ -59,11 +60,11 @@
 		activeImage = 0;
 	}
 
-	// Cart is not wired up yet - this is a placeholder for the upcoming cart
-	// store. A specific instance must be selected to add to the cart.
+	// A specific available instance must be selected to add to the cart.
+	// Adding an instance already in the cart is a no-op (REQ-CART-004).
 	function addToCart() {
 		if (!selected || !selected.available) return;
-		// TODO: push { instanceId: selected.id } into the cart store.
+		cart.add(selected.id, product.slug);
 	}
 </script>
 

@@ -52,7 +52,7 @@ tests is a separate task from capturing requirements.
 | PRODUCT  | [product-detail.md](./product-detail.md) | `/produkt/[slug]` detail page                                                  |
 | LISTING  | [listing.md](./listing.md)               | `/produkty` and `/produkty/[category]`                                         |
 | HOME     | [home.md](./home.md)                     | Homepage                                                                       |
-| CART     | [cart.md](./cart.md)                     | `/kosik`                                                                       |
+| CART     | [cart.md](./cart.md)                     | `/cart`                                                                        |
 | CHECKOUT | [checkout.md](./checkout.md)             | `/objednavka`                                                                  |
 | ADMIN    | [admin.md](./admin.md)                   | Admin area: Firebase-backed login and product / instance / category management |
 | API      | [api.md](./api.md)                       | Catalog management API used by the admin UI and seeding (Firebase-backed)      |
@@ -95,12 +95,12 @@ tests is a separate task from capturing requirements.
 | REQ-HOME-002     | Value propositions                                       | verified    | tests/e2e/home.spec.ts           |
 | REQ-HOME-003     | Featured products grid                                   | verified    | tests/e2e/home.spec.ts           |
 | REQ-HOME-004     | About teaser                                             | verified    | tests/e2e/home.spec.ts           |
-| REQ-CART-001     | Cart lists selected instances                            | draft       | todo                             |
-| REQ-CART-002     | Cart summary totals                                      | draft       | todo                             |
-| REQ-CART-003     | Empty cart state                                         | draft       | todo                             |
-| REQ-CART-004     | An instance can be in at most one cart/order             | approved    | todo                             |
-| REQ-CART-005     | Remove an instance from the cart                         | draft       | todo                             |
-| REQ-CART-006     | No quantity editing for cart lines                       | draft       | todo                             |
+| REQ-CART-001     | Cart lists selected instances                            | verified    | tests/e2e/cart.spec.ts           |
+| REQ-CART-002     | Cart summary totals                                      | verified    | tests/e2e/cart.spec.ts           |
+| REQ-CART-003     | Empty cart state                                         | verified    | tests/e2e/cart.spec.ts           |
+| REQ-CART-004     | An instance can be in at most one cart/order             | verified    | tests/e2e/cart.spec.ts           |
+| REQ-CART-005     | Remove an instance from the cart                         | verified    | tests/e2e/cart.spec.ts           |
+| REQ-CART-006     | No quantity editing for cart lines                       | verified    | tests/e2e/cart.spec.ts           |
 | REQ-CHECKOUT-001 | Order summary                                            | draft       | todo                             |
 | REQ-CHECKOUT-002 | Contact information form                                 | draft       | todo                             |
 | REQ-CHECKOUT-003 | Shipping method selection                                | removed     | todo                             |

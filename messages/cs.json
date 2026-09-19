@@ -182,5 +182,19 @@
 	"admin_order_cancel_hint": "Zrušením objednávky se rezervované kusy uvolní a budou opět k dispozici.",
 
 	"lang_switch_to_en": "English",
-	"lang_switch_to_cs": "Čeština"
+	"lang_switch_to_cs": "Čeština",
+
+	"cart_title": "Košík · Lada Bartoníková",
+	"cart_meta_description": "Prohlédněte si vybrané kusy ve svém košíku a přejděte k rezervaci.",
+	"cart_eyebrow": "Váš výběr",
+	"cart_heading": "Košík",
+	"cart_empty_text": "Váš košík je prázdný.",
+	"cart_empty_cta": "Prohlédnout produkty",
+	"cart_remove_line": "Odebrat {title} z košíku",
+	"cart_summary_heading": "Souhrn",
+	"cart_summary_subtotal": "Mezisoučet",
+	"cart_summary_shipping": "Doprava",
+	"cart_summary_shipping_pickup": "Osobní odběr",
+	"cart_summary_total": "Celkem",
+	"cart_checkout_cta": "Přejít k rezervaci"
 }
