@@ -96,31 +96,31 @@ icon links to `/cart` — all of these now exist.
 
 ## 5. Cart & checkout (client-side MVP)
 
-- [ ] Cart store (Svelte store persisted to `localStorage`)
-- [ ] Add to cart / update quantity / remove item
-- [ ] Cart count badge in header
-- [ ] Cart page wiring (subtotal, shipping estimate, total, empty state)
-- [ ] Checkout form + validation
-- [ ] Order submission strategy (email/webhook/serverless — no backend yet)
-- [ ] Order confirmation / thank-you page
+- [x] Cart store (Svelte store persisted to `localStorage`)
+- [x] Add to cart / remove item (multi-step undo on remove; no quantity editing — each instance is a unique piece, REQ-CART-006)
+- [x] Cart count badge in header
+- [x] Cart page wiring (subtotal, shipping estimate, total, empty state)
+- [x] Checkout form + validation
+- [x] Order submission strategy (client writes a reservation to Firestore via `placeOrder`)
+- [x] Order confirmation / thank-you page
 
 ---
 
 ## 6. Internationalization
 
-- [ ] Audit every new page: all copy via `m.*()`, keys in BOTH cs.json and en.json
-- [ ] Localize all internal links via `localizeHref`
+- [x] Audit every new page: all copy via `m.*()`, keys in BOTH cs.json and en.json
+- [x] Localize all internal links via `localizeHref`
 - [ ] Decide on translated slugs vs. shared slugs (currently shared, e.g. `/produkty`)
-- [ ] Currency/number formatting per locale (CZK)
+- [x] Currency/number formatting per locale (CZK, via `m.price_czk()`)
 
 ---
 
 ## 7. Design & responsiveness
 
-- [ ] Desktop layout (spec is currently mobile-first); apply 3/4-col grids at md/lg
-- [ ] Header desktop layout (inline nav instead of only hamburger)
+- [x] Desktop layout (3/4-col grids at md/lg on home, listing, category, related)
+- [x] Header desktop layout (inline nav instead of only hamburger)
 - [ ] Consistent spacing/typography scale via tokens
-- [ ] Hover animations on cards (subtle zoom / second image)
+- [x] Hover animations on cards (accent outline instead of scale, per user preference)
 - [ ] Accessibility pass (focus states, alt text, aria, keyboard nav, color contrast)
 
 ---
