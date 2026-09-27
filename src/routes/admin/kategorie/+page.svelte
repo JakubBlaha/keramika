@@ -68,7 +68,7 @@
 	<title>{m.admin_categories_heading()} · {m.admin_title()}</title>
 </svelte:head>
 
-<header class="mb-6 flex flex-col gap-1">
+<header class="mb-8 flex flex-col gap-[0.4rem]">
 	<h1 class="text-[1.6rem]">{m.admin_categories_heading()}</h1>
 	<p class="text-[0.9rem] text-ink-soft">{m.admin_categories_intro()}</p>
 </header>
@@ -120,7 +120,7 @@
 				required
 				bind:value={slug}
 				placeholder="andele"
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -128,7 +128,7 @@
 			<input
 				required
 				bind:value={nameCs}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -136,7 +136,7 @@
 			<input
 				required
 				bind:value={nameEn}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -145,7 +145,7 @@
 				required
 				rows="2"
 				bind:value={descCs}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			></textarea>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -154,7 +154,7 @@
 				required
 				rows="2"
 				bind:value={descEn}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			></textarea>
 		</label>
 

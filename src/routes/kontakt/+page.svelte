@@ -5,6 +5,8 @@
 	// out of the prerendered HTML and out of scrapers' reach.
 	import { m } from '$lib/paraglide/messages';
 	import { EMAIL_REVERSED, PHONE_REVERSED, decodeContact, formatPhone } from '$lib/contact';
+	import MailIcon from '$lib/components/MailIcon.svelte';
+	import PhoneIcon from '$lib/components/PhoneIcon.svelte';
 
 	let emailRevealed = $state(false);
 	let phoneRevealed = $state(false);
@@ -31,15 +33,20 @@
 				{m.contact_email_heading()}
 			</h2>
 			{#if emailRevealed}
-				<a href={'mailto:' + email} class="text-[1.05rem] text-accent-dark hover:underline">
+				<a
+					href={'mailto:' + email}
+					class="inline-flex items-center gap-1.5 text-[1.05rem] text-accent-dark hover:underline"
+				>
+					<MailIcon />
 					{email}
 				</a>
 			{:else}
 				<button
 					type="button"
-					class="cursor-pointer self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline"
+					class="inline-flex cursor-pointer items-center gap-1.5 self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline"
 					onclick={() => (emailRevealed = true)}
 				>
+					<MailIcon />
 					{m.contact_show_email()}
 				</button>
 			{/if}
@@ -50,15 +57,20 @@
 				{m.contact_phone_heading()}
 			</h2>
 			{#if phoneRevealed}
-				<a href={'tel:' + phone} class="text-[1.05rem] text-accent-dark hover:underline">
+				<a
+					href={'tel:' + phone}
+					class="inline-flex items-center gap-1.5 text-[1.05rem] text-accent-dark hover:underline"
+				>
+					<PhoneIcon />
 					{formatPhone(phone)}
 				</a>
 			{:else}
 				<button
 					type="button"
-					class="cursor-pointer self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline"
+					class="inline-flex cursor-pointer items-center gap-1.5 self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline"
 					onclick={() => (phoneRevealed = true)}
 				>
+					<PhoneIcon />
 					{m.contact_show_phone()}
 				</button>
 			{/if}

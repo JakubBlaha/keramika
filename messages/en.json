@@ -63,10 +63,6 @@
 	"product_meta_figure": "Stoneware · handmade",
 	"product_meta_decor": "Stoneware · decor",
 
-	"material_stoneware": "Stoneware",
-	"material_porcelain": "Porcelain",
-	"material_earthenware": "Earthenware",
-
 	"product_desc_angel": "A ceramic guardian angel - a small gift for joy and a little luck around the home. Each piece is one of a kind.",
 	"product_desc_bird": "A small ceramic bird to brighten up a shelf or a windowsill.",
 	"product_desc_cat": "A ceramic cat with its own expression. A perfect gift for cat lovers.",
@@ -76,7 +72,6 @@
 	"product_desc_leaf": "A ceramic leaf - a small decoration for the wall, a shelf, or as a dish for trinkets.",
 	"product_care_default": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece.",
 
-	"product_spec_material": "Material",
 	"product_spec_size": "Size",
 	"product_detail_about": "About",
 	"product_detail_care": "Care",
@@ -232,8 +227,6 @@
 	"admin_field_meta_en": "Short tagline (English)",
 	"admin_field_price": "Price (CZK)",
 	"admin_field_size": "Size",
-	"admin_field_material_cs": "Material (Czech)",
-	"admin_field_material_en": "Material (English)",
 	"admin_field_care_cs": "Care (Czech)",
 	"admin_field_care_en": "Care (English)",
 	"admin_field_category": "Category",

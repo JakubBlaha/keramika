@@ -23,8 +23,6 @@
 	let descEn = $state('');
 	let careCs = $state('');
 	let careEn = $state('');
-	let materialCs = $state('');
-	let materialEn = $state('');
 	let price = $state('');
 	let size = $state('');
 
@@ -55,7 +53,6 @@
 				meta: { cs: metaCs.trim(), en: metaEn.trim() },
 				description: { cs: descCs.trim(), en: descEn.trim() },
 				care: { cs: careCs.trim(), en: careEn.trim() },
-				material: { cs: materialCs.trim(), en: materialEn.trim() },
 				price: String(price).trim(),
 				size: size.trim()
 			});
@@ -89,7 +86,7 @@
 				required
 				bind:value={slug}
 				placeholder="andel"
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -98,7 +95,7 @@
 				required
 				bind:value={categorySlug}
 				disabled={loadingCategories}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			>
 				{#each categories as c (c.slug)}
 					<option value={c.slug}>{c.name[locale]}</option>
@@ -113,7 +110,7 @@
 			<input
 				required
 				bind:value={nameCs}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -121,7 +118,7 @@
 			<input
 				required
 				bind:value={nameEn}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -129,7 +126,7 @@
 			<input
 				required
 				bind:value={metaCs}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -137,7 +134,7 @@
 			<input
 				required
 				bind:value={metaEn}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -147,7 +144,7 @@
 				type="number"
 				min="0"
 				bind:value={price}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -156,23 +153,7 @@
 				required
 				bind:value={size}
 				placeholder="12 cm"
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
-			/>
-		</label>
-		<label class="flex flex-col gap-1 text-[0.8rem]">
-			<span class="text-ink-soft">{m.admin_field_material_cs()}</span>
-			<input
-				required
-				bind:value={materialCs}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
-			/>
-		</label>
-		<label class="flex flex-col gap-1 text-[0.8rem]">
-			<span class="text-ink-soft">{m.admin_field_material_en()}</span>
-			<input
-				required
-				bind:value={materialEn}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -181,7 +162,7 @@
 				required
 				rows="3"
 				bind:value={descCs}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			></textarea>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -190,7 +171,7 @@
 				required
 				rows="3"
 				bind:value={descEn}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			></textarea>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -199,7 +180,7 @@
 				required
 				rows="2"
 				bind:value={careCs}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			></textarea>
 		</label>
 		<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -208,7 +189,7 @@
 				required
 				rows="2"
 				bind:value={careEn}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			></textarea>
 		</label>
 	</div>

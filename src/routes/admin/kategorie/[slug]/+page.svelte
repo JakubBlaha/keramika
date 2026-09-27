@@ -106,7 +106,7 @@
 			<input
 				required
 				bind:value={slug}
-				class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+				class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 			/>
 		</label>
 		<div class="grid gap-4 sm:grid-cols-2">
@@ -115,7 +115,7 @@
 				<input
 					required
 					bind:value={nameCs}
-					class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+					class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 				/>
 			</label>
 			<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -123,7 +123,7 @@
 				<input
 					required
 					bind:value={nameEn}
-					class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+					class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 				/>
 			</label>
 			<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -132,7 +132,7 @@
 					required
 					rows="3"
 					bind:value={descCs}
-					class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+					class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 				></textarea>
 			</label>
 			<label class="flex flex-col gap-1 text-[0.8rem]">
@@ -141,7 +141,7 @@
 					required
 					rows="3"
 					bind:value={descEn}
-					class="rounded-[4px] border border-line px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
+					class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.9rem] focus:border-accent focus:outline-none"
 				></textarea>
 			</label>
 		</div>

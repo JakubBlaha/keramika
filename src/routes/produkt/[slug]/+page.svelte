@@ -74,7 +74,7 @@
 	<meta name="description" content={product.description()} />
 </svelte:head>
 
-<article class="mx-auto max-w-site px-4 pt-6 pb-16">
+<article class="mx-auto max-w-site px-4 pt-10 pb-16">
 	<a
 		href={localizeHref('/produkty/' + category.slug)}
 		class="mb-6 inline-block text-[0.85rem] tracking-[0.02em] text-ink-soft transition-colors hover:text-accent-dark"
@@ -140,10 +140,6 @@
 
 			<!-- Specifications -->
 			<dl class="flex flex-col gap-1 border-y border-line py-4 text-[0.9rem]">
-				<div class="flex justify-between gap-4">
-					<dt class="text-ink-soft">{m.product_spec_material()}</dt>
-					<dd>{product.material()}</dd>
-				</div>
 				<div class="flex justify-between gap-4">
 					<dt class="text-ink-soft">{m.product_spec_size()}</dt>
 					<dd>{product.size}</dd>

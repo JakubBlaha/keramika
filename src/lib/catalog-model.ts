@@ -39,7 +39,6 @@ export type ProductRecord = {
 	price: string;
 	// Human-readable dimension/volume (e.g. "12 cm").
 	size: string;
-	material: Localized;
 };
 
 export type InstanceRecord = {
@@ -125,7 +124,6 @@ export function validateProduct(input: unknown): ValidationError[] {
 	checkLocalized('meta', p.meta, errors);
 	checkLocalized('description', p.description, errors);
 	checkLocalized('care', p.care, errors);
-	checkLocalized('material', p.material, errors);
 	return errors;
 }
 

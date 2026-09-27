@@ -65,7 +65,7 @@
 					autocomplete="username"
 					required
 					bind:value={email}
-					class="rounded-[4px] border border-line px-3 py-2 text-[0.95rem] focus:border-accent focus:outline-none"
+					class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.95rem] focus:border-accent focus:outline-none"
 				/>
 			</label>
 			<label class="flex flex-col gap-1 text-[0.85rem]">
@@ -76,7 +76,7 @@
 					autocomplete="current-password"
 					required
 					bind:value={password}
-					class="rounded-[4px] border border-line px-3 py-2 text-[0.95rem] focus:border-accent focus:outline-none"
+					class="rounded-[4px] border border-line bg-white px-3 py-2 text-[0.95rem] focus:border-accent focus:outline-none"
 				/>
 			</label>
 

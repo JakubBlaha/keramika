@@ -46,7 +46,7 @@
 	<title>{m.admin_orders_heading()} · {m.admin_title()}</title>
 </svelte:head>
 
-<header class="mb-6 flex flex-col gap-1">
+<header class="mb-8 flex flex-col gap-[0.4rem]">
 	<h1 class="text-[1.6rem]">{m.admin_orders_heading()}</h1>
 	<p class="text-[0.9rem] text-ink-soft">{m.admin_orders_intro()}</p>
 </header>

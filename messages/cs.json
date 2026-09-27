@@ -63,10 +63,6 @@
 	"product_meta_figure": "Kamenina · ruční práce",
 	"product_meta_decor": "Kamenina · dekorace",
 
-	"material_stoneware": "Kamenina",
-	"material_porcelain": "Porcelán",
-	"material_earthenware": "Hrnčířská hlína",
-
 	"product_desc_angel": "Keramický anděl strážce - malý dárek pro radost i pro štěstí do domácnosti. Každý kus je originál.",
 	"product_desc_bird": "Malý keramický ptáček, který rozveselí poličku i okenní parapet.",
 	"product_desc_cat": "Keramická kočička s vlastním výrazem. Ideální dárek pro milovníky koček.",
@@ -76,7 +72,6 @@
 	"product_desc_leaf": "Keramický lístek - drobná dekorace na zeď, poličku i jako miska na drobnosti.",
 	"product_care_default": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
 
-	"product_spec_material": "Materiál",
 	"product_spec_size": "Rozměr",
 	"product_detail_about": "O výrobku",
 	"product_detail_care": "Péče",
@@ -232,8 +227,6 @@
 	"admin_field_meta_en": "Krátký popisek (angličtina)",
 	"admin_field_price": "Cena (Kč)",
 	"admin_field_size": "Velikost",
-	"admin_field_material_cs": "Materiál (čeština)",
-	"admin_field_material_en": "Materiál (angličtina)",
 	"admin_field_care_cs": "Péče (čeština)",
 	"admin_field_care_en": "Péče (angličtina)",
 	"admin_field_category": "Kategorie",

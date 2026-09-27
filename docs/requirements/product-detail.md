@@ -60,11 +60,11 @@ Behavior of the product detail page `/produkt/[slug]`
 - Status: verified
 - Priority: should
 - Source: spec
-- Description: The detail page lists product specifications (material and size).
+- Description: The detail page lists product specifications (size).
 - Acceptance:
   - Given a product
   - When the detail page renders
-  - Then a specifications block shows at least the material and the size
+  - Then a specifications block shows at least the size
 - Test: tests/e2e/product-detail.spec.ts > REQ-PRODUCT-005
 
 ### REQ-PRODUCT-006 - About/Care/Shipping accordion

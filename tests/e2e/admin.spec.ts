@@ -30,7 +30,10 @@ function unique(prefix: string): string {
 
 test.describe('Admin', () => {
 	test.beforeEach(async ({ page }) => {
-		test.skip(!(await usingEmulator(page)), 'Requires the Firebase emulator (pnpm test:e2e:emulator)');
+		test.skip(
+			!(await usingEmulator(page)),
+			'Requires the Firebase emulator (pnpm test:e2e:emulator)'
+		);
 	});
 
 	test('REQ-ADMIN-002 - unauthenticated visitors see only the login form', async ({ page }) => {
@@ -136,8 +139,6 @@ test.describe('Admin', () => {
 		await page.getByLabel('Krátký popisek (angličtina)').fill('Tagline');
 		await page.getByLabel('Cena (Kč)').fill('100');
 		await page.getByLabel('Velikost').fill('10 cm');
-		await page.getByLabel('Materiál (čeština)').fill('Hlína');
-		await page.getByLabel('Materiál (angličtina)').fill('Clay');
 		await page.getByLabel('Popis (čeština)').fill('Popis produktu.');
 		await page.getByLabel('Popis (angličtina)').fill('Product description.');
 		await page.getByLabel('Péče (čeština)').fill('Péče.');
@@ -189,8 +190,6 @@ test.describe('Admin', () => {
 		await page.getByLabel('Krátký popisek (angličtina)').fill('Tagline');
 		await page.getByLabel('Cena (Kč)').fill('250');
 		await page.getByLabel('Velikost').fill('15 cm');
-		await page.getByLabel('Materiál (čeština)').fill('Kamenina');
-		await page.getByLabel('Materiál (angličtina)').fill('Stoneware');
 		await page.getByLabel('Popis (čeština)').fill('Popis produktu.');
 		await page.getByLabel('Popis (angličtina)').fill('Product description.');
 		await page.getByLabel('Péče (čeština)').fill('Péče.');
@@ -228,8 +227,6 @@ test.describe('Admin', () => {
 		await page.getByLabel('Krátký popisek (angličtina)').fill('Tagline');
 		await page.getByLabel('Cena (Kč)').fill('250');
 		await page.getByLabel('Velikost').fill('15 cm');
-		await page.getByLabel('Materiál (čeština)').fill('Kamenina');
-		await page.getByLabel('Materiál (angličtina)').fill('Stoneware');
 		await page.getByLabel('Popis (čeština)').fill('Popis.');
 		await page.getByLabel('Popis (angličtina)').fill('Description.');
 		await page.getByLabel('Péče (čeština)').fill('Péče.');
@@ -267,8 +264,6 @@ test.describe('Admin', () => {
 		await page.getByLabel('Krátký popisek (angličtina)').fill('Tagline');
 		await page.getByLabel('Cena (Kč)').fill('50');
 		await page.getByLabel('Velikost').fill('5 cm');
-		await page.getByLabel('Materiál (čeština)').fill('Hlína');
-		await page.getByLabel('Materiál (angličtina)').fill('Clay');
 		await page.getByLabel('Popis (čeština)').fill('Popis.');
 		await page.getByLabel('Popis (angličtina)').fill('Description.');
 		await page.getByLabel('Péče (čeština)').fill('Péče.');
@@ -307,8 +302,6 @@ test.describe('Admin', () => {
 		await page.getByLabel('Krátký popisek (angličtina)').fill('Tagline');
 		await page.getByLabel('Cena (Kč)').fill('300');
 		await page.getByLabel('Velikost').fill('20 cm');
-		await page.getByLabel('Materiál (čeština)').fill('Porcelán');
-		await page.getByLabel('Materiál (angličtina)').fill('Porcelain');
 		await page.getByLabel('Popis (čeština)').fill('Popis.');
 		await page.getByLabel('Popis (angličtina)').fill('Description.');
 		await page.getByLabel('Péče (čeština)').fill('Péče.');

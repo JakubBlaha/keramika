@@ -38,8 +38,6 @@ export type Product = {
 	price: string;
 	// Human-readable dimension/volume, language-neutral (e.g. "14 cm").
 	size: string;
-	// Material label via a message function (e.g. Stoneware / Kamenina).
-	material: () => string;
 	// The unique physical pieces of this blueprint.
 	instances: ProductInstance[];
 };
@@ -50,8 +48,6 @@ export type Category = {
 	description: () => string;
 	products: Product[];
 };
-
-const stoneware = () => m.material_stoneware();
 
 // Build the instances for a product from a folder listing. `pieces` maps an
 // instance folder name (under /products/<dir>/) to its ordered image files and
@@ -81,7 +77,6 @@ export const categories: Category[] = [
 				care: () => m.product_care_default(),
 				price: '390',
 				size: '12 cm',
-				material: stoneware,
 				instances: makeInstances('angel', [
 					{ dir: '01', files: ['01.jpg'], available: true },
 					{ dir: '02', files: ['01.jpg'], available: true }
@@ -102,7 +97,6 @@ export const categories: Category[] = [
 				care: () => m.product_care_default(),
 				price: '320',
 				size: '9 cm',
-				material: stoneware,
 				instances: makeInstances('bird', [{ dir: '01', files: ['01.jpg'], available: true }])
 			},
 			{
@@ -113,7 +107,6 @@ export const categories: Category[] = [
 				care: () => m.product_care_default(),
 				price: '340',
 				size: '10 cm',
-				material: stoneware,
 				instances: makeInstances('cat', [
 					{ dir: '01', files: ['01.jpg'], available: true },
 					{ dir: '02', files: ['01.jpg'], available: true }
@@ -127,7 +120,6 @@ export const categories: Category[] = [
 				care: () => m.product_care_default(),
 				price: '300',
 				size: '11 cm',
-				material: stoneware,
 				instances: makeInstances('fish', [{ dir: '01', files: ['01.jpg'], available: true }])
 			}
 		]
@@ -145,7 +137,6 @@ export const categories: Category[] = [
 				care: () => m.product_care_default(),
 				price: '450',
 				size: '14 cm',
-				material: stoneware,
 				instances: makeInstances('dubanek', [
 					{ dir: '01', files: ['01.jpg'], available: true },
 					{ dir: '02', files: ['01.jpg'], available: true },
@@ -162,7 +153,6 @@ export const categories: Category[] = [
 				care: () => m.product_care_default(),
 				price: '420',
 				size: '13 cm',
-				material: stoneware,
 				instances: makeInstances('guy', [
 					{ dir: '01', files: ['01.jpg'], available: true },
 					{ dir: '02', files: ['01.jpg'], available: true }
@@ -183,7 +173,6 @@ export const categories: Category[] = [
 				care: () => m.product_care_default(),
 				price: '260',
 				size: '16 cm',
-				material: stoneware,
 				instances: makeInstances('leaf', [
 					{ dir: '01', files: ['01.jpg'], available: true },
 					{ dir: '02', files: ['01.jpg'], available: true },

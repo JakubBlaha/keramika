@@ -122,7 +122,6 @@ function makeInstances(productDir, pieces) {
 const meta_figure = L('product_meta_figure');
 const meta_decor = L('product_meta_decor');
 const care = L('product_care_default');
-const material = L('material_stoneware');
 
 const categories = [
 	{ slug: 'andele', name: L('category_angels_name'), description: L('category_angels_desc') },
@@ -141,7 +140,6 @@ const products = [
 		care,
 		price: '390',
 		size: '12 cm',
-		material,
 		instances: makeInstances('angel', [
 			{ dir: '01', files: ['01.jpg'], available: true },
 			{ dir: '02', files: ['01.jpg'], available: true }
@@ -156,7 +154,6 @@ const products = [
 		care,
 		price: '320',
 		size: '9 cm',
-		material,
 		instances: makeInstances('bird', [{ dir: '01', files: ['01.jpg'], available: true }])
 	},
 	{
@@ -168,7 +165,6 @@ const products = [
 		care,
 		price: '340',
 		size: '10 cm',
-		material,
 		instances: makeInstances('cat', [
 			{ dir: '01', files: ['01.jpg'], available: true },
 			{ dir: '02', files: ['01.jpg'], available: true }
@@ -183,7 +179,6 @@ const products = [
 		care,
 		price: '300',
 		size: '11 cm',
-		material,
 		instances: makeInstances('fish', [{ dir: '01', files: ['01.jpg'], available: true }])
 	},
 	{
@@ -195,7 +190,6 @@ const products = [
 		care,
 		price: '450',
 		size: '14 cm',
-		material,
 		instances: makeInstances('dubanek', [
 			{ dir: '01', files: ['01.jpg'], available: true },
 			{ dir: '02', files: ['01.jpg'], available: true },
@@ -213,7 +207,6 @@ const products = [
 		care,
 		price: '420',
 		size: '13 cm',
-		material,
 		instances: makeInstances('guy', [
 			{ dir: '01', files: ['01.jpg'], available: true },
 			{ dir: '02', files: ['01.jpg'], available: true }
@@ -228,7 +221,6 @@ const products = [
 		care,
 		price: '260',
 		size: '16 cm',
-		material,
 		instances: makeInstances('leaf', [
 			{ dir: '01', files: ['01.jpg'], available: true },
 			{ dir: '02', files: ['01.jpg'], available: true },

@@ -55,8 +55,8 @@
 </section>
 
 <!-- Featured products -->
-<section class="mx-auto max-w-site px-4 pt-16">
-	<header class="mb-6 flex flex-col gap-[0.4rem]">
+<section class="mx-auto max-w-site px-4 pt-16 pb-16">
+	<header class="mb-8 flex flex-col gap-[0.4rem]">
 		<span class="eyebrow">{m.featured_eyebrow()}</span>
 		<h2 class="text-[2rem]">{m.featured_heading()}</h2>
 	</header>
@@ -69,12 +69,14 @@
 </section>
 
 <!-- About teaser (About Me) -->
-<section class="mt-16 flex flex-col">
+<section
+	class="flex flex-col md:mx-auto md:max-w-site md:flex-row md:items-center md:gap-10 md:px-4"
+>
 	<div
-		class="aspect-[4/3] w-full bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.35),transparent_55%),linear-gradient(150deg,#b9c2ad,#8a9a82_60%,#6f7e68)]"
+		class="aspect-[4/3] w-full bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.35),transparent_55%),linear-gradient(150deg,#b9c2ad,#8a9a82_60%,#6f7e68)] md:aspect-square md:flex-1 md:rounded-[4px]"
 		aria-hidden="true"
 	></div>
-	<div class="flex flex-col gap-4 bg-bg-alt px-4 py-10">
+	<div class="flex flex-col gap-4 bg-bg-alt px-4 py-10 md:flex-1 md:bg-transparent md:px-0 md:py-0">
 		<span class="eyebrow">{m.about_eyebrow()}</span>
 		<h2 class="text-[2rem]">{m.about_heading()}</h2>
 		<p class="text-ink-soft">

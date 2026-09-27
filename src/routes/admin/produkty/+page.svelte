@@ -55,8 +55,8 @@
 	<title>{m.admin_products_heading()} · {m.admin_title()}</title>
 </svelte:head>
 
-<header class="mb-6 flex flex-wrap items-end justify-between gap-3">
-	<div class="flex flex-col gap-1">
+<header class="mb-8 flex flex-wrap items-end justify-between gap-3">
+	<div class="flex flex-col gap-[0.4rem]">
 		<h1 class="text-[1.6rem]">{m.admin_products_heading()}</h1>
 		<p class="text-[0.9rem] text-ink-soft">{m.admin_products_intro()}</p>
 	</div>

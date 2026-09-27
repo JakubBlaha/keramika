@@ -5,6 +5,8 @@
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import { EMAIL_REVERSED, PHONE_REVERSED, decodeContact, formatPhone } from '$lib/contact';
 	import { PUBLIC_FIREBASE_EMULATOR } from '$env/static/public';
+	import MailIcon from '$lib/components/MailIcon.svelte';
+	import PhoneIcon from '$lib/components/PhoneIcon.svelte';
 
 	let { children } = $props();
 
@@ -64,29 +66,32 @@
 					{#if emailRevealed}
 						<a
 							href={'mailto:' + email}
-							class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white">{email}</a
+							class="inline-flex items-center gap-1.5 text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
+							><MailIcon />{email}</a
 						>
 					{:else}
 						<button
 							type="button"
-							class="cursor-pointer border-none bg-transparent p-0 text-left text-[0.9rem] text-[#d8cfc4] underline transition-colors hover:text-white"
+							class="inline-flex cursor-pointer items-center gap-1.5 border-none bg-transparent p-0 text-left text-[0.9rem] text-[#d8cfc4] underline transition-colors hover:text-white"
 							onclick={() => (emailRevealed = true)}
 						>
+							<MailIcon />
 							{m.footer_show_email()}
 						</button>
 					{/if}
 					{#if phoneRevealed}
 						<a
 							href={'tel:' + phone}
-							class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
-							>{formatPhone(phone)}</a
+							class="inline-flex items-center gap-1.5 text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
+							><PhoneIcon />{formatPhone(phone)}</a
 						>
 					{:else}
 						<button
 							type="button"
-							class="cursor-pointer border-none bg-transparent p-0 text-left text-[0.9rem] text-[#d8cfc4] underline transition-colors hover:text-white"
+							class="inline-flex cursor-pointer items-center gap-1.5 border-none bg-transparent p-0 text-left text-[0.9rem] text-[#d8cfc4] underline transition-colors hover:text-white"
 							onclick={() => (phoneRevealed = true)}
 						>
+							<PhoneIcon />
 							{m.footer_show_phone()}
 						</button>
 					{/if}

@@ -83,9 +83,9 @@ The categories landing page `/produkty` and the per-category listing
 - Status: draft
 - Priority: could
 - Source: spec (section 5)
-- Description: Products can be filtered by category (mutually exclusive), size, material and glaze, with URL-synced state.
+- Description: Products can be filtered by category (mutually exclusive), size and glaze, with URL-synced state.
 - Acceptance:
   - Given the product listing
-  - When the user applies size, material or glaze filters
+  - When the user applies size or glaze filters
   - Then only matching products are shown and the filter state is reflected in the URL
 - Test: tests/e2e/listing.spec.ts > REQ-LISTING-007 (todo)

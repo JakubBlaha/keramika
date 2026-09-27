@@ -55,10 +55,8 @@ test.describe('Product detail', () => {
 		await expect(page.getByText('Poslední kus skladem')).toBeVisible();
 	});
 
-	test('REQ-PRODUCT-005 - specifications show material and size', async ({ page }) => {
+	test('REQ-PRODUCT-005 - specifications show size', async ({ page }) => {
 		await page.goto('/produkt/andel');
-		await expect(page.getByText('Materiál')).toBeVisible();
-		await expect(page.getByText('Kamenina').first()).toBeVisible();
 		await expect(page.getByText('Rozměr')).toBeVisible();
 		await expect(page.getByText('12 cm')).toBeVisible();
 	});

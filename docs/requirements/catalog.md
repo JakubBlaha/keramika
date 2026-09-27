@@ -69,11 +69,11 @@ Data model, products, instances, and availability. Source of truth is
 - Status: verified
 - Priority: must
 - Source: TODO / spec
-- Description: Copy fields (name, description, care, material) are localized via Paraglide; language-neutral data (price, slug, size, images) lives in the catalog.
+- Description: Copy fields (name, description, care) are localized via Paraglide; language-neutral data (price, slug, size, images) lives in the catalog.
 - Acceptance:
   - Given a product in the catalog
   - When it is rendered in cs or en
-  - Then name/description/care/material come from message functions, while price/slug/size/images are identical across locales
+  - Then name/description/care come from message functions, while price/slug/size/images are identical across locales
 - Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-006
 
 ### REQ-CATALOG-007 - Products are grouped into categories
@@ -109,5 +109,5 @@ Data model, products, instances, and availability. Source of truth is
 - Acceptance:
   - Given the target product data model
   - When a product is defined
-  - Then it can carry optional glaze, weight, care and featured attributes in addition to name/slug/description/price/images/category/size/material
+  - Then it can carry optional glaze, weight, care and featured attributes in addition to name/slug/description/price/images/category/size
 - Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-009 (todo)

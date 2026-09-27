@@ -8,6 +8,8 @@
 	import { m } from '$lib/paraglide/messages';
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
 	import OrderStatusBadge from '../OrderStatusBadge.svelte';
+	import MailIcon from '$lib/components/MailIcon.svelte';
+	import PhoneIcon from '$lib/components/PhoneIcon.svelte';
 
 	const id = $derived(page.params.id ?? '');
 
@@ -113,7 +115,11 @@
 					<dt class="text-ink-soft">{m.admin_order_contact_email()}</dt>
 					<dd>
 						{#if order.contact.email}
-							<a href={'mailto:' + order.contact.email} class="text-accent-dark hover:underline">
+							<a
+								href={'mailto:' + order.contact.email}
+								class="inline-flex items-center gap-1.5 text-accent-dark hover:underline"
+							>
+								<MailIcon />
 								{order.contact.email}
 							</a>
 						{:else}
@@ -125,7 +131,11 @@
 					<dt class="text-ink-soft">{m.admin_order_contact_phone()}</dt>
 					<dd>
 						{#if order.contact.phone}
-							<a href={'tel:' + order.contact.phone} class="text-accent-dark hover:underline">
+							<a
+								href={'tel:' + order.contact.phone}
+								class="inline-flex items-center gap-1.5 text-accent-dark hover:underline"
+							>
+								<PhoneIcon />
 								{order.contact.phone}
 							</a>
 						{:else}
