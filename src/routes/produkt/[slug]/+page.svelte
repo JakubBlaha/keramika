@@ -11,6 +11,8 @@
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import ProductGrid from '$lib/components/ProductGrid.svelte';
+	import { EASE_SOFT, prefersReducedMotion, reveal } from '$lib/motion';
+	import { fly, slide } from 'svelte/transition';
 
 	let { data } = $props();
 
@@ -55,17 +57,43 @@
 		openSection = openSection === section ? null : section;
 	}
 
-	function selectInstance(instance: ProductInstance) {
-		if (!instance.available) return;
-		selectedId = instance.id;
-		activeImage = 0;
+	let heroEl = $state<HTMLImageElement>();
+
+	// Soft cross-fade when the shown photo changes (another piece or thumb).
+	function showImage(update: () => void) {
+		update();
+		if (!prefersReducedMotion()) {
+			heroEl?.animate(
+				[
+					{ opacity: 0.25, transform: 'scale(1.03)' },
+					{ opacity: 1, transform: 'none' }
+				],
+				{ duration: 600, easing: EASE_SOFT }
+			);
+		}
 	}
+
+	function selectInstance(instance: ProductInstance) {
+		if (!instance.available || instance.id === selectedId) return;
+		showImage(() => {
+			selectedId = instance.id;
+			activeImage = 0;
+		});
+	}
+
+	// Confirmation shown under the button after adding (reset per product).
+	let justAdded = $state(false);
+	$effect(() => {
+		void data.slug;
+		justAdded = false;
+	});
 
 	// A specific available instance must be selected to add to the cart.
 	// Adding an instance already in the cart is a no-op (REQ-CART-004).
 	function addToCart() {
 		if (!selected || !selected.available) return;
 		cart.add(selected.id, product.slug);
+		justAdded = true;
 	}
 </script>
 
@@ -88,9 +116,11 @@
 			<div class="aspect-square w-full overflow-hidden rounded-[4px] bg-bg-alt">
 				{#if heroImage}
 					<img
+						bind:this={heroEl}
 						src={heroImage}
 						alt={product.name()}
 						class="h-full w-full object-cover"
+						style:view-transition-name="product-{product.slug}"
 						loading="eager"
 					/>
 				{/if}
@@ -106,7 +136,7 @@
 							class:border-transparent={activeImage !== i}
 							aria-label={product.name()}
 							aria-pressed={activeImage === i}
-							onclick={() => (activeImage = i)}
+							onclick={() => showImage(() => (activeImage = i))}
 						>
 							<img src={img} alt={product.name()} class="h-full w-full object-cover" />
 						</button>
@@ -116,7 +146,7 @@
 		</div>
 
 		<!-- Product info -->
-		<div class="flex flex-col gap-4 md:w-1/2">
+		<div class="flex rise-children flex-col gap-4 md:w-1/2">
 			<div class="flex flex-col gap-[0.4rem]">
 				<span class="eyebrow">{category.name()}</span>
 				<h1 class="text-[2rem] leading-tight">{product.name()}</h1>
@@ -164,7 +194,7 @@
 								onclick={() => selectInstance(inst)}
 							>
 								<span
-									class="aspect-square w-full overflow-hidden rounded-[4px] border-2 transition"
+									class="aspect-square w-full overflow-hidden rounded-[4px] border-2 transition duration-300 group-enabled:group-hover:-translate-y-0.5"
 									class:border-accent={selectedId === inst.id && inst.available}
 									class:border-transparent={selectedId !== inst.id && inst.available}
 									class:border-line={!inst.available}
@@ -189,7 +219,7 @@
 			{/if}
 
 			<!-- Add to cart -->
-			<div class="flex flex-wrap items-center gap-3">
+			<div class="flex flex-col gap-2">
 				<button
 					type="button"
 					class="btn grow btn-primary disabled:cursor-not-allowed disabled:opacity-50"
@@ -198,6 +228,29 @@
 				>
 					{soldOut ? m.product_sold_out() : m.product_add_to_cart()}
 				</button>
+				<p class="min-h-[1.6em] text-[0.85rem]" aria-live="polite">
+					{#if justAdded}
+						<span class="inline-flex items-center gap-2 text-sage" in:fly={{ y: 6, duration: 400 }}>
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								aria-hidden="true"
+							>
+								<path d="M5 12.5l4.5 4.5L19 7.5" />
+							</svg>
+							{m.product_added_to_cart()}
+							<a
+								href={localizeHref('/cart')}
+								class="text-accent-dark underline transition-colors hover:text-accent"
+								>{m.product_view_cart()}</a
+							>
+						</span>
+					{/if}
+				</p>
 			</div>
 
 			<!-- Accordion sections -->
@@ -210,10 +263,16 @@
 						onclick={() => toggle('about')}
 					>
 						{m.product_detail_about()}
-						<span aria-hidden="true">{openSection === 'about' ? '−' : '+'}</span>
+						<span
+							class="text-[1.2rem] leading-none font-light transition-transform duration-400 ease-(--ease-soft)"
+							class:rotate-45={openSection === 'about'}
+							aria-hidden="true">+</span
+						>
 					</button>
 					{#if openSection === 'about'}
-						<p class="pb-4 text-[0.9rem] text-ink-soft">{product.description()}</p>
+						<p transition:slide={{ duration: 350 }} class="pb-4 text-[0.9rem] text-ink-soft">
+							{product.description()}
+						</p>
 					{/if}
 				</section>
 
@@ -225,10 +284,16 @@
 						onclick={() => toggle('care')}
 					>
 						{m.product_detail_care()}
-						<span aria-hidden="true">{openSection === 'care' ? '−' : '+'}</span>
+						<span
+							class="text-[1.2rem] leading-none font-light transition-transform duration-400 ease-(--ease-soft)"
+							class:rotate-45={openSection === 'care'}
+							aria-hidden="true">+</span
+						>
 					</button>
 					{#if openSection === 'care'}
-						<p class="pb-4 text-[0.9rem] text-ink-soft">{product.care()}</p>
+						<p transition:slide={{ duration: 350 }} class="pb-4 text-[0.9rem] text-ink-soft">
+							{product.care()}
+						</p>
 					{/if}
 				</section>
 
@@ -240,10 +305,16 @@
 						onclick={() => toggle('shipping')}
 					>
 						{m.product_detail_shipping()}
-						<span aria-hidden="true">{openSection === 'shipping' ? '−' : '+'}</span>
+						<span
+							class="text-[1.2rem] leading-none font-light transition-transform duration-400 ease-(--ease-soft)"
+							class:rotate-45={openSection === 'shipping'}
+							aria-hidden="true">+</span
+						>
 					</button>
 					{#if openSection === 'shipping'}
-						<p class="pb-4 text-[0.9rem] text-ink-soft">{m.product_detail_shipping_text()}</p>
+						<p transition:slide={{ duration: 350 }} class="pb-4 text-[0.9rem] text-ink-soft">
+							{m.product_detail_shipping_text()}
+						</p>
 					{/if}
 				</section>
 			</div>
@@ -253,7 +324,7 @@
 	<!-- Related products -->
 	{#if related.length > 0}
 		<section class="mt-16">
-			<h2 class="mb-6 text-[1.6rem]">{m.product_related_heading()}</h2>
+			<h2 class="mb-6 text-[1.6rem]" {@attach reveal()}>{m.product_related_heading()}</h2>
 			<ProductGrid products={related} cols={4} />
 		</section>
 	{/if}

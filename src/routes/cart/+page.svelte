@@ -4,6 +4,8 @@
 	import type { Product, ProductInstance } from '$lib/catalog';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
+	import { flip } from 'svelte/animate';
+	import { slide } from 'svelte/transition';
 
 	// Resolve each cart line to its live product/instance data. Lines that
 	// reference a product/instance that no longer exists are skipped rather
@@ -48,7 +50,7 @@
 </svelte:head>
 
 <section class="mx-auto max-w-site px-4 pt-10 pb-16">
-	<header class="mb-8 flex flex-col gap-[0.4rem]">
+	<header class="mb-8 flex rise-children flex-col gap-[0.4rem]">
 		<span class="eyebrow">{m.cart_eyebrow()}</span>
 		<h1 class="text-[2rem]">{m.cart_heading()}</h1>
 	</header>
@@ -56,6 +58,7 @@
 	{#if cart.canUndo}
 		<div
 			class="mb-6 flex items-center justify-between gap-4 rounded-[4px] border border-line bg-bg-alt px-4 py-3"
+			transition:slide={{ duration: 300 }}
 		>
 			<span class="text-[0.9rem] text-ink-soft">{m.cart_removed_notice()}</span>
 			<button
@@ -69,18 +72,22 @@
 	{/if}
 
 	{#if isEmpty}
-		<div class="flex flex-col items-start gap-4 border-y border-line py-10">
+		<div class="flex animate-fade-in flex-col items-start gap-4 border-y border-line py-10">
 			<p class="text-ink-soft">{m.cart_empty_text()}</p>
 			<a href={localizeHref('/produkty')} class="btn btn-primary">
 				{m.cart_empty_cta()}
 			</a>
 		</div>
 	{:else}
-		<div class="flex flex-col gap-10 md:flex-row md:gap-10">
+		<div class="flex animate-fade-in flex-col gap-10 md:flex-row md:gap-10">
 			<!-- Cart lines -->
 			<ul class="flex flex-1 flex-col divide-y divide-line border-y border-line">
 				{#each resolvedLines as line (line.instance.id)}
-					<li class="flex items-center gap-4 py-4">
+					<li
+						class="flex items-center gap-4 py-4"
+						animate:flip={{ duration: 400 }}
+						transition:slide={{ duration: 350 }}
+					>
 						<a
 							href={localizeHref('/produkt/' + line.product.slug)}
 							class="aspect-square w-20 shrink-0 overflow-hidden rounded-[4px] bg-bg-alt"

@@ -23,7 +23,7 @@ The homepage `/` (`src/routes/+page.svelte`).
 - Acceptance:
   - Given the homepage
   - When it renders
-  - Then a value-propositions section shows the handmade, own-designs and one-of-a-kind values
+  - Then a value-propositions section shows the made-with-love, own-designs and one-of-a-kind values
 - Test: tests/e2e/home.spec.ts > REQ-HOME-002
 
 ### REQ-HOME-003 - Featured products grid
@@ -35,7 +35,7 @@ The homepage `/` (`src/routes/+page.svelte`).
 - Acceptance:
   - Given the catalog has products
   - When the homepage renders
-  - Then a featured grid shows several product cards, each linking to its detail page
+  - Then a featured grid shows at least two rows of product cards, each linking to its detail page
   - And a link to all products is shown
 - Test: tests/e2e/home.spec.ts > REQ-HOME-003
 

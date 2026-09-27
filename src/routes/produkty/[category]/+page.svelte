@@ -24,7 +24,7 @@
 		&larr; {m.category_back_to_products()}
 	</a>
 
-	<header class="mb-8 flex flex-col gap-[0.4rem]">
+	<header class="mb-8 flex rise-children flex-col gap-[0.4rem]">
 		<span class="eyebrow">{m.products_eyebrow()}</span>
 		<h1 class="text-[2rem]">{category.name()}</h1>
 		<p class="max-w-[34rem] text-ink-soft">{category.description()}</p>

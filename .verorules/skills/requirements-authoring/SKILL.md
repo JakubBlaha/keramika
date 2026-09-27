@@ -29,6 +29,7 @@ docs/requirements/
   catalog.md         # data model, products, instances, availability
   product-detail.md  # /produkt/[slug] behavior
   listing.md         # /produkty and /produkty/[category]
+  gallery.md         # /galerie
   home.md            # homepage
   cart.md            # /kosik
   checkout.md        # /objednavka
@@ -48,7 +49,7 @@ Format: `REQ-<AREA>-<NNN>` where `<AREA>` is uppercase and `<NNN>` is a
 zero-padded, per-area sequential counter (001, 002, ...).
 
 Current area codes: `CATALOG`, `PRODUCT`, `LISTING`, `HOME`, `CART`,
-`CHECKOUT`, `I18N`, `BUILD`, `CONTENT`, `A11Y`, `DESIGN`.
+`CHECKOUT`, `GALLERY`, `I18N`, `BUILD`, `CONTENT`, `A11Y`, `DESIGN`.
 
 Rules:
 

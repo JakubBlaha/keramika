@@ -62,57 +62,66 @@ tests is a separate task from capturing requirements.
 | CONTENT | [content.md](./content.md) | Content, assets, SEO |
 | A11Y | [a11y.md](./a11y.md) | Accessibility |
 | DESIGN | [design.md](./design.md) | Visual design direction |
+| GALLERY | [gallery.md](./gallery.md) | `/galerie` gallery of every instance |
 
 ## Coverage table
 
-| ID               | Title                                                    | Status      | Test                             |
-| ---------------- | -------------------------------------------------------- | ----------- | -------------------------------- |
-| REQ-CATALOG-001  | Multiple images per instance                             | verified    | tests/e2e/catalog.spec.ts        |
-| REQ-CATALOG-002  | Product is a blueprint with unique instances             | verified    | tests/e2e/catalog.spec.ts        |
-| REQ-CATALOG-003  | Each instance is sold exactly once                       | approved    | todo                             |
-| REQ-CATALOG-004  | Product availability equals count of available instances | verified    | tests/e2e/catalog.spec.ts        |
-| REQ-CATALOG-005  | Cover image comes from first available instance          | verified    | tests/e2e/catalog.spec.ts        |
-| REQ-CATALOG-006  | Copy fields are localized, data fields are neutral       | verified    | tests/e2e/catalog.spec.ts        |
-| REQ-CATALOG-007  | Products are grouped into categories                     | verified    | tests/e2e/catalog.spec.ts        |
-| REQ-CATALOG-008  | Related products come from the same category             | verified    | tests/e2e/catalog.spec.ts        |
-| REQ-CATALOG-009  | Product data model fields                                | draft       | todo                             |
-| REQ-PRODUCT-001  | Image gallery follows the selected instance              | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-002  | Instance picker lets the buyer choose a piece            | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-003  | Sold instances are not selectable                        | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-004  | Availability text reflects stock                         | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-005  | Specifications are shown                                 | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-006  | About/Care/Shipping accordion                            | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-007  | Add to cart requires an available selected instance      | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-008  | Related products section                                 | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-PRODUCT-009  | Back link to the category                                | verified    | tests/e2e/product-detail.spec.ts |
-| REQ-LISTING-001  | Categories landing page                                  | verified    | tests/e2e/listing.spec.ts        |
-| REQ-LISTING-002  | Category product listing                                 | verified    | tests/e2e/listing.spec.ts        |
-| REQ-LISTING-003  | Product cards show image, name, meta, price              | verified    | tests/e2e/listing.spec.ts        |
-| REQ-LISTING-004  | Last-piece and sold-out badges                           | verified    | tests/e2e/listing.spec.ts        |
-| REQ-LISTING-005  | Responsive grid column counts                            | draft       | todo                             |
-| REQ-LISTING-006  | All-products view                                        | draft       | todo                             |
-| REQ-LISTING-007  | Product filtering                                        | draft       | todo                             |
-| REQ-HOME-001     | Hero with headline and CTA                               | verified    | tests/e2e/home.spec.ts           |
-| REQ-HOME-002     | Value propositions                                       | verified    | tests/e2e/home.spec.ts           |
-| REQ-HOME-003     | Featured products grid                                   | verified    | tests/e2e/home.spec.ts           |
-| REQ-HOME-004     | About teaser                                             | verified    | tests/e2e/home.spec.ts           |
-| REQ-CART-001     | Cart lists selected instances                            | verified    | tests/e2e/cart.spec.ts           |
-| REQ-CART-002     | Cart summary totals                                      | verified    | tests/e2e/cart.spec.ts           |
-| REQ-CART-003     | Empty cart state                                         | verified    | tests/e2e/cart.spec.ts           |
-| REQ-CART-004     | An instance can be in at most one cart/order             | verified    | tests/e2e/cart.spec.ts           |
-| REQ-CART-005     | Remove an instance from the cart                         | verified    | tests/e2e/cart.spec.ts           |
-| REQ-CART-006     | No quantity editing for cart lines                       | verified    | tests/e2e/cart.spec.ts           |
-| REQ-CHECKOUT-001 | Order summary                                            | verified    | tests/e2e/checkout.spec.ts       |
-| REQ-CHECKOUT-002 | Contact information form                                 | verified    | tests/e2e/checkout.spec.ts       |
-| REQ-CHECKOUT-003 | Shipping method selection                                | removed     | todo                             |
-| REQ-CHECKOUT-004 | Payment method selection                                 | removed     | todo                             |
-| REQ-CHECKOUT-005 | Terms acceptance required                                | verified    | tests/e2e/checkout.spec.ts       |
+| ID               | Title                                                    | Status      | Test                                  |
+| ---------------- | -------------------------------------------------------- | ----------- | ------------------------------------- |
+| REQ-CATALOG-001  | Multiple images per instance                             | verified    | tests/e2e/catalog.spec.ts             |
+| REQ-CATALOG-002  | Product is a blueprint with unique instances             | verified    | tests/e2e/catalog.spec.ts             |
+| REQ-CATALOG-003  | Each instance is sold exactly once                       | approved    | todo                                  |
+| REQ-CATALOG-004  | Product availability equals count of available instances | verified    | tests/e2e/catalog.spec.ts             |
+| REQ-CATALOG-005  | Cover image comes from first available instance          | verified    | tests/e2e/catalog.spec.ts             |
+| REQ-CATALOG-006  | Copy fields are localized, data fields are neutral       | verified    | tests/e2e/catalog.spec.ts             |
+| REQ-CATALOG-007  | Products are grouped into categories                     | verified    | tests/e2e/catalog.spec.ts             |
+| REQ-CATALOG-008  | Related products come from the same category             | verified    | tests/e2e/catalog.spec.ts             |
+| REQ-CATALOG-009  | Product data model fields                                | draft       | todo                                  |
+| REQ-PRODUCT-001  | Image gallery follows the selected instance              | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-002  | Instance picker lets the buyer choose a piece            | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-003  | Sold instances are not selectable                        | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-004  | Availability text reflects stock                         | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-005  | Specifications are shown                                 | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-006  | About/Care/Shipping accordion                            | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-007  | Add to cart requires an available selected instance      | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-008  | Related products section                                 | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-PRODUCT-009  | Back link to the category                                | verified    | tests/e2e/product-detail.spec.ts      |
+| REQ-LISTING-001  | Categories landing page                                  | verified    | tests/e2e/listing.spec.ts             |
+| REQ-LISTING-002  | Category product listing                                 | verified    | tests/e2e/listing.spec.ts             |
+| REQ-LISTING-003  | Product cards show image, name, meta, price              | verified    | tests/e2e/listing.spec.ts             |
+| REQ-LISTING-004  | Last-piece and sold-out badges                           | verified    | tests/e2e/listing.spec.ts             |
+| REQ-LISTING-005  | Responsive grid column counts                            | draft       | todo                                  |
+| REQ-LISTING-006  | All-products view                                        | draft       | todo                                  |
+| REQ-LISTING-007  | Product filtering                                        | draft       | todo                                  |
+| REQ-LISTING-008  | Card hover previews up to four pieces                    | implemented | tests/e2e/listing.spec.ts             |
+| REQ-GALLERY-001  | Gallery shows every instance grouped by product          | implemented | tests/e2e/gallery.spec.ts             |
+| REQ-GALLERY-002  | Grid is photos only                                      | implemented | tests/e2e/gallery.spec.ts             |
+| REQ-GALLERY-003  | Fullscreen view of a photo                               | implemented | tests/e2e/gallery.spec.ts             |
+| REQ-GALLERY-004  | Fullscreen view shows stock status                       | implemented | tests/e2e/gallery.spec.ts             |
+| REQ-GALLERY-005  | Buy link for an available instance                       | implemented | tests/e2e/gallery.spec.ts             |
+| REQ-GALLERY-006  | Product link for a sold instance                         | implemented | tests/e2e/gallery.spec.ts             |
+| REQ-GALLERY-007  | Gallery is in the main navigation                        | implemented | tests/e2e/gallery.spec.ts             |
+| REQ-HOME-001     | Hero with headline and CTA                               | verified    | tests/e2e/home.spec.ts                |
+| REQ-HOME-002     | Value propositions                                       | verified    | tests/e2e/home.spec.ts                |
+| REQ-HOME-003     | Featured products grid                                   | verified    | tests/e2e/home.spec.ts                |
+| REQ-HOME-004     | About teaser                                             | verified    | tests/e2e/home.spec.ts                |
+| REQ-CART-001     | Cart lists selected instances                            | verified    | tests/e2e/cart.spec.ts                |
+| REQ-CART-002     | Cart summary totals                                      | verified    | tests/e2e/cart.spec.ts                |
+| REQ-CART-003     | Empty cart state                                         | verified    | tests/e2e/cart.spec.ts                |
+| REQ-CART-004     | An instance can be in at most one cart/order             | verified    | tests/e2e/cart.spec.ts                |
+| REQ-CART-005     | Remove an instance from the cart                         | verified    | tests/e2e/cart.spec.ts                |
+| REQ-CART-006     | No quantity editing for cart lines                       | verified    | tests/e2e/cart.spec.ts                |
+| REQ-CHECKOUT-001 | Order summary                                            | verified    | tests/e2e/checkout.spec.ts            |
+| REQ-CHECKOUT-002 | Contact information form                                 | verified    | tests/e2e/checkout.spec.ts            |
+| REQ-CHECKOUT-003 | Shipping method selection                                | removed     | todo                                  |
+| REQ-CHECKOUT-004 | Payment method selection                                 | removed     | todo                                  |
+| REQ-CHECKOUT-005 | Terms acceptance required                                | verified    | tests/e2e/checkout.spec.ts            |
 | REQ-CHECKOUT-006 | Order confirmation                                       | verified    | tests/e2e/checkout.spec.ts (emulator) |
-| REQ-CHECKOUT-007 | Pickup in store is the only fulfillment                  | verified    | tests/e2e/checkout.spec.ts       |
-| REQ-CHECKOUT-008 | Pay in store is the only payment                         | verified    | tests/e2e/checkout.spec.ts       |
-| REQ-CHECKOUT-009 | Site is a reservation, not a paid sale                   | verified    | tests/e2e/checkout.spec.ts       |
+| REQ-CHECKOUT-007 | Pickup in store is the only fulfillment                  | verified    | tests/e2e/checkout.spec.ts            |
+| REQ-CHECKOUT-008 | Pay in store is the only payment                         | verified    | tests/e2e/checkout.spec.ts            |
+| REQ-CHECKOUT-009 | Site is a reservation, not a paid sale                   | verified    | tests/e2e/checkout.spec.ts            |
 | REQ-CHECKOUT-010 | Place the reservation                                    | verified    | tests/e2e/checkout.spec.ts (emulator) |
-| REQ-ADMIN-001    | Dedicated admin area reachable only by URL               | draft       | todo                             |
+| REQ-ADMIN-001    | Dedicated admin area reachable only by URL               | draft       | todo                                  |
 
 | REQ-ADMIN-002 | Admin area requires authentication | verified | tests/e2e/admin.spec.ts (emulator) |
 | REQ-ADMIN-003 | Admin login | verified | tests/e2e/admin.spec.ts (emulator) |
@@ -166,3 +175,6 @@ tests is a separate task from capturing requirements.
 | REQ-DESIGN-003 | Minimal, uncluttered visual style | draft | todo |
 | REQ-DESIGN-004 | Tech stack and data strategy | removed | n/a |
 | REQ-DESIGN-005 | Tech stack and Firebase data strategy | draft | n/a |
+| REQ-DESIGN-006 | Motion respects reduced-motion preference | implemented | tests/e2e/design.spec.ts |
+| REQ-DESIGN-007 | Page transitions with product image morph | implemented | tests/e2e/design.spec.ts |
+| REQ-DESIGN-008 | Scroll reveal never hides the first paint | implemented | tests/e2e/design.spec.ts |

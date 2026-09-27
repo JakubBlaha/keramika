@@ -113,7 +113,7 @@
 			</a>
 		</div>
 	{:else}
-		<header class="mb-8 flex flex-col gap-[0.4rem]">
+		<header class="mb-8 flex rise-children flex-col gap-[0.4rem]">
 			<span class="eyebrow">{m.checkout_eyebrow()}</span>
 			<h1 class="text-[2rem]">{m.checkout_heading()}</h1>
 		</header>

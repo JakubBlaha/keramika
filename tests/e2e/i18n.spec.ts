@@ -43,7 +43,7 @@ test.describe('i18n', () => {
 
 	test('REQ-I18N-004 - routes are reachable in both locales', async ({ page }) => {
 		// Each prerendered route exists under both the root (cs) and /en (en).
-		for (const path of ['/', '/produkty', '/produkty/andele', '/produkt/andel']) {
+		for (const path of ['/', '/produkty', '/produkty/andele', '/produkt/andel', '/galerie']) {
 			const cs = await page.goto(path);
 			expect(cs?.status(), `cs ${path}`).toBeLessThan(400);
 

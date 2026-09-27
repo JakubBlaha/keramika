@@ -21,14 +21,17 @@
 </svelte:head>
 
 <section class="mx-auto max-w-site px-4 pt-10 pb-16">
-	<header class="mb-8 flex flex-col gap-[0.4rem]">
+	<header class="mb-8 flex rise-children flex-col gap-[0.4rem]">
 		<span class="eyebrow">{m.contact_eyebrow()}</span>
 		<h1 class="text-[2rem]">{m.contact_heading()}</h1>
 		<p class="max-w-[34rem] text-ink-soft">{m.contact_intro()}</p>
 	</header>
 
 	<div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
-		<div class="flex flex-col gap-2 rounded-[4px] border border-line bg-white p-6">
+		<div
+			class="flex animate-rise flex-col gap-2 rounded-[4px] border border-line bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-accent/50 hover:shadow-[0_1rem_2rem_-1.5rem_rgb(61_53_48/0.35)]"
+			style:animation-delay="250ms"
+		>
 			<h2 class="text-[0.75rem] tracking-[0.1em] text-ink-soft uppercase">
 				{m.contact_email_heading()}
 			</h2>
@@ -52,7 +55,10 @@
 			{/if}
 		</div>
 
-		<div class="flex flex-col gap-2 rounded-[4px] border border-line bg-white p-6">
+		<div
+			class="flex animate-rise flex-col gap-2 rounded-[4px] border border-line bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-accent/50 hover:shadow-[0_1rem_2rem_-1.5rem_rgb(61_53_48/0.35)]"
+			style:animation-delay="350ms"
+		>
 			<h2 class="text-[0.75rem] tracking-[0.1em] text-ink-soft uppercase">
 				{m.contact_phone_heading()}
 			</h2>
@@ -76,7 +82,10 @@
 			{/if}
 		</div>
 
-		<div class="flex flex-col gap-2 rounded-[4px] border border-line bg-white p-6">
+		<div
+			class="flex animate-rise flex-col gap-2 rounded-[4px] border border-line bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-accent/50 hover:shadow-[0_1rem_2rem_-1.5rem_rgb(61_53_48/0.35)]"
+			style:animation-delay="450ms"
+		>
 			<h2 class="text-[0.75rem] tracking-[0.1em] text-ink-soft uppercase">
 				{m.contact_location_heading()}
 			</h2>

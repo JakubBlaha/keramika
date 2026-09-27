@@ -25,6 +25,48 @@
 	/* Layout */
 	--radius-token: 4px;
 	--container-site: 72rem;
+
+	/* Motion - one soft "settling clay" curve used everywhere, so the site
+	   moves consistently. Keyframes below back the animate-* utilities. */
+	--ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+	--animate-rise: rise 0.9s var(--ease-soft) both;
+	--animate-fade-in: fade-in 0.5s var(--ease-soft) both;
+	--animate-pop: pop 0.45s var(--ease-soft);
+	--animate-float: float 8s ease-in-out infinite;
+}
+
+/* Keyframes behind the animate-* utilities and arbitrary animate-[...] uses. */
+
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(1.25rem);
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes pop {
+	40% {
+		transform: scale(1.35);
+	}
+}
+
+@keyframes float {
+	50% {
+		transform: translateY(-0.6rem) rotate(0.6deg);
+	}
+}
+
+@keyframes zoom-in {
+	from {
+		opacity: 0;
+		transform: scale(0.96);
+	}
 }
 
 /* Base element styles ------------------------------------------------------ */
@@ -49,7 +91,107 @@ h4 {
 	color: var(--color-ink);
 }
 
+::selection {
+	background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+
+/* Zero specificity so utilities (e.g. card hover outlines) still win. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
+}
+
+/* Page transitions (see onNavigate in +layout.svelte). The header keeps its
+   own name so it stays put while the page content cross-fades beneath it. */
+::view-transition-old(root) {
+	animation: 0.2s ease-out both vt-out;
+}
+
+::view-transition-new(root) {
+	animation: 0.45s var(--ease-soft) both vt-in;
+}
+
+::view-transition-group(*) {
+	animation-duration: 0.5s;
+	animation-timing-function: var(--ease-soft);
+}
+
+@keyframes vt-out {
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes vt-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.75rem);
+	}
+}
+
+/* Honour the OS "reduce motion" setting across CSS animations, transitions,
+   Svelte transitions (compiled to CSS animations) and view transitions.
+   JS-driven motion checks prefersReducedMotion() in $lib/motion.ts. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	::before,
+	::after {
+		animation-duration: 0.01ms !important;
+		animation-delay: 0ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
 /* Reusable component classes ----------------------------------------------- */
+
+/* Staggered entrance for a stack of children (eyebrow, heading, intro...). */
+@utility rise-children {
+	& > * {
+		animation: rise 0.9s var(--ease-soft) both;
+	}
+	& > :nth-child(2) {
+		animation-delay: 90ms;
+	}
+	& > :nth-child(3) {
+		animation-delay: 180ms;
+	}
+	& > :nth-child(4) {
+		animation-delay: 270ms;
+	}
+	& > :nth-child(n + 5) {
+		animation-delay: 360ms;
+	}
+}
+
+/* Hairline underline that draws in on hover and stays on the current page. */
+@utility link-underline {
+	position: relative;
+
+	&::after {
+		content: '';
+		position: absolute;
+		inset-inline: 0;
+		bottom: -0.2rem;
+		height: 1px;
+		background-color: currentColor;
+		transform: scaleX(0);
+		transform-origin: right;
+		transition: transform 0.4s var(--ease-soft);
+	}
+
+	&:hover::after,
+	&[aria-current='page']::after {
+		transform: scaleX(1);
+		transform-origin: left;
+	}
+}
 
 @utility eyebrow {
 	font-size: 0.72rem;
@@ -72,7 +214,21 @@ h4 {
 	font-weight: 500;
 	border-radius: var(--radius-token);
 	border: 1px solid transparent;
-	transition: 0.25s ease;
+	cursor: pointer;
+	transition:
+		background-color 0.3s var(--ease-soft),
+		color 0.3s var(--ease-soft),
+		border-color 0.3s var(--ease-soft),
+		box-shadow 0.3s var(--ease-soft),
+		transform 0.3s var(--ease-soft);
+
+	&:hover:not(:disabled) {
+		transform: translateY(-1px);
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0) scale(0.98);
+	}
 }
 
 @utility btn-primary {
@@ -81,6 +237,7 @@ h4 {
 
 	&:hover {
 		background-color: var(--color-accent-dark);
+		box-shadow: 0 0.75rem 1.5rem -0.9rem rgb(167 95 66 / 0.8);
 	}
 }
 

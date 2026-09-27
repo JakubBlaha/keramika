@@ -1,8 +1,15 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 // E2E tests for the listing pages: categories landing (/produkty) and the
 // per-category listing (/produkty/[category]). Test titles carry the
 // requirement ID for traceability. See docs/requirements/listing.md.
+
+// Wait until SvelteKit has hydrated (the root layout sets this attribute in an
+// $effect); before that, hover handlers are not attached yet.
+async function gotoHydrated(page: Page, path: string) {
+	await page.goto(path);
+	await page.waitForFunction(() => document.documentElement.dataset.firebaseEmulator !== undefined);
+}
 
 test.describe('Listing', () => {
 	test('REQ-LISTING-001 - categories landing shows category cards', async ({ page }) => {
@@ -50,5 +57,26 @@ test.describe('Listing', () => {
 		const cat = page.locator('a[href="/produkt/kocicka"]');
 		await expect(cat.getByText('Poslední kus')).toHaveCount(0);
 		await expect(cat.getByText('Vyprodáno')).toHaveCount(0);
+	});
+
+	test('REQ-LISTING-008 - hovering a card previews up to four pieces', async ({ page }) => {
+		// Dubánek has 5 pieces -> 4 in the preview.
+		await gotoHydrated(page, '/produkty/postavicky');
+		const dubanek = page.locator('a[href="/produkt/dubanek"]');
+		await dubanek.hover();
+		const preview = dubanek.getByTestId('piece-preview');
+		await expect(preview).toHaveCSS('visibility', 'visible');
+		await expect(preview.locator('> div')).toHaveCount(4);
+
+		// Leaving the card zooms back in and then hides the preview (no fade).
+		await page.mouse.move(0, 0);
+		await expect(preview).toHaveCSS('visibility', 'hidden');
+		await expect(preview).toHaveCSS('opacity', '1');
+
+		// Ptáček has a single piece -> no preview.
+		await gotoHydrated(page, '/produkty/zviratka');
+		const bird = page.locator('a[href="/produkt/ptacek"]');
+		await bird.hover();
+		await expect(bird.getByTestId('piece-preview')).toHaveCount(0);
 	});
 });

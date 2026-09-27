@@ -3,9 +3,10 @@
 
 	"brand_name": "Lada Bartoníková",
 	"brand_tagline": "keramika",
-	"brand_tagline_full": "Ruční keramika z Brna",
+	"brand_tagline_full": "Keramika tvořená s láskou",
 
 	"nav_products": "Produkty",
+	"nav_gallery": "Galerie",
 	"nav_about": "O mně",
 	"nav_contact": "Kontakt",
 
@@ -13,21 +14,36 @@
 	"a11y_menu_close": "Zavřít menu",
 	"a11y_cart": "Košík",
 
-	"home_title": "Lada Bartoníková · Ruční keramika",
+	"gallery_title": "Galerie · Lada Bartoníková",
+	"gallery_meta_description": "Galerie všech ručně tvořených kusů keramiky - každý kus je originál.",
+	"gallery_eyebrow": "Z ateliéru",
+	"gallery_heading": "Galerie",
+	"gallery_intro": "Každý kus je originál. Klikněte na fotku a zobrazte ji na celou obrazovku.",
+	"gallery_open": "Zobrazit {name} na celou obrazovku",
+	"gallery_close": "Zavřít",
+	"gallery_prev": "Předchozí kus",
+	"gallery_next": "Další kus",
+	"gallery_photo": "Fotka {number}",
+	"gallery_in_stock": "Skladem",
+	"gallery_buy": "Koupit tento kus",
+	"gallery_view_cart": "Zobrazit v košíku",
+	"gallery_view_product": "Zobrazit produkt",
+
+	"home_title": "Lada Bartoníková · Keramika tvořená s láskou",
 	"home_meta_description": "Ruční keramika z Brna - andělé, zvířátka, postavičky a další kousky tvořené s láskou.",
 
-	"hero_eyebrow": "Ruční keramika z Brna",
+	"hero_eyebrow": "Z ateliéru v Brně",
 	"hero_heading_line1": "Keramika, která",
-	"hero_heading_line2": "vznikla rukama",
+	"hero_heading_line2": "vznikla s láskou",
 	"hero_text": "Andělé, zvířátka, postavičky a další kousky do domácnosti. Každý kus tvořím ručně ve svém malém ateliéru v Brně - pro radost, jako dárek i pro potěšení duše.",
 	"hero_cta": "Prohlédnout produkty",
 
-	"value_handmade_title": "Ručně tvořeno",
-	"value_handmade_text": "Každý kus tvořím ručně ve svém ateliéru v Brně. Žádná sériová výroba.",
+	"value_love_title": "Tvořeno s láskou",
+	"value_love_text": "Každý kus tvořím ručně a s péčí ve svém ateliéru v Brně. Žádná sériová výroba.",
 	"value_motifs_title": "Vlastní tvorba",
 	"value_motifs_text": "Andělé, zvířátka i postavičky podle vlastních návrhů.",
 	"value_original_title": "Originální kusy",
-	"value_original_text": "Díky ruční práci je každý kus jedinečný. Žádné dva nejsou stejné.",
+	"value_original_text": "Díky ruční práci je každý kus jedinečný. Žádné dva nejsou stejné. Pořiďte si i vy svůj unikátní kousek.",
 
 	"featured_eyebrow": "Vybrané kousky",
 	"featured_heading": "Novinky z ateliéru",
@@ -80,6 +96,8 @@
 	"product_in_stock": "Skladem",
 	"product_out_of_stock": "Vyprodáno",
 	"product_add_to_cart": "Přidat do košíku",
+	"product_added_to_cart": "Přidáno do košíku.",
+	"product_view_cart": "Zobrazit košík",
 	"product_related_heading": "Mohlo by se vám líbit",
 	"product_back_to_category": "Zpět do kategorie",
 
@@ -121,7 +139,7 @@
 	"footer_show_phone": "Zobrazit telefon",
 	"footer_location": "Brno, Česká republika",
 
-	"footer_copy": "© {year} Lada Bartoníková · Vyrobeno s láskou v Brně",
+	"footer_copy": "© {year} Lada Bartoníková · Brno",
 
 	"admin_title": "Administrace",
 	"admin_subtitle": "Lada Bartoníková",

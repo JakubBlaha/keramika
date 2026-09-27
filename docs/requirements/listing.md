@@ -89,3 +89,17 @@ The categories landing page `/produkty` and the per-category listing
   - When the user applies size or glaze filters
   - Then only matching products are shown and the filter state is reflected in the URL
 - Test: tests/e2e/listing.spec.ts > REQ-LISTING-007 (todo)
+
+### REQ-LISTING-008 - Card hover previews up to four pieces
+
+- Status: implemented
+- Priority: could
+- Source: user, 2026-09-27
+- Description: Hovering a product card with a mouse zooms the cover photo out into a grid showing up to four pieces of that product.
+- Acceptance:
+  - Given a product card whose product has 2 or more pieces
+  - When the visitor hovers it with a mouse
+  - Then the tile zooms out (a pure scale transform, no fade) into a grid of min(pieces, 4) photos, available pieces first (sold ones greyed), starting from the cover photo
+  - And moving the pointer away returns the tile to the cover photo
+  - And a product with a single piece shows no grid
+- Test: tests/e2e/listing.spec.ts > REQ-LISTING-008

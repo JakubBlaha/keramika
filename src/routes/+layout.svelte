@@ -7,8 +7,25 @@
 	import { PUBLIC_FIREBASE_EMULATOR } from '$env/static/public';
 	import MailIcon from '$lib/components/MailIcon.svelte';
 	import PhoneIcon from '$lib/components/PhoneIcon.svelte';
+	import { onNavigate } from '$app/navigation';
+	import { prefersReducedMotion } from '$lib/motion';
 
 	let { children } = $props();
+
+	// Cross-fade between pages with the View Transitions API (REQ-DESIGN-007);
+	// product images morph between card and detail page via matching
+	// view-transition-name. Browsers without the API just navigate.
+	onNavigate((navigation) => {
+		if (!document.startViewTransition || prefersReducedMotion()) return;
+		if (navigation.from?.url.pathname === navigation.to?.url.pathname) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	// Expose whether the Firebase client is wired to the local emulator so the
 	// e2e checkout tests (which submit real reservations) can detect it. No

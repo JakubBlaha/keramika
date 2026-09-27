@@ -3,9 +3,10 @@
 
 	"brand_name": "Lada Bartoníková",
 	"brand_tagline": "ceramics",
-	"brand_tagline_full": "Handmade ceramics from Brno",
+	"brand_tagline_full": "Ceramics made with love",
 
 	"nav_products": "Products",
+	"nav_gallery": "Gallery",
 	"nav_about": "About me",
 	"nav_contact": "Contact",
 
@@ -13,21 +14,36 @@
 	"a11y_menu_close": "Close menu",
 	"a11y_cart": "Cart",
 
-	"home_title": "Lada Bartoníková · Handmade ceramics",
+	"gallery_title": "Gallery · Lada Bartoníková",
+	"gallery_meta_description": "A gallery of every handmade ceramic piece - each one is one of a kind.",
+	"gallery_eyebrow": "From the studio",
+	"gallery_heading": "Gallery",
+	"gallery_intro": "Every piece is one of a kind. Click a photo to view it full screen.",
+	"gallery_open": "View {name} full screen",
+	"gallery_close": "Close",
+	"gallery_prev": "Previous piece",
+	"gallery_next": "Next piece",
+	"gallery_photo": "Photo {number}",
+	"gallery_in_stock": "In stock",
+	"gallery_buy": "Buy this piece",
+	"gallery_view_cart": "View in cart",
+	"gallery_view_product": "View product",
+
+	"home_title": "Lada Bartoníková · Ceramics made with love",
 	"home_meta_description": "Handmade ceramics from Brno - angels, animals, figures and other pieces made with love.",
 
-	"hero_eyebrow": "Handmade ceramics from Brno",
-	"hero_heading_line1": "Ceramics shaped",
-	"hero_heading_line2": "by hand",
+	"hero_eyebrow": "From a studio in Brno",
+	"hero_heading_line1": "Ceramics made",
+	"hero_heading_line2": "with love",
 	"hero_text": "Angels, animals, figures and other pieces for your home. I make each piece by hand in my small studio in Brno - for joy, as a gift, and for the pleasure of the soul.",
 	"hero_cta": "Browse products",
 
-	"value_handmade_title": "Handmade",
-	"value_handmade_text": "I make every piece by hand in my studio in Brno. No mass production.",
+	"value_love_title": "Made with love",
+	"value_love_text": "I make every piece by hand, with care, in my studio in Brno. No mass production.",
 	"value_motifs_title": "My own designs",
 	"value_motifs_text": "Angels, animals and figures from my own designs.",
 	"value_original_title": "One-of-a-kind pieces",
-	"value_original_text": "Thanks to the handwork, each piece is unique. No two are the same.",
+	"value_original_text": "Thanks to the handwork, each piece is unique. No two are the same. Find a one-of-a-kind piece of your own.",
 
 	"featured_eyebrow": "Selected pieces",
 	"featured_heading": "New from the studio",
@@ -80,6 +96,8 @@
 	"product_in_stock": "In stock",
 	"product_out_of_stock": "Sold out",
 	"product_add_to_cart": "Add to cart",
+	"product_added_to_cart": "Added to your cart.",
+	"product_view_cart": "View cart",
 	"product_related_heading": "You might also like",
 	"product_back_to_category": "Back to category",
 
@@ -121,7 +139,7 @@
 	"footer_show_phone": "Show phone number",
 	"footer_location": "Brno, Czech Republic",
 
-	"footer_copy": "© {year} Lada Bartoníková · Made with love in Brno",
+	"footer_copy": "© {year} Lada Bartoníková · Brno",
 
 	"admin_title": "Administration",
 	"admin_subtitle": "Lada Bartoníková",

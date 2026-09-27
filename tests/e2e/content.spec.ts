@@ -7,7 +7,7 @@ test.describe('Content', () => {
 	test('REQ-CONTENT-002 - each page sets its own title and meta description', async ({ page }) => {
 		// Homepage.
 		await page.goto('/');
-		await expect(page).toHaveTitle('Lada Bartoníková · Ruční keramika');
+		await expect(page).toHaveTitle('Lada Bartoníková · Keramika tvořená s láskou');
 		await expect(page.locator('head meta[name="description"]')).toHaveAttribute(
 			'content',
 			/Ruční keramika/

@@ -22,7 +22,7 @@ test.describe('Homepage', () => {
 	});
 
 	test('REQ-HOME-002 - shows the brand value propositions', async ({ page }) => {
-		await expect(page.getByRole('heading', { name: 'Ručně tvořeno' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Tvořeno s láskou' })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Vlastní tvorba' })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Originální kusy' })).toBeVisible();
 	});
@@ -31,10 +31,17 @@ test.describe('Homepage', () => {
 		const featured = page.getByRole('heading', { name: 'Novinky z ateliéru' });
 		await expect(featured).toBeVisible();
 
-		// Several product cards link to product detail pages.
-		const productLinks = page.locator('a[href^="/produkt/"]');
+		// Product cards link to product detail pages.
+		const section = page.locator('section', { has: featured });
+		const productLinks = section.locator('a[href^="/produkt/"]');
 		await expect(productLinks.first()).toBeVisible();
-		expect(await productLinks.count()).toBeGreaterThan(0);
+
+		// The cards fill at least two grid rows (distinct layout offsets;
+		// offsetTop ignores the scroll-reveal transform).
+		const tops = await productLinks.evaluateAll((links) =>
+			links.map((a) => (a as HTMLElement).offsetTop)
+		);
+		expect(new Set(tops).size).toBeGreaterThanOrEqual(2);
 
 		// A link to all products is shown.
 		await expect(page.getByRole('link', { name: 'Všechny produkty' }).first()).toBeVisible();
