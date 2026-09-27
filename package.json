@@ -14,6 +14,7 @@
 		"format": "prettier --write .",
 		"seed": "node scripts/seed.mjs",
 		"grant-admin": "node scripts/grant-admin.mjs",
+		"render-linen": "node scripts/render-linen.mjs",
 		"test": "playwright test",
 		"test:e2e": "playwright test",
 		"test:e2e:emulator": "firebase emulators:exec --only auth,firestore,storage \"node scripts/emulator-admin-setup.mjs && PUBLIC_FIREBASE_EMULATOR=true playwright test\"",

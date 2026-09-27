@@ -8,7 +8,7 @@ The categories landing page `/produkty` and the per-category listing
 - Status: verified
 - Priority: must
 - Source: spec
-- Description: `/produkty` shows a grid of categories, each with an image, name, description and product count.
+- Description: `/produkty` presents each category as an editorial section (a collage of its pieces beside a large numbered title, alternating sides on wide screens), visually distinct from the product grids, with an image, name, description and product count.
 - Acceptance:
   - Given the catalog categories
   - When `/produkty` renders
@@ -103,3 +103,17 @@ The categories landing page `/produkty` and the per-category listing
   - And moving the pointer away returns the tile to the cover photo
   - And a product with a single piece shows no grid
 - Test: tests/e2e/listing.spec.ts > REQ-LISTING-008
+
+### REQ-LISTING-009 - Category switcher on the category listing
+
+- Status: implemented
+- Priority: should
+- Source: user, 2026-09-27
+- Description: The category listing shows a switcher with every category so the visitor can jump to another category without going back to `/produkty`.
+- Acceptance:
+  - Given the listing page of a category
+  - When it renders
+  - Then a category navigation lists every category (localized names, in both cs and en) linking to its listing, with the current category marked as current
+  - And choosing another category shows that category's listing
+- Test: tests/e2e/listing.spec.ts > REQ-LISTING-009
+- Related: REQ-LISTING-002

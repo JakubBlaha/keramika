@@ -3,6 +3,11 @@
 	// click, same click-to-reveal approach as the footer (see
 	// src/lib/contact.ts and src/routes/+layout.svelte) to keep the plaintext
 	// out of the prerendered HTML and out of scrapers' reach.
+	//
+	// The reveal buttons stretch their click area over the whole card (an
+	// absolutely positioned ::after), so clicking anywhere on the card reveals
+	// the detail (REQ-CONTENT-003) while the button stays the single
+	// focusable control.
 	import { m } from '$lib/paraglide/messages';
 	import { EMAIL_REVERSED, PHONE_REVERSED, decodeContact, formatPhone } from '$lib/contact';
 	import MailIcon from '$lib/components/MailIcon.svelte';
@@ -29,7 +34,7 @@
 
 	<div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
 		<div
-			class="flex animate-rise flex-col gap-2 rounded-[4px] border border-line bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-accent/50 hover:shadow-[0_1rem_2rem_-1.5rem_rgb(61_53_48/0.35)]"
+			class="relative flex animate-rise flex-col gap-2 rounded-[4px] border border-line bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-accent/50 hover:shadow-[0_1rem_2rem_-1.5rem_rgb(61_53_48/0.35)]"
 			style:animation-delay="250ms"
 		>
 			<h2 class="text-[0.75rem] tracking-[0.1em] text-ink-soft uppercase">
@@ -46,7 +51,7 @@
 			{:else}
 				<button
 					type="button"
-					class="inline-flex cursor-pointer items-center gap-1.5 self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline"
+					class="inline-flex cursor-pointer items-center gap-1.5 self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline after:absolute after:inset-0 after:rounded-[4px] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-accent"
 					onclick={() => (emailRevealed = true)}
 				>
 					<MailIcon />
@@ -56,7 +61,7 @@
 		</div>
 
 		<div
-			class="flex animate-rise flex-col gap-2 rounded-[4px] border border-line bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-accent/50 hover:shadow-[0_1rem_2rem_-1.5rem_rgb(61_53_48/0.35)]"
+			class="relative flex animate-rise flex-col gap-2 rounded-[4px] border border-line bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-accent/50 hover:shadow-[0_1rem_2rem_-1.5rem_rgb(61_53_48/0.35)]"
 			style:animation-delay="350ms"
 		>
 			<h2 class="text-[0.75rem] tracking-[0.1em] text-ink-soft uppercase">
@@ -73,7 +78,7 @@
 			{:else}
 				<button
 					type="button"
-					class="inline-flex cursor-pointer items-center gap-1.5 self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline"
+					class="inline-flex cursor-pointer items-center gap-1.5 self-start border-none bg-transparent p-0 text-left text-[1.05rem] text-accent-dark underline after:absolute after:inset-0 after:rounded-[4px] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-accent"
 					onclick={() => (phoneRevealed = true)}
 				>
 					<PhoneIcon />

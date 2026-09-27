@@ -8,6 +8,7 @@
 	import { resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
+	import BackLink from '$lib/components/BackLink.svelte';
 	import {
 		fetchProduct,
 		fetchCategories,
@@ -223,12 +224,7 @@
 	<title>{m.admin_products_edit_heading()} · {m.admin_title()}</title>
 </svelte:head>
 
-<a
-	href={localizeHref('/admin/produkty')}
-	class="mb-4 inline-block text-[0.85rem] text-accent-dark hover:underline"
->
-	{m.admin_products_back()}
-</a>
+<BackLink href={localizeHref('/admin/produkty')}>{m.admin_products_back()}</BackLink>
 
 {#if loading}
 	<p class="py-10 text-center text-ink-soft">{m.admin_loading()}</p>

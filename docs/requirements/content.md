@@ -25,3 +25,16 @@ Content, assets and SEO.
   - When it renders
   - Then it sets a page-specific `<title>` and a meta description
 - Test: tests/e2e/content.spec.ts > REQ-CONTENT-002
+
+### REQ-CONTENT-003 - Contact cards reveal on a click anywhere
+
+- Status: implemented
+- Priority: could
+- Source: user, 2026-09-27
+- Description: On the contact page, clicking anywhere on the e-mail or phone card reveals that contact detail, not only clicking its "show" link.
+- Acceptance:
+  - Given the contact page with the e-mail and phone still hidden
+  - When the visitor clicks anywhere on the e-mail (or phone) card
+  - Then the card shows the e-mail as a `mailto:` link (or the phone as a `tel:` link)
+  - And keyboard users can still reveal it via the single focusable "show" button
+- Test: tests/e2e/content.spec.ts > REQ-CONTENT-003

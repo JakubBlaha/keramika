@@ -1,8 +1,8 @@
 // Grant (or revoke) the `admin` custom claim on a Firebase user by email.
 //
 // The admin area gates access on the `admin` custom claim carried by the
-// signed-in user's ID token (REQ-ADMIN-017). Signing in with Google (or
-// email/password) only proves identity; without this claim the user is
+// signed-in user's ID token (REQ-ADMIN-017). Signing in with Google only
+// proves identity; without this claim the user is
 // authenticated but rejected by the layout gate and stays on the login page.
 //
 // Custom claims can only be set server-side with the Admin SDK. This script

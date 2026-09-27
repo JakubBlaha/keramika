@@ -57,8 +57,10 @@
 				>
 			</div>
 
+			<!-- Fixed two-column grid (not justify-between) so the contact column
+			     doesn't shift when a revealed email/phone is wider than its label. -->
 			<div
-				class="flex flex-col gap-6 divide-y divide-accent/40 py-8 sm:flex-row sm:justify-between sm:divide-x sm:divide-y-0"
+				class="flex flex-col gap-6 divide-y divide-accent/40 py-8 sm:grid sm:grid-cols-2 sm:divide-x sm:divide-y-0"
 			>
 				<div class="flex flex-col gap-2 pb-6 sm:pr-8 sm:pb-0">
 					<h4 class="mb-1 font-body text-[0.72rem] tracking-[0.2em] text-accent uppercase">
@@ -73,6 +75,12 @@
 						href={localizeHref('/obchodni-podminky')}
 						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
 						>{m.footer_link_terms()}</a
+					>
+					<!-- The only public entry point to the admin login (REQ-ADMIN-023). -->
+					<a
+						href={localizeHref('/admin')}
+						class="text-[0.9rem] text-[#d8cfc4] transition-colors hover:text-white"
+						>{m.footer_link_login()}</a
 					>
 				</div>
 

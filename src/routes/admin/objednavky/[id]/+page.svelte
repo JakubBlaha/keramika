@@ -7,6 +7,7 @@
 	import { getOrder, setOrderStatus, type Order, type OrderStatus } from '$lib/orders';
 	import { m } from '$lib/paraglide/messages';
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
+	import BackLink from '$lib/components/BackLink.svelte';
 	import OrderStatusBadge from '../OrderStatusBadge.svelte';
 	import MailIcon from '$lib/components/MailIcon.svelte';
 	import PhoneIcon from '$lib/components/PhoneIcon.svelte';
@@ -78,12 +79,7 @@
 	</title>
 </svelte:head>
 
-<a
-	href={localizeHref('/admin/objednavky')}
-	class="mb-6 inline-block text-[0.85rem] text-ink-soft transition-colors hover:text-accent-dark"
->
-	&larr; {m.admin_order_back()}
-</a>
+<BackLink href={localizeHref('/admin/objednavky')}>{m.admin_order_back()}</BackLink>
 
 {#if loading}
 	<p class="py-10 text-center text-ink-soft">{m.admin_loading()}</p>

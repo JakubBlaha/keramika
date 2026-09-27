@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import { cart } from '$lib/cart.svelte';
 	import { fade, fly, slide } from 'svelte/transition';
+	import { adminHint } from '$lib/adminHint.svelte';
 
 	let menuOpen = $state(false);
 
@@ -22,6 +23,7 @@
 	}
 
 	const nav = $derived([
+		{ label: m.nav_home(), href: '/' },
 		{ label: m.nav_products(), href: '/produkty' },
 		{ label: m.nav_gallery(), href: '/galerie' },
 		{ label: m.nav_about(), href: '/o-nas' },
@@ -35,7 +37,45 @@
 		getLocale() === 'cs' ? m.lang_switch_to_en() : m.lang_switch_to_cs()
 	);
 	const switchHref = $derived(localizeHref(page.url.pathname, { locale: otherLocale }));
+
+	// Admin shortcut (REQ-ADMIN-024). The Firebase-backed session module is
+	// only loaded when this browser has previously seen an admin session (see
+	// $lib/adminHint.svelte.ts), so regular visitors never download it. Hidden
+	// inside the admin area, which has its own navigation.
+	let isAdmin = $state(false);
+	const showAdmin = $derived(adminHint.present && isAdmin && !path.startsWith('/admin'));
+
+	$effect(() => {
+		if (!adminHint.present) return;
+		let cancelled = false;
+		let unsubscribe: (() => void) | undefined;
+		import('$lib/adminAuth').then(({ subscribeAdminSession }) => {
+			if (cancelled) return;
+			unsubscribe = subscribeAdminSession((s) => (isAdmin = s.isAdmin));
+		});
+		return () => {
+			cancelled = true;
+			unsubscribe?.();
+		};
+	});
 </script>
+
+{#snippet adminIcon()}
+	<svg
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="1.6"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" />
+		<path d="M9 12l2 2 4-4" />
+	</svg>
+{/snippet}
 
 <svelte:window bind:scrollY />
 
@@ -46,11 +86,11 @@
 	]}
 >
 	<div
-		class="mx-auto grid max-w-site grid-cols-[2.5rem_1fr_2.5rem] items-center px-4 py-3 md:grid-cols-3"
+		class="mx-auto grid max-w-site grid-cols-[2.5rem_1fr_2.5rem] items-center px-4 py-3 lg:grid-cols-3"
 	>
 		<div class="flex items-center gap-1">
 			<button
-				class="group inline-flex h-10 w-10 cursor-pointer flex-col justify-center gap-[5px] border-none bg-transparent p-2 md:hidden"
+				class="group inline-flex h-10 w-10 cursor-pointer flex-col justify-center gap-[5px] border-none bg-transparent p-2 lg:hidden"
 				aria-label={m.a11y_menu()}
 				aria-expanded={menuOpen}
 				onclick={() => (menuOpen = !menuOpen)}
@@ -72,7 +112,7 @@
 			</button>
 
 			<!-- Desktop inline nav -->
-			<nav class="hidden items-center gap-6 md:flex">
+			<nav class="hidden items-center gap-6 lg:flex">
 				{#each nav as item (item.href)}
 					<a
 						href={localizeHref(item.href)}
@@ -96,10 +136,20 @@
 		</a>
 
 		<div class="flex items-center justify-end gap-3">
+			{#if showAdmin}
+				<a
+					href={localizeHref('/admin')}
+					class="hidden animate-pop items-center gap-1.5 rounded-full bg-accent-dark px-3 py-1.5 text-[0.75rem] font-medium tracking-[0.08em] text-bg uppercase shadow-[0_0.4rem_1rem_-0.5rem_rgb(61_53_48/0.6)] transition-colors hover:bg-ink lg:inline-flex"
+				>
+					{@render adminIcon()}
+					{m.nav_admin()}
+				</a>
+			{/if}
+
 			<!-- Language switcher with a globe icon so it reads as a language selector -->
 			<a
 				href={switchHref}
-				class="hidden items-center gap-1.5 text-[0.8rem] tracking-[0.06em] text-accent-dark transition-colors hover:text-ink md:inline-flex"
+				class="hidden items-center gap-1.5 text-[0.8rem] tracking-[0.06em] text-accent-dark transition-colors hover:text-ink lg:inline-flex"
 				data-sveltekit-reload
 				aria-label={switchLabel}
 			>
@@ -152,16 +202,26 @@
 	{#if menuOpen}
 		<!-- Dim the rest of the page while the mobile menu is open. -->
 		<button
-			class="fixed inset-0 top-[var(--header-h,3.75rem)] z-40 cursor-default border-none bg-ink/40 md:hidden"
+			class="fixed inset-0 top-[var(--header-h,3.75rem)] z-40 cursor-default border-none bg-ink/40 lg:hidden"
 			aria-label={m.a11y_menu_close()}
 			transition:fade={{ duration: 200 }}
 			onclick={() => (menuOpen = false)}
 		></button>
 
 		<nav
-			class="absolute inset-x-0 top-full z-50 flex flex-col border-t border-line bg-bg py-2 md:hidden"
+			class="absolute inset-x-0 top-full z-50 flex flex-col border-t border-line bg-bg py-2 lg:hidden"
 			transition:slide={{ duration: 250 }}
 		>
+			{#if showAdmin}
+				<a
+					href={localizeHref('/admin')}
+					class="mx-4 mt-2 mb-3 flex items-center justify-center gap-2 rounded-full bg-accent-dark px-6 py-3 text-[0.85rem] font-medium tracking-[0.08em] text-bg uppercase"
+					onclick={() => (menuOpen = false)}
+				>
+					{@render adminIcon()}
+					{m.nav_admin()}
+				</a>
+			{/if}
 			{#each nav as item, i (item.href)}
 				<a
 					href={localizeHref(item.href)}

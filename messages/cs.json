@@ -5,10 +5,12 @@
 	"brand_tagline": "keramika",
 	"brand_tagline_full": "Keramika tvořená s láskou",
 
+	"nav_home": "Domů",
 	"nav_products": "Produkty",
 	"nav_gallery": "Galerie",
 	"nav_about": "O mně",
 	"nav_contact": "Kontakt",
+	"nav_admin": "Administrace",
 
 	"a11y_menu": "Menu",
 	"a11y_menu_close": "Zavřít menu",
@@ -57,6 +59,7 @@
 	"products_view_category": "Zobrazit kategorii",
 	"category_count_products": "{count} produktů",
 	"category_back_to_products": "Zpět na kategorie",
+	"category_switcher_label": "Kategorie",
 	"category_empty": "V této kategorii zatím nic není.",
 
 	"category_angels_name": "Andělé",
@@ -133,6 +136,7 @@
 
 	"footer_link_about": "O mně",
 	"footer_link_terms": "Obchodní podmínky",
+	"footer_link_login": "Přihlášení",
 	"footer_col_contact": "Kontakt",
 
 	"footer_show_email": "Zobrazit e-mail",
@@ -146,19 +150,15 @@
 	"admin_nav_dashboard": "Přehled",
 	"admin_nav_orders": "Objednávky",
 	"admin_loading": "Načítání…",
+	"admin_config_error": "Administraci se nepodařilo spustit: chybí nebo je neplatná konfigurace Firebase (hodnoty PUBLIC_FIREBASE_* v souboru .env).",
 	"admin_saving": "Ukládání…",
 	"admin_logout": "Odhlásit se",
 	"admin_logout_pending": "Odhlašování…",
 
 	"admin_login_heading": "Přihlášení",
 	"admin_login_intro": "Přihlaste se do administrace.",
-	"admin_login_email": "E-mail",
-	"admin_login_password": "Heslo",
-	"admin_login_submit": "Přihlásit se",
-	"admin_login_submitting": "Přihlašování…",
-	"admin_login_error": "Přihlášení se nezdařilo. Zkontrolujte e-mail a heslo.",
+	"admin_login_error": "Přihlášení se nezdařilo. Zkuste to prosím znovu.",
 	"admin_login_not_admin": "Tento účet nemá oprávnění pro přístup do administrace.",
-	"admin_login_or": "nebo",
 	"admin_login_google": "Přihlásit se přes Google",
 	"admin_login_google_pending": "Přihlašování…",
 

@@ -12,7 +12,12 @@
 
 	let { children } = $props();
 
-	let session = $state<AdminSession>({ loading: true, user: null, isAdmin: false });
+	let session = $state<AdminSession>({
+		loading: true,
+		user: null,
+		isAdmin: false,
+		error: false
+	});
 	let loggingOut = $state(false);
 
 	$effect(() => subscribeAdminSession((s) => (session = s)));
@@ -31,6 +36,10 @@
 <div class="min-h-screen bg-bg">
 	{#if session.loading}
 		<p class="py-20 text-center text-ink-soft">{m.admin_loading()}</p>
+	{:else if session.error}
+		<p class="mx-auto max-w-[34rem] px-4 py-20 text-center text-accent-dark" role="alert">
+			{m.admin_config_error()}
+		</p>
 	{:else if !session.user || !session.isAdmin}
 		<main class="mx-auto max-w-site px-4 py-8">
 			<AdminLogin notAdmin={!!session.user && !session.isAdmin} />

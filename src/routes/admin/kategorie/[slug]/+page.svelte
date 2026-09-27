@@ -8,6 +8,7 @@
 	import { resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
+	import BackLink from '$lib/components/BackLink.svelte';
 	import { fetchCategory, updateCategory, deleteCategory, AdminApiError } from '$lib/adminApi';
 
 	const originalSlug = $derived(page.params.slug ?? '');
@@ -86,12 +87,7 @@
 	<title>{m.admin_categories_edit_heading()} · {m.admin_title()}</title>
 </svelte:head>
 
-<a
-	href={localizeHref('/admin/kategorie')}
-	class="mb-4 inline-block text-[0.85rem] text-accent-dark hover:underline"
->
-	{m.admin_categories_back()}
-</a>
+<BackLink href={localizeHref('/admin/kategorie')}>{m.admin_categories_back()}</BackLink>
 
 {#if loading}
 	<p class="py-10 text-center text-ink-soft">{m.admin_loading()}</p>

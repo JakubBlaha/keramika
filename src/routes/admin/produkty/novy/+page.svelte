@@ -7,6 +7,7 @@
 	import { resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
+	import BackLink from '$lib/components/BackLink.svelte';
 	import { fetchCategories, createProduct, AdminApiError } from '$lib/adminApi';
 	import type { CategoryRecord } from '$lib/catalog-model';
 
@@ -69,12 +70,7 @@
 	<title>{m.admin_products_new_heading()} · {m.admin_title()}</title>
 </svelte:head>
 
-<a
-	href={localizeHref('/admin/produkty')}
-	class="mb-4 inline-block text-[0.85rem] text-accent-dark hover:underline"
->
-	{m.admin_products_back()}
-</a>
+<BackLink href={localizeHref('/admin/produkty')}>{m.admin_products_back()}</BackLink>
 
 <h1 class="mb-6 text-[1.6rem]">{m.admin_products_new_heading()}</h1>
 

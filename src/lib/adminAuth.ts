@@ -2,7 +2,7 @@
 // REQ-ADMIN-004, REQ-ADMIN-017).
 //
 // Auth is handled entirely by the Firebase JS SDK in the browser: the user
-// signs in with email/password or with a Google account, and access to the
+// signs in with a Google account (the only sign-in method), and access to the
 // admin area is gated on the `admin` custom claim carried by their ID token.
 // Signing in only proves identity; a user without the claim is authenticated
 // but still rejected by the gate. The same ID token is sent as a Bearer token
@@ -12,7 +12,6 @@
 // This module is browser-only, like src/lib/firebase.ts and src/lib/orders.ts.
 
 import {
-	signInWithEmailAndPassword,
 	signInWithPopup,
 	GoogleAuthProvider,
 	signOut,
@@ -20,21 +19,25 @@ import {
 	type User
 } from 'firebase/auth';
 import { getFirebase } from '$lib/firebase';
+import { setAdminHint } from '$lib/adminHint.svelte';
 
 // The reactive admin session, consumed by the admin layout and pages.
 // - loading: the initial auth state has not resolved yet.
 // - user: the signed-in Firebase user, or null when signed out.
 // - isAdmin: true only when the signed-in user carries the `admin` claim.
+// - error: Firebase could not start (typically missing/invalid PUBLIC_FIREBASE_*
+//   config), so the session will never resolve to a user.
 export type AdminSession = {
 	loading: boolean;
 	user: User | null;
 	isAdmin: boolean;
+	error: boolean;
 };
 
 // Svelte 5 rune-based store. `$state` in a `.svelte.ts` context would be
 // reactive; here we keep a plain object updated by the listener and expose a
 // getter so components can read it inside their own `$derived`/`$effect`.
-let session: AdminSession = { loading: true, user: null, isAdmin: false };
+let session: AdminSession = { loading: true, user: null, isAdmin: false, error: false };
 const subscribers = new Set<(s: AdminSession) => void>();
 let started = false;
 
@@ -48,10 +51,20 @@ function emit(): void {
 function start(): void {
 	if (started) return;
 	started = true;
-	const { auth } = getFirebase();
+	let auth;
+	try {
+		({ auth } = getFirebase());
+	} catch (err) {
+		// e.g. auth/invalid-api-key when .env has no Firebase config. Resolve
+		// the session as failed instead of leaving the admin area loading forever.
+		console.error('Admin auth could not start:', err);
+		session = { loading: false, user: null, isAdmin: false, error: true };
+		return;
+	}
 	onIdTokenChanged(auth, async (user) => {
 		if (!user) {
-			session = { loading: false, user: null, isAdmin: false };
+			session = { loading: false, user: null, isAdmin: false, error: false };
+			setAdminHint(false);
 			emit();
 			return;
 		}
@@ -62,8 +75,9 @@ function start(): void {
 		} catch {
 			isAdmin = false;
 		}
-		session = { loading: false, user, isAdmin };
-
+		session = { loading: false, user, isAdmin, error: false };
+		// Lets the public header know to check for an admin session (REQ-ADMIN-024).
+		setAdminHint(isAdmin);
 		emit();
 	});
 }
@@ -79,16 +93,8 @@ export function subscribeAdminSession(fn: (s: AdminSession) => void): () => void
 	};
 }
 
-// Sign in with email/password (REQ-ADMIN-003). Resolves once Firebase has the
-// credential; the session listener then updates isAdmin from the token claims.
-// Throws on invalid credentials so the caller can show an error.
-export async function adminLogin(email: string, password: string): Promise<void> {
-	const { auth } = getFirebase();
-	await signInWithEmailAndPassword(auth, email, password);
-}
-
-// Sign in with a Google account via a popup (REQ-ADMIN-003). As with
-// email/password, admin access is still gated on the `admin` claim: a Google
+// Sign in with a Google account via a popup (REQ-ADMIN-003) - the only admin
+// sign-in method. Admin access is still gated on the `admin` claim: a Google
 // user without it signs in but is rejected by the layout gate. Throws if the
 // popup is closed or the sign-in fails so the caller can show an error.
 export async function adminLoginWithGoogle(): Promise<void> {

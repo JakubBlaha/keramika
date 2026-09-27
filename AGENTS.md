@@ -68,7 +68,8 @@ count of available instances. Firestore layout: `categories/{slug}`,
 ### Auth flow
 
 Admin access is gated on the `admin` **custom claim**, not just being signed in.
-Client signs in (email/password or Google) via `src/lib/adminAuth.ts`, sends the
+Client signs in with Google (the only sign-in method; there is no
+email/password login) via `src/lib/adminAuth.ts`, sends the
 ID token as `Authorization: Bearer <idToken>` to the write API, which re-verifies
 it in `src/lib/server/apiAuth.ts` (`requireAdmin`, 401/403). All write invariants
 (slug uniqueness, category-delete guard, product-delete cascade, instance count

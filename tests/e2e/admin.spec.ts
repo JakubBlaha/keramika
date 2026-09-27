@@ -6,19 +6,41 @@ import { expect, test, type Page } from '@playwright/test';
 //
 // The admin area is Firebase-backed (Auth + Firestore + Storage), so every
 // test here needs a real backend and runs only against the Firebase emulator
-// suite (`pnpm test:e2e:emulator`, which also provisions the seed admin
-// account via scripts/emulator-admin-setup.mjs). Tests are skipped otherwise.
+// suite (`pnpm test:e2e:emulator`, which also provisions the e2e admin as a
+// Google-linked account via scripts/emulator-admin-setup.mjs). Tests are
+// skipped otherwise.
+//
+// Sign-in is Google-only. In the emulator, "Přihlásit se přes Google" opens
+// the Auth Emulator's fake Google popup (firebase-tools
+// lib/emulator/auth/handlers.js + widget_ui.js), which lists existing Google
+// accounts and can create new ones.
 
 async function usingEmulator(page: Page): Promise<boolean> {
 	await page.goto('/');
 	return page.evaluate(() => document.documentElement.dataset.firebaseEmulator === 'true');
 }
 
+// The emulator admin provisioned by scripts/emulator-admin-setup.mjs (a fixed
+// throwaway account, not the real seed admin; keep the two in sync).
+const E2E_ADMIN_EMAIL = 'e2e-admin@example.com';
+
+// Click the Google button and complete the emulator's sign-in popup.
+async function signInWithGoogle(page: Page, choose: (popup: Page) => Promise<void>) {
+	const popupPromise = page.waitForEvent('popup');
+	await page.getByRole('button', { name: 'Přihlásit se přes Google' }).click();
+	const popup = await popupPromise;
+	await popup.waitForLoadState();
+	const closed = popup.waitForEvent('close');
+	await choose(popup);
+	await closed;
+}
+
 async function loginAsAdmin(page: Page) {
 	await page.goto('/admin');
-	await page.getByLabel('E-mail').fill(process.env.SEED_ADMIN_EMAIL ?? '');
-	await page.getByLabel('Heslo').fill(process.env.SEED_ADMIN_PASSWORD ?? '');
-	await page.getByRole('button', { name: 'Přihlásit se', exact: true }).click();
+	// Pick the pre-provisioned admin from the popup's list of existing accounts.
+	await signInWithGoogle(page, (popup) =>
+		popup.locator('.js-reuse-account').filter({ hasText: E2E_ADMIN_EMAIL }).click()
+	);
 	await expect(page.getByRole('heading', { name: 'Administrace' })).toBeVisible({
 		timeout: 15000
 	});
@@ -27,6 +49,19 @@ async function loginAsAdmin(page: Page) {
 function unique(prefix: string): string {
 	return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 }
+
+// Public-site entry point: needs no backend, so it runs in every e2e mode.
+test('REQ-ADMIN-023 - footer login link leads to the admin login', async ({ page }) => {
+	await page.goto('/');
+	const login = page.getByRole('contentinfo').getByRole('link', { name: 'Přihlášení' });
+	await expect(login).toBeVisible();
+	await expect(login).toHaveAttribute('href', '/admin');
+
+	// Visitors who are not signed-in admins see no admin entry in the header.
+	const header = page.getByRole('banner');
+	await expect(header.getByRole('link', { name: 'Administrace' })).toHaveCount(0);
+	await expect(header.getByRole('link', { name: 'Přihlášení' })).toHaveCount(0);
+});
 
 test.describe('Admin', () => {
 	test.beforeEach(async ({ page }) => {
@@ -42,21 +77,29 @@ test.describe('Admin', () => {
 		await expect(page.getByRole('heading', { name: 'Administrace' })).toHaveCount(0);
 	});
 
+	test('REQ-ADMIN-003 - login is Google-only, with no email/password form', async ({ page }) => {
+		await page.goto('/admin');
+		await expect(page.getByRole('button', { name: 'Přihlásit se přes Google' })).toBeVisible();
+		await expect(page.locator('input[type="password"]')).toHaveCount(0);
+		await expect(page.locator('input[type="email"]')).toHaveCount(0);
+	});
+
 	test('REQ-ADMIN-003 - admin can log in with valid credentials', async ({ page }) => {
 		await loginAsAdmin(page);
 		await expect(page.getByRole('link', { name: 'Objednávky', exact: true })).toBeVisible();
 	});
 
-	test('REQ-ADMIN-003 - invalid credentials show an error and no session starts', async ({
-		page
-	}) => {
+	test('REQ-ADMIN-017 - a Google account without the admin claim is rejected', async ({ page }) => {
 		await page.goto('/admin');
-		await page.getByLabel('E-mail').fill('nope@example.com');
-		await page.getByLabel('Heslo').fill('wrong-password');
-		await page.getByRole('button', { name: 'Přihlásit se', exact: true }).click();
+		// Create a fresh (non-admin) Google account in the emulator popup.
+		await signInWithGoogle(page, async (popup) => {
+			await popup.locator('#add-account-button').click();
+			await popup.locator('#autogen-button').click();
+			await popup.locator('#sign-in').click();
+		});
 		await expect(
-			page.getByText('Přihlášení se nezdařilo. Zkontrolujte e-mail a heslo.')
-		).toBeVisible();
+			page.getByText('Tento účet nemá oprávnění pro přístup do administrace.')
+		).toBeVisible({ timeout: 15000 });
 		await expect(page.getByRole('heading', { name: 'Administrace' })).toHaveCount(0);
 	});
 
@@ -64,6 +107,25 @@ test.describe('Admin', () => {
 		await loginAsAdmin(page);
 		await page.getByRole('button', { name: 'Odhlásit se' }).click();
 		await expect(page.getByRole('heading', { name: 'Přihlášení' })).toBeVisible();
+	});
+
+	test('REQ-ADMIN-024 - signed-in admins get an Administration button in the header', async ({
+		page
+	}) => {
+		await loginAsAdmin(page);
+		await page.goto('/');
+		const adminButton = page.getByRole('banner').getByRole('link', { name: 'Administrace' });
+		await expect(adminButton).toBeVisible({ timeout: 15000 });
+		await expect(adminButton).toHaveAttribute('href', '/admin');
+
+		// It disappears again once the admin signs out.
+		await adminButton.click();
+		await page.getByRole('button', { name: 'Odhlásit se' }).click();
+		await expect(page.getByRole('heading', { name: 'Přihlášení' })).toBeVisible();
+		await page.goto('/');
+		await expect(page.getByRole('banner').getByRole('link', { name: 'Administrace' })).toHaveCount(
+			0
+		);
 	});
 
 	test('REQ-ADMIN-013 - lists categories with slug, name and product count', async ({ page }) => {

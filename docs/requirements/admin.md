@@ -1,8 +1,9 @@
 # ADMIN requirements
 
 Admin area for managing the catalog: products, product instances, and
-categories. The admin area is not linked from the public site and is reached
-only via a dedicated URL, and it is gated behind authentication.
+categories. The public site links to it only through a discreet login link in
+the footer (plus an admin-only shortcut in the header once signed in), and it
+is gated behind authentication.
 
 All catalog data is stored in Firebase: product, instance, and category records
 live in Cloud Firestore, uploaded images live in Firebase Storage, and admin
@@ -11,7 +12,7 @@ from Firestore/Storage rather than from a static module.
 
 ### REQ-ADMIN-001 - Dedicated admin area reachable only by URL
 
-- Status: draft
+- Status: removed (superseded by REQ-ADMIN-023 and REQ-ADMIN-024, user, 2026-09-27)
 - Priority: must
 - Source: user, 2026-09-12
 - Description: The admin area lives under a dedicated URL and is not linked from any public page.
@@ -39,12 +40,13 @@ from Firestore/Storage rather than from a static module.
 - Status: implemented
 - Priority: must
 - Source: user, 2026-09-12
-- Description: An admin can log in to the admin area using Firebase Authentication.
+- Description: An admin logs in to the admin area with their Google account (Firebase Authentication); there is no email/password login.
 - Acceptance:
   - Given the admin login page backed by Firebase Authentication
-  - When an admin submits valid Firebase credentials
+  - When an admin signs in with a Google account that carries the admin claim
   - Then an authenticated admin session starts and they land on the admin dashboard
-  - And when they submit invalid credentials, an error is shown and no session starts
+  - And the login page offers no email/password form
+  - And when a Google account without the admin claim signs in, a not-authorized message is shown and no admin content is revealed
 - Test: tests/e2e/admin.spec.ts > REQ-ADMIN-003 (todo)
 - Related: REQ-ADMIN-017
 
@@ -286,3 +288,32 @@ from Firestore/Storage rather than from a static module.
   - And when an order is cancelled, its reserved instances are released and become available again (REQ-CATALOG-003, REQ-CART-004)
 - Test: tests/e2e/admin.spec.ts > REQ-ADMIN-022 (todo)
 - Related: REQ-ADMIN-018
+
+### REQ-ADMIN-023 - Footer login link
+
+- Status: implemented
+- Priority: should
+- Source: user, 2026-09-27
+- Description: The public site footer contains a login link that leads to the admin login; it is the only admin entry point shown to every visitor.
+- Acceptance:
+  - Given any public page
+  - When a visitor looks at the footer
+  - Then a login link ("Přihlášení" / "Log in", in both cs and en) is shown and points to the admin area (`/admin`, localized)
+  - And the header shows no login link or admin entry to visitors who are not signed-in admins
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-023
+- Related: REQ-ADMIN-002, REQ-ADMIN-024
+
+### REQ-ADMIN-024 - Admin shortcut in the header for signed-in admins
+
+- Status: implemented
+- Priority: should
+- Source: user, 2026-09-27
+- Description: When the visitor is signed in with an admin account, a prominent "Administration" button appears in the site header next to the language switcher and leads to the admin area.
+- Acceptance:
+  - Given a visitor signed in with an account carrying the `admin` claim
+  - When they browse the public site
+  - Then a visually prominent "Administrace" / "Administration" button is shown next to the language switcher (inside the mobile menu on small screens) and links to `/admin`
+  - And the button is not shown to signed-out visitors or to signed-in accounts without the admin claim
+  - And regular visitors do not download the Firebase Auth code just to decide this
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-024 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Related: REQ-ADMIN-017

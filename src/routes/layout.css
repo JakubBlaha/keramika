@@ -193,6 +193,27 @@ h4 {
 	}
 }
 
+/* Embroidered linen, like the cloth the pieces are photographed on. Two
+   pre-rendered layers (sources and renderer in scripts/linen*.svg and
+   scripts/render-linen.mjs): soft white embroidery on top, and a fine weave
+   multiplied into the background colour below. Both are transparent or
+   multiply-only, so this works over any background colour (the page body,
+   and bg-bg-alt bands for a slightly darker stretch of the same cloth).
+   Bitmaps rather than the SVGs themselves, because SVG filters re-run on
+   every paint and made the page-load animations stutter. */
+@utility bg-linen {
+	background-image: url('/textures/linen-embroidery.webp'), url('/textures/linen-weave.webp');
+	background-size:
+		960px 960px,
+		320px 320px;
+	background-repeat: repeat;
+	background-blend-mode: normal, multiply;
+}
+
+body {
+	@apply bg-linen;
+}
+
 @utility eyebrow {
 	font-size: 0.72rem;
 	letter-spacing: 0.22em;

@@ -18,7 +18,7 @@ test.describe('Listing', () => {
 		const angels = page.locator('main a[href="/produkty/andele"]');
 		await expect(angels).toBeVisible();
 		// Card shows a cover image, localized name, description and product count.
-		await expect(angels.locator('img')).toBeVisible();
+		await expect(angels.locator('img').first()).toBeVisible();
 		await expect(angels.getByRole('heading', { name: 'Andělé' })).toBeVisible();
 		await expect(angels.getByText('1 produktů')).toBeVisible();
 	});
@@ -78,5 +78,28 @@ test.describe('Listing', () => {
 		const bird = page.locator('a[href="/produkt/ptacek"]');
 		await bird.hover();
 		await expect(bird.getByTestId('piece-preview')).toHaveCount(0);
+	});
+
+	test('REQ-LISTING-009 - category switcher jumps between categories', async ({ page }) => {
+		await gotoHydrated(page, '/produkty/zviratka');
+		const switcher = page.getByRole('navigation', { name: 'Kategorie' });
+
+		// Every category is listed, and the current one is marked.
+		for (const slug of ['andele', 'zviratka', 'postavicky', 'dekorace']) {
+			await expect(switcher.locator(`a[href="/produkty/${slug}"]`)).toHaveCount(1);
+		}
+		await expect(switcher.locator('a[aria-current="page"]')).toHaveAttribute(
+			'href',
+			'/produkty/zviratka'
+		);
+
+		// Switching shows the other category without going back to /produkty.
+		await switcher.locator('a[href="/produkty/postavicky"]').click();
+		await expect(page).toHaveURL(/\/produkty\/postavicky$/);
+		await expect(page.getByRole('heading', { level: 1, name: 'Postavičky' })).toBeVisible();
+		await expect(switcher.locator('a[aria-current="page"]')).toHaveAttribute(
+			'href',
+			'/produkty/postavicky'
+		);
 	});
 });

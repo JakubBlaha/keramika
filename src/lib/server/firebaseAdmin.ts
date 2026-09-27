@@ -4,23 +4,23 @@
 // tokens (REQ-API-002) and writes to Firestore/Storage (REQ-ADMIN-018/019).
 //
 // Credentials come from Application Default Credentials (ADC), so no
-// service-account key file is committed to the repo. Locally, ADC is provided
-// by the Firebase/gcloud CLI login; in a deployed environment it is provided by
-// the platform's default service account. The project id is taken from the
+// service-account key file is committed to the repo. Locally, ADC comes from
+// `gcloud auth application-default login`, or else from the `firebase login`
+// refresh token (see resolveCredential); in a deployed environment it is
+// provided by the platform's default service account. The project id is taken from the
 // public config so it matches the client app.
 //
 // This module must never be imported by client code. The `$lib/server`
 // directory is server-only in SvelteKit and importing it from the browser is a
 // build error, which is exactly the guard we want.
 
-import { existsSync, readFileSync } from 'node:fs';
-import { homedir } from 'node:os';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { homedir, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
 	getApps,
 	initializeApp,
 	applicationDefault,
-	refreshToken,
 	type App,
 	type Credential
 } from 'firebase-admin/app';
@@ -37,6 +37,13 @@ const FIREBASE_CLI_CLIENT_ID =
 const FIREBASE_CLI_CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi';
 
 // Resolves a credential: prefer ADC, otherwise the Firebase CLI refresh token.
+//
+// The CLI token must still be presented *as ADC*: the Admin SDK only lets
+// Firestore (and Storage) use a service-account or application-default
+// credential, and rejects a plain refreshToken() credential with "Failed to
+// initialize Google Cloud Firestore client with the available credentials".
+// So the token is written as an ADC `authorized_user` file (private temp dir,
+// owner-only, removed on exit) and GOOGLE_APPLICATION_CREDENTIALS points at it.
 function resolveCredential(): Credential {
 	const hasAdc =
 		!!process.env.GOOGLE_APPLICATION_CREDENTIALS ||
@@ -50,12 +57,21 @@ function resolveCredential(): Credential {
 		const cli = JSON.parse(readFileSync(cliPath, 'utf8'));
 		const rt = cli?.tokens?.refresh_token;
 		if (rt) {
-			return refreshToken({
-				type: 'authorized_user',
-				client_id: FIREBASE_CLI_CLIENT_ID,
-				client_secret: FIREBASE_CLI_CLIENT_SECRET,
-				refresh_token: rt
-			});
+			const dir = mkdtempSync(join(tmpdir(), 'keramika-adc-'));
+			const file = join(dir, 'application_default_credentials.json');
+			writeFileSync(
+				file,
+				JSON.stringify({
+					type: 'authorized_user',
+					client_id: FIREBASE_CLI_CLIENT_ID,
+					client_secret: FIREBASE_CLI_CLIENT_SECRET,
+					refresh_token: rt
+				}),
+				{ mode: 0o600 }
+			);
+			process.once('exit', () => rmSync(dir, { recursive: true, force: true }));
+			process.env.GOOGLE_APPLICATION_CREDENTIALS = file;
+			return applicationDefault();
 		}
 	}
 

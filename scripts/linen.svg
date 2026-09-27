@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 960 960">
+	<!--
+		SOURCE for static/textures/linen-embroidery.webp - edit, then run
+		`pnpm render-linen`. Together with scripts/linen-weave.svg it forms the
+		site background: the embroidered linen tablecloth the pieces are
+		photographed on (see static/products/*). This layer holds soft, raised
+		white satin-stitch scrolls and fragments of the scalloped chain and
+		drawn-thread "ladder" work, on a transparent 960px tile. Motifs stay
+		inside the tile, so it repeats without seams; everything is kept very
+		low contrast so text on top stays crisp.
+	-->
+	<defs>
+		<!-- Satin stitch: soft-edged white thread with a faint shadow below it,
+		     so the embroidery reads as slightly raised, like in the photos. -->
+		<filter id="stitch" x="-10%" y="-10%" width="120%" height="120%">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="2.4" result="blur" />
+			<feOffset in="blur" dy="2" result="drop" />
+			<feFlood flood-color="#a8998a" flood-opacity="0.16" />
+			<feComposite in2="drop" operator="in" result="shadow" />
+			<feGaussianBlur in="SourceGraphic" stdDeviation="1.3" result="soft" />
+			<feMerge>
+				<feMergeNode in="shadow" />
+				<feMergeNode in="soft" />
+			</feMerge>
+		</filter>
+
+		<path id="leaf" d="M0 0C9-11 27-12 38 0C27 12 9 11 0 0Z" />
+	</defs>
+
+	<g filter="url(#stitch)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+		<!-- Large C-scroll ending in a curl, with leaves (top left) -->
+		<g transform="translate(20 10) scale(1.35)">
+			<g stroke-width="8">
+				<path d="M58 262C26 176 82 92 172 82C254 74 306 132 284 194C268 238 212 244 196 208C185 182 206 160 228 172" />
+				<path d="M104 118C96 150 118 176 150 176" stroke-width="6" />
+			</g>
+			<g fill="#fff" stroke="none">
+				<use href="#leaf" transform="translate(66 196) rotate(-70)" />
+				<use href="#leaf" transform="translate(206 70) rotate(-10) scale(0.8)" />
+				<use href="#leaf" transform="translate(150 176) rotate(20) scale(0.7)" />
+			</g>
+		</g>
+
+		<!-- Sweeping vine with a tendril (top right) -->
+		<g transform="translate(200 20) scale(1.2)">
+			<g stroke-width="7">
+				<path d="M338 58C408 18 508 30 566 92C604 134 594 194 548 204C512 211 496 178 518 162" />
+				<path d="M452 34C474 70 470 104 444 124C424 139 402 128 408 110" stroke-width="5" />
+			</g>
+			<g fill="#fff" stroke="none">
+				<use href="#leaf" transform="translate(372 44) rotate(-30) scale(0.85)" />
+				<use href="#leaf" transform="translate(580 120) rotate(80) scale(0.75)" />
+			</g>
+		</g>
+
+		<!-- Fragment of the scalloped loop chain (bottom left) -->
+		<g transform="translate(40 905)">
+			<path stroke-width="7" d="M0 0c24-52 72-52 96 0c24-52 72-52 96 0c24-52 72-52 96 0c24-52 72-52 96 0" />
+			<g stroke-width="5">
+				<circle cx="48" cy="-18" r="9" /><circle cx="144" cy="-18" r="9" />
+				<circle cx="240" cy="-18" r="9" /><circle cx="336" cy="-18" r="9" />
+			</g>
+		</g>
+
+		<!-- Oval ring with an inner curl (bottom left) -->
+		<g transform="translate(150 770)" stroke-width="7">
+			<ellipse cx="0" cy="0" rx="92" ry="58" transform="rotate(-12)" />
+			<path d="M-40 6C-30-26 18-30 30-4C38 14 20 28 6 18" stroke-width="5" />
+		</g>
+
+		<!-- Curl with leaf (bottom right) -->
+		<g transform="translate(300 150) scale(1.25)">
+			<path stroke-width="7" d="M404 626C366 590 380 522 432 516C482 511 498 564 466 578C446 586 432 566 446 554" />
+			<use href="#leaf" fill="#fff" stroke="none" transform="translate(366 600) rotate(-110) scale(0.8)" />
+		</g>
+	</g>
+
+	<!-- Fragment of drawn-thread "ladder" work (right, below middle). Placed so
+	     it lands in open space under the homepage hero, not beside its CTA. -->
+	<g filter="url(#stitch)" fill="#fff" opacity="0.65">
+		<rect x="600" y="580" width="14" height="76" rx="7" /><rect x="644" y="580" width="14" height="76" rx="7" />
+		<rect x="688" y="580" width="14" height="76" rx="7" /><rect x="732" y="580" width="14" height="76" rx="7" />
+		<rect x="776" y="580" width="14" height="76" rx="7" /><rect x="820" y="580" width="14" height="76" rx="7" />
+		<rect x="864" y="580" width="14" height="76" rx="7" /><rect x="908" y="580" width="14" height="76" rx="7" />
+	</g>
+</svg>

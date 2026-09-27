@@ -5,10 +5,12 @@
 	"brand_tagline": "ceramics",
 	"brand_tagline_full": "Ceramics made with love",
 
+	"nav_home": "Home",
 	"nav_products": "Products",
 	"nav_gallery": "Gallery",
 	"nav_about": "About me",
 	"nav_contact": "Contact",
+	"nav_admin": "Administration",
 
 	"a11y_menu": "Menu",
 	"a11y_menu_close": "Close menu",
@@ -57,6 +59,7 @@
 	"products_view_category": "View category",
 	"category_count_products": "{count} products",
 	"category_back_to_products": "Back to categories",
+	"category_switcher_label": "Categories",
 	"category_empty": "There is nothing in this category yet.",
 
 	"category_angels_name": "Angels",
@@ -133,6 +136,7 @@
 
 	"footer_link_about": "About me",
 	"footer_link_terms": "Terms and conditions",
+	"footer_link_login": "Log in",
 	"footer_col_contact": "Contact",
 
 	"footer_show_email": "Show email",
@@ -146,19 +150,15 @@
 	"admin_nav_dashboard": "Overview",
 	"admin_nav_orders": "Orders",
 	"admin_loading": "Loading…",
+	"admin_config_error": "The admin area could not start: the Firebase configuration is missing or invalid (the PUBLIC_FIREBASE_* values in .env).",
 	"admin_saving": "Saving…",
 	"admin_logout": "Log out",
 	"admin_logout_pending": "Logging out…",
 
 	"admin_login_heading": "Sign in",
 	"admin_login_intro": "Sign in to the administration.",
-	"admin_login_email": "Email",
-	"admin_login_password": "Password",
-	"admin_login_submit": "Sign in",
-	"admin_login_submitting": "Signing in…",
-	"admin_login_error": "Sign-in failed. Check your email and password.",
+	"admin_login_error": "Sign-in failed. Please try again.",
 	"admin_login_not_admin": "This account is not authorized to access the administration.",
-	"admin_login_or": "or",
 	"admin_login_google": "Sign in with Google",
 	"admin_login_google_pending": "Signing in…",
 

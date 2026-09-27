@@ -1,6 +1,15 @@
-// One-time setup for e2e admin tests: ensures the seed admin account exists in
+// One-time setup for e2e admin tests: ensures the e2e admin account exists in
 // the Firebase Auth emulator and carries the `admin` custom claim, so
 // tests/e2e/admin.spec.ts can sign in and exercise the admin CRUD pages.
+//
+// The admin area only offers Google sign-in, so the account is created as a
+// Google-linked user (no password). The emulator's Google sign-in popup lists
+// it as an existing account, and the tests pick it there.
+//
+// It is a throwaway account in the local emulator (not the real seed admin),
+// so it has a fixed identity instead of coming from .env: the Playwright
+// process does not load .env, and tests/e2e/admin.spec.ts must pick exactly
+// this account. Keep E2E_ADMIN_EMAIL in sync with that spec.
 //
 // Only meant to run against the emulator suite (via `firebase emulators:exec`,
 // see `pnpm test:e2e:emulator`), which sets FIREBASE_AUTH_EMULATOR_HOST /
@@ -41,13 +50,7 @@ if (!process.env.FIREBASE_AUTH_EMULATOR_HOST) {
 }
 
 const projectId = env.PUBLIC_FIREBASE_PROJECT_ID || 'demo-keramika';
-const email = env.SEED_ADMIN_EMAIL;
-const password = env.SEED_ADMIN_PASSWORD;
-
-if (!email || !password) {
-	console.error('Missing SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD in .env');
-	process.exit(1);
-}
+const email = 'e2e-admin@example.com'; // E2E_ADMIN_EMAIL in tests/e2e/admin.spec.ts
 
 async function main() {
 	const app = getApps().length ? getApps()[0] : initializeApp({ projectId });
@@ -57,7 +60,20 @@ async function main() {
 	try {
 		user = await auth.getUserByEmail(email);
 	} catch {
-		user = await auth.createUser({ email, password, emailVerified: true });
+		const uid = 'e2e-admin';
+		const result = await auth.importUsers([
+			{
+				uid,
+				email,
+				emailVerified: true,
+				displayName: 'E2E Admin',
+				providerData: [
+					{ uid: `google-${uid}`, email, displayName: 'E2E Admin', providerId: 'google.com' }
+				]
+			}
+		]);
+		if (result.failureCount) throw result.errors[0].error;
+		user = await auth.getUser(uid);
 	}
 
 	await auth.setCustomUserClaims(user.uid, { admin: true });

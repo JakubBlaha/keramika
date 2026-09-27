@@ -94,6 +94,7 @@ tests is a separate task from capturing requirements.
 | REQ-LISTING-006  | All-products view                                        | draft       | todo                                  |
 | REQ-LISTING-007  | Product filtering                                        | draft       | todo                                  |
 | REQ-LISTING-008  | Card hover previews up to four pieces                    | implemented | tests/e2e/listing.spec.ts             |
+| REQ-LISTING-009  | Category switcher on the category listing                | implemented | tests/e2e/listing.spec.ts             |
 | REQ-GALLERY-001  | Gallery shows every instance grouped by product          | implemented | tests/e2e/gallery.spec.ts             |
 | REQ-GALLERY-002  | Grid is photos only                                      | implemented | tests/e2e/gallery.spec.ts             |
 | REQ-GALLERY-003  | Fullscreen view of a photo                               | implemented | tests/e2e/gallery.spec.ts             |
@@ -121,7 +122,7 @@ tests is a separate task from capturing requirements.
 | REQ-CHECKOUT-008 | Pay in store is the only payment                         | verified    | tests/e2e/checkout.spec.ts            |
 | REQ-CHECKOUT-009 | Site is a reservation, not a paid sale                   | verified    | tests/e2e/checkout.spec.ts            |
 | REQ-CHECKOUT-010 | Place the reservation                                    | verified    | tests/e2e/checkout.spec.ts (emulator) |
-| REQ-ADMIN-001    | Dedicated admin area reachable only by URL               | draft       | todo                                  |
+| REQ-ADMIN-001    | Dedicated admin area reachable only by URL               | removed     | -                                     |
 
 | REQ-ADMIN-002 | Admin area requires authentication | verified | tests/e2e/admin.spec.ts (emulator) |
 | REQ-ADMIN-003 | Admin login | verified | tests/e2e/admin.spec.ts (emulator) |
@@ -144,6 +145,8 @@ tests is a separate task from capturing requirements.
 | REQ-ADMIN-020 | List orders in admin | implemented | todo |
 | REQ-ADMIN-021 | View an order's detail | implemented | todo |
 | REQ-ADMIN-022 | Mark an order as resolved or cancelled | implemented | todo |
+| REQ-ADMIN-023 | Footer login link | implemented | tests/e2e/admin.spec.ts |
+| REQ-ADMIN-024 | Admin shortcut in the header for signed-in admins | implemented | tests/e2e/admin.spec.ts (emulator) |
 | REQ-API-001 | Single catalog write API shared by UI and seeding | implemented | todo |
 | REQ-API-002 | Write endpoints require an authenticated admin | implemented | todo |
 | REQ-API-003 | List and read endpoints for catalog entities | implemented | todo |
@@ -168,6 +171,7 @@ tests is a separate task from capturing requirements.
 | REQ-BUILD-003 | Style with Tailwind CSS v4 | verified | tests/e2e/build.spec.ts |
 | REQ-CONTENT-001 | Real square product photography | draft | todo |
 | REQ-CONTENT-002 | Per-page title and meta description | verified | tests/e2e/content.spec.ts |
+| REQ-CONTENT-003 | Contact cards reveal on a click anywhere | implemented | tests/e2e/content.spec.ts |
 | REQ-A11Y-001 | Images have alt text | verified | tests/e2e/a11y.spec.ts |
 | REQ-A11Y-002 | Interactive controls are keyboard accessible | draft | todo |
 | REQ-DESIGN-001 | Warm, earthy color palette | verified | tests/e2e/design.spec.ts |

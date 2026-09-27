@@ -85,7 +85,7 @@
 </section>
 
 <!-- Value propositions -->
-<section class="bg-bg-alt py-12 md:py-20">
+<section class="bg-bg-alt bg-linen py-12 md:py-20">
 	<div class="mx-auto grid max-w-site gap-8 px-4 md:grid-cols-3 md:gap-10">
 		{#each values as v, i (v.title)}
 			<div class="flex flex-col gap-[0.4rem] border-t border-accent/40 pt-5" {@attach reveal()}>
