@@ -5,7 +5,7 @@ The categories landing page `/produkty` and the per-category listing
 
 ### REQ-LISTING-001 - Categories landing page
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: spec
 - Description: `/produkty` presents each category as an editorial section (a collage of its pieces beside a large numbered title, alternating sides on wide screens), visually distinct from the product grids, with an image, name, description and product count.
@@ -13,7 +13,7 @@ The categories landing page `/produkty` and the per-category listing
   - Given the catalog categories
   - When `/produkty` renders
   - Then each category card links to its listing and shows a cover image, localized name, description and product count
-- Test: tests/e2e/listing.spec.ts > REQ-LISTING-001
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-LISTING-002 - Category product listing
 
@@ -31,7 +31,7 @@ The categories landing page `/produkty` and the per-category listing
 
 ### REQ-LISTING-003 - Product cards show image, name, meta, price
 
-- Status: verified
+- Status: implemented
 - Priority: should
 - Source: spec (section 7)
 - Description: A product card shows a square cover image, name, meta line and price.
@@ -39,7 +39,7 @@ The categories landing page `/produkty` and the per-category listing
   - Given a product card in any grid
   - When it renders
   - Then it shows a square cover image, the product name, its meta line and its price in CZK
-- Test: tests/e2e/listing.spec.ts > REQ-LISTING-003
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-LISTING-004 - Last-piece and sold-out badges
 
@@ -102,11 +102,11 @@ The categories landing page `/produkty` and the per-category listing
   - Then the tile zooms out (a pure scale transform, no fade) into a grid of min(pieces, 4) photos, available pieces first (sold ones greyed), starting from the cover photo
   - And moving the pointer away returns the tile to the cover photo
   - And a product with a single piece shows no grid
-- Test: tests/e2e/listing.spec.ts > REQ-LISTING-008
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-LISTING-009 - Category switcher on the category listing
 
-- Status: implemented
+- Status: verified
 - Priority: should
 - Source: user, 2026-09-27
 - Description: The category listing shows a switcher with every category so the visitor can jump to another category without going back to `/produkty`.

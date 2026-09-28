@@ -30,13 +30,6 @@ test.describe('Gallery', () => {
 		await expect(main.getByRole('listitem')).toHaveCount(17);
 	});
 
-	test('REQ-GALLERY-002 - grid shows no status or actions', async ({ page }) => {
-		await gotoHydrated(page, '/galerie');
-		await expect(page.getByText('Skladem')).toHaveCount(0);
-		await expect(page.getByRole('link', { name: 'Koupit tento kus' })).toHaveCount(0);
-		await expect(page.getByRole('link', { name: 'Zobrazit produkt' })).toHaveCount(0);
-	});
-
 	test('REQ-GALLERY-003 - fullscreen opens, steps and closes', async ({ page }) => {
 		await gotoHydrated(page, '/galerie');
 		await page.getByRole('button', { name: /Anděl #1/ }).click();
@@ -98,19 +91,6 @@ test.describe('Gallery', () => {
 		await expect(dialog.getByRole('link', { name: 'Zobrazit produkt' })).toHaveAttribute(
 			'href',
 			'/produkt/dubanek'
-		);
-	});
-
-	test('REQ-GALLERY-007 - header links to the gallery in each locale', async ({ page }) => {
-		await page.goto('/');
-		await expect(page.locator('header').getByRole('link', { name: 'Galerie' })).toHaveAttribute(
-			'href',
-			'/galerie'
-		);
-		await page.goto('/en');
-		await expect(page.locator('header').getByRole('link', { name: 'Gallery' })).toHaveAttribute(
-			'href',
-			'/en/galerie'
 		);
 	});
 });

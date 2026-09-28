@@ -4,7 +4,7 @@
 	// and delete it. Deleting a category that still has products is blocked by
 	// the API (409); the message is surfaced here.
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
+	import { gotoLocalized } from '$lib/navigation';
 	import { resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
@@ -58,7 +58,7 @@
 			saved = true;
 			// If the slug changed, its document id changed too; go to the new URL.
 			if (slug.trim() !== originalSlug) {
-				await goto(localizeHref(resolve('/admin/kategorie/[slug]', { slug: slug.trim() })));
+				await gotoLocalized(resolve('/admin/kategorie/[slug]', { slug: slug.trim() }));
 			}
 		} catch (err) {
 			formError = err instanceof AdminApiError ? err.message : m.admin_catalog_save_error();
@@ -74,7 +74,7 @@
 		formError = '';
 		try {
 			await deleteCategory(originalSlug);
-			await goto(localizeHref(resolve('/admin/kategorie')));
+			await gotoLocalized(resolve('/admin/kategorie'));
 		} catch (err) {
 			formError = err instanceof AdminApiError ? err.message : m.admin_catalog_save_error();
 		} finally {

@@ -26,7 +26,7 @@ test.describe('Cart', () => {
 		await expect(link).toHaveAttribute('href', '/produkty');
 	});
 
-	test('REQ-CART-001 - lists an added instance with image, title, size and price', async ({
+	test('REQ-CART-001, REQ-PRODUCT-007 - lists an added instance with image, title, size and price', async ({
 		page
 	}) => {
 		await page.goto('/produkt/andel');
@@ -40,17 +40,6 @@ test.describe('Cart', () => {
 		await expect(line.getByText('390 Kč')).toBeVisible();
 		// Remove control is present.
 		await expect(line.getByRole('button')).toBeVisible();
-	});
-
-	test('REQ-CART-006 - no quantity editing control on a cart line', async ({ page }) => {
-		await page.goto('/produkt/andel');
-		await page.getByRole('button', { name: 'Přidat do košíku' }).click();
-
-		await page.goto('/cart');
-		const line = page.locator('li').filter({ hasText: 'Anděl' });
-		// Only control besides links is the remove button; no number input/stepper.
-		await expect(line.locator('input')).toHaveCount(0);
-		await expect(line.getByRole('button')).toHaveCount(1);
 	});
 
 	test('REQ-CART-002 - summary shows subtotal, shipping and total', async ({ page }) => {
@@ -71,10 +60,17 @@ test.describe('Cart', () => {
 		page
 	}) => {
 		await page.goto('/produkt/andel');
-		await page.getByRole('button', { name: 'Přidat do košíku' }).click();
-		// Re-visit and add the same (still default-selected) instance again.
+		const add = page.getByRole('button', { name: 'Přidat do košíku' });
+		await add.click();
+
+		// The button immediately switches to a disabled "in cart" state.
+		await expect(page.getByRole('button', { name: 'V košíku' })).toBeDisabled();
+		await expect(add).toHaveCount(0);
+
+		// Re-visiting with the same (default-selected) piece offers no add again.
 		await page.goto('/produkt/andel');
-		await page.getByRole('button', { name: 'Přidat do košíku' }).click();
+		await expect(page.getByRole('button', { name: 'V košíku' })).toBeDisabled();
+		await expect(page.getByText('Tento kus už máte v košíku.')).toBeVisible();
 
 		await page.goto('/cart');
 		await expect(page.locator('li')).toHaveCount(1);

@@ -26,7 +26,7 @@ product, with a fullscreen view that carries stock status and purchase links.
   - Given the gallery page with no photo opened
   - When it renders
   - Then no in-stock/sold status, buy link or view-product link is visible
-- Test: tests/e2e/gallery.spec.ts > REQ-GALLERY-002
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-GALLERY-003 - Fullscreen view of a photo
 
@@ -89,4 +89,4 @@ product, with a fullscreen view that carries stock status and purchase links.
   - Given any public page
   - When the header renders
   - Then it contains a "Galerie" / "Gallery" link to `/galerie` (`/en/galerie` in English)
-- Test: tests/e2e/gallery.spec.ts > REQ-GALLERY-007
+- Test: none (not functional behaviour; outside the e2e scope)

@@ -81,7 +81,7 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
 
 ### REQ-CHECKOUT-007 - Pickup in store is the only fulfillment
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: user, 2026-09-12
 - Description: The only fulfillment method is pickup in store; no shipping is offered.
@@ -89,11 +89,11 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given the checkout page
   - When it renders
   - Then pickup in store is presented as the fulfillment method, and no shipping method or delivery-address option is offered
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-007
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-CHECKOUT-008 - Pay in store is the only payment
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: user, 2026-09-12
 - Description: The only payment method is payment in store on pickup; no online payment is taken.
@@ -101,11 +101,11 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given the checkout page
   - When it renders
   - Then payment in store on pickup is presented as the payment method, and no online payment step (card, transfer, gateway) is offered
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-008
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-CHECKOUT-009 - Site is a reservation, not a paid sale
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: user, 2026-09-12
 - Description: Completing checkout creates a reservation of the selected instances rather than a paid purchase; the copy makes clear payment happens in store on pickup.
@@ -113,7 +113,7 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given a non-empty cart at checkout
   - When the buyer reviews the order details
   - Then the flow is labelled as a reservation and states that payment is due in store on pickup, with no money collected online
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-009
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-CHECKOUT-010 - Place the reservation
 

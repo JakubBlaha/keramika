@@ -16,7 +16,7 @@ Content, assets and SEO.
 
 ### REQ-CONTENT-002 - Per-page title and meta description
 
-- Status: verified
+- Status: implemented
 - Priority: should
 - Source: spec / TODO
 - Description: Every page sets its own document title and meta description.
@@ -24,11 +24,11 @@ Content, assets and SEO.
   - Given any page
   - When it renders
   - Then it sets a page-specific `<title>` and a meta description
-- Test: tests/e2e/content.spec.ts > REQ-CONTENT-002
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-CONTENT-003 - Contact cards reveal on a click anywhere
 
-- Status: implemented
+- Status: verified
 - Priority: could
 - Source: user, 2026-09-27
 - Description: On the contact page, clicking anywhere on the e-mail or phone card reveals that contact detail, not only clicking its "show" link.

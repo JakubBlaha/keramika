@@ -3,13 +3,13 @@
 // tests/e2e/admin.spec.ts can sign in and exercise the admin CRUD pages.
 //
 // The admin area only offers Google sign-in, so the account is created as a
-// Google-linked user (no password). The emulator's Google sign-in popup lists
-// it as an existing account, and the tests pick it there.
+// Google-linked user (no password). The tests sign in with a fake Google
+// credential whose `sub` is this user's Google provider uid.
 //
 // It is a throwaway account in the local emulator (not the real seed admin),
 // so it has a fixed identity instead of coming from .env: the Playwright
 // process does not load .env, and tests/e2e/admin.spec.ts must pick exactly
-// this account. Keep E2E_ADMIN_EMAIL in sync with that spec.
+// this account. Keep E2E_ADMIN in sync with that spec.
 //
 // Only meant to run against the emulator suite (via `firebase emulators:exec`,
 // see `pnpm test:e2e:emulator`), which sets FIREBASE_AUTH_EMULATOR_HOST /
@@ -50,7 +50,7 @@ if (!process.env.FIREBASE_AUTH_EMULATOR_HOST) {
 }
 
 const projectId = env.PUBLIC_FIREBASE_PROJECT_ID || 'demo-keramika';
-const email = 'e2e-admin@example.com'; // E2E_ADMIN_EMAIL in tests/e2e/admin.spec.ts
+const email = 'e2e-admin@example.com'; // E2E_ADMIN in tests/e2e/admin.spec.ts
 
 async function main() {
 	const app = getApps().length ? getApps()[0] : initializeApp({ projectId });

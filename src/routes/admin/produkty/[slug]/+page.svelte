@@ -4,7 +4,7 @@
 	// instances, lets the admin edit/delete the product, and add/edit/delete
 	// instances including uploading their images to Firebase Storage.
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
+	import { gotoLocalized } from '$lib/navigation';
 	import { resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
@@ -99,7 +99,7 @@
 			});
 			saved = true;
 			if (currentSlug.trim() !== slug) {
-				await goto(localizeHref(resolve('/admin/produkty/[slug]', { slug: currentSlug.trim() })));
+				await gotoLocalized(resolve('/admin/produkty/[slug]', { slug: currentSlug.trim() }));
 			}
 		} catch (err) {
 			formError = err instanceof AdminApiError ? err.message : m.admin_catalog_save_error();
@@ -115,7 +115,7 @@
 		formError = '';
 		try {
 			await deleteProduct(slug);
-			await goto(localizeHref(resolve('/admin/produkty')));
+			await gotoLocalized(resolve('/admin/produkty'));
 		} catch (err) {
 			formError = err instanceof AdminApiError ? err.message : m.admin_catalog_save_error();
 		} finally {

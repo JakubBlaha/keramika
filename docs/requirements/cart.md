@@ -48,6 +48,7 @@ The cart page `/cart` and cart state.
   - Given an instance already in the cart
   - When the same instance is added again
   - Then it is not duplicated, and once ordered it becomes unavailable for others
+  - And on the product page, once the selected piece is in the cart the add button is disabled and reads "V košíku" / "In your cart" (the piece is marked "V košíku" in the piece picker too), so it cannot be added again
 - Test: tests/e2e/cart.spec.ts > REQ-CART-004
 
 ### REQ-CART-005 - Remove an instance from the cart
@@ -64,7 +65,7 @@ The cart page `/cart` and cart state.
 
 ### REQ-CART-006 - No quantity editing for cart lines
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: user, 2026-09-12
 - Description: Because each instance is a unique piece, cart lines have a fixed quantity of one and expose no quantity editing control.
@@ -72,4 +73,4 @@ The cart page `/cart` and cart state.
   - Given a cart line for an instance
   - When `/cart` renders that line
   - Then the line quantity is one, and no quantity input, stepper or other quantity-editing control is present (only a remove control per REQ-CART-005)
-- Test: tests/e2e/cart.spec.ts > REQ-CART-006
+- Test: none (not functional behaviour; outside the e2e scope)

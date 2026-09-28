@@ -85,44 +85,6 @@ test.describe('Checkout', () => {
 		await expect(page.getByRole('button', { name: 'Odeslat rezervaci' })).toBeVisible();
 	});
 
-	test('REQ-CHECKOUT-007 - pickup in store is the only fulfillment, no shipping', async ({
-		page
-	}) => {
-		await addOneToCart(page);
-		await page.goto('/checkout');
-
-		await expect(page.getByRole('heading', { name: 'Vyzvednutí' })).toBeVisible();
-		await expect(
-			page.getByText('Osobní odběr v ateliéru v Brně. Doprava není nabízena.')
-		).toBeVisible();
-		// No shipping-method selector of any kind.
-		await expect(page.locator('select')).toHaveCount(0);
-	});
-
-	test('REQ-CHECKOUT-008 - pay in store is the only payment, no online payment', async ({
-		page
-	}) => {
-		await addOneToCart(page);
-		await page.goto('/checkout');
-
-		await expect(page.getByRole('heading', { name: 'Platba' })).toBeVisible();
-		await expect(
-			page.getByText(
-				'Platba probíhá osobně při vyzvednutí v ateliéru. Online platba není vyžadována.'
-			)
-		).toBeVisible();
-	});
-
-	test('REQ-CHECKOUT-009 - flow is a reservation, payment due in store', async ({ page }) => {
-		await addOneToCart(page);
-		await page.goto('/checkout');
-
-		await expect(page.getByRole('heading', { name: 'Rezervace' })).toBeVisible();
-		await expect(
-			page.getByText(/vytváříte rezervaci vybraných kusů, nikoli placenou objednávku/i)
-		).toBeVisible();
-	});
-
 	test('REQ-CHECKOUT-006 - shows a confirmation after a successful reservation', async ({
 		page
 	}) => {

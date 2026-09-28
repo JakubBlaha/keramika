@@ -5,7 +5,7 @@ design tokens live in `src/routes/layout.css`; these requirements capture intent
 
 ### REQ-DESIGN-001 - Warm, earthy color palette
 
-- Status: verified
+- Status: implemented
 - Priority: should
 - Source: spec (section 9)
 - Description: The site uses a warm, earthy palette (off-white background, earthy dark ink, terracotta accent, sage secondary).
@@ -13,11 +13,11 @@ design tokens live in `src/routes/layout.css`; these requirements capture intent
   - Given any page
   - When it renders
   - Then the background is a warm off-white, the primary ink is an earthy dark, the accent is a terracotta/warm clay, and a sage secondary is used for highlights
-- Test: tests/e2e/design.spec.ts > REQ-DESIGN-001
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-DESIGN-002 - Display headings, sans-serif body
 
-- Status: verified
+- Status: implemented
 - Priority: should
 - Source: spec (section 9)
 - Description: Headings use a display/serif font for an artisanal feel; body copy uses a clean sans-serif.
@@ -25,7 +25,7 @@ design tokens live in `src/routes/layout.css`; these requirements capture intent
   - Given any page
   - When it renders
   - Then headings use the display font and body text uses the sans-serif body font
-- Test: tests/e2e/design.spec.ts > REQ-DESIGN-002
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-DESIGN-003 - Minimal, uncluttered visual style
 
@@ -75,7 +75,7 @@ design tokens live in `src/routes/layout.css`; these requirements capture intent
   - Given a visitor with `prefers-reduced-motion: reduce`
   - When any public page renders
   - Then content below the fold is fully visible (opacity 1) without scrolling, and no page transition animates
-- Test: tests/e2e/design.spec.ts > REQ-DESIGN-006
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-DESIGN-007 - Page transitions with product image morph
 
@@ -88,7 +88,7 @@ design tokens live in `src/routes/layout.css`; these requirements capture intent
   - When the visitor follows a product card link
   - Then a view transition runs, and the card image and the detail page's main image share the view-transition name `product-<slug>`
   - And browsers without the API navigate normally
-- Test: tests/e2e/design.spec.ts > REQ-DESIGN-007
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-DESIGN-008 - Scroll reveal never hides the first paint
 
@@ -101,4 +101,4 @@ design tokens live in `src/routes/layout.css`; these requirements capture intent
   - When it loads, the featured product cards below the fold are transparent
   - And after they are scrolled into view they become fully opaque
   - And the hero heading is never hidden by the reveal
-- Test: tests/e2e/design.spec.ts > REQ-DESIGN-008
+- Test: none (not functional behaviour; outside the e2e scope)

@@ -18,4 +18,10 @@ bun.lockb
 /src/lib/paraglide
 /project.inlang/cache
 /project.inlang/.lix
+# inlang regenerates these (git-ignored via project.inlang/.gitignore)
+/project.inlang/.meta.json
+/project.inlang/README.md
+
+# Local, git-ignored Claude Code settings
+/.claude/settings.local.json
 

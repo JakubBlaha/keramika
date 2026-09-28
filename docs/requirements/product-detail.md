@@ -5,7 +5,7 @@ Behavior of the product detail page `/produkt/[slug]`
 
 ### REQ-PRODUCT-001 - Image gallery follows the selected instance
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: user, 2026-09-12
 - Description: The gallery shows the images of the currently selected instance, with thumbnails when the instance has more than one image.
@@ -15,7 +15,7 @@ Behavior of the product detail page `/produkt/[slug]`
   - Then the main image is the selected instance's active image
   - And a thumbnail strip is shown only when N > 1
   - And clicking a thumbnail changes the main image
-- Test: tests/e2e/product-detail.spec.ts > REQ-PRODUCT-001
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-PRODUCT-002 - Instance picker lets the buyer choose a piece
 
@@ -57,7 +57,7 @@ Behavior of the product detail page `/produkt/[slug]`
 
 ### REQ-PRODUCT-005 - Specifications are shown
 
-- Status: verified
+- Status: implemented
 - Priority: should
 - Source: spec
 - Description: The detail page lists product specifications (size).
@@ -65,7 +65,7 @@ Behavior of the product detail page `/produkt/[slug]`
   - Given a product
   - When the detail page renders
   - Then a specifications block shows at least the size
-- Test: tests/e2e/product-detail.spec.ts > REQ-PRODUCT-005
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-PRODUCT-006 - About/Care/Shipping accordion
 
@@ -90,7 +90,7 @@ Behavior of the product detail page `/produkt/[slug]`
   - When it is sold out or no available instance is selected
   - Then the add-to-cart button is disabled
   - And when an available instance is selected, the button is enabled
-- Test: tests/e2e/product-detail.spec.ts > REQ-PRODUCT-007
+- Test: tests/e2e/cart.spec.ts > REQ-CART-001
 
 ### REQ-PRODUCT-008 - Related products section
 
@@ -103,7 +103,7 @@ Behavior of the product detail page `/produkt/[slug]`
   - When the detail page renders
   - Then a related-products grid links to each related product's detail page
   - And sold-out or last-piece badges are shown per related product
-- Test: tests/e2e/product-detail.spec.ts > REQ-PRODUCT-008
+- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-008
 
 ### REQ-PRODUCT-009 - Back link to the category
 

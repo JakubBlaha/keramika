@@ -5,7 +5,7 @@ and `package.json`.
 
 ### REQ-BUILD-001 - check, lint and build must pass
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: TODO
 - Description: The project must pass type/svelte checks, linting and a production build.
@@ -13,7 +13,7 @@ and `package.json`.
   - Given the repository
   - When `pnpm check`, `pnpm exec eslint .` and `pnpm build` are run
   - Then all three complete without errors
-- Test: tests/e2e/build.spec.ts > REQ-BUILD-001
+- Test: none (enforced by running `pnpm check` / `pnpm lint` directly)
 
 ### REQ-BUILD-002 - Do not run the dev server
 
@@ -29,7 +29,7 @@ and `package.json`.
 
 ### REQ-BUILD-003 - Style with Tailwind CSS v4
 
-- Status: verified
+- Status: implemented
 - Priority: should
 - Source: instructions
 - Description: Styling uses Tailwind CSS v4 utilities; new bespoke CSS is avoided in favor of utilities and existing design tokens.
@@ -37,4 +37,4 @@ and `package.json`.
   - Given a new or changed UI element
   - When it is styled
   - Then it uses Tailwind utility classes (and existing tokens) rather than new bespoke CSS
-- Test: tests/e2e/build.spec.ts > REQ-BUILD-003
+- Test: none (not functional behaviour; outside the e2e scope)

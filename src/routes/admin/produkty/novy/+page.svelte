@@ -3,7 +3,7 @@
 	// required fields (name, category, price, and localized cs/en copy); it
 	// then appears in the product list and on the public site under its
 	// category once the catalog reads from Firestore.
-	import { goto } from '$app/navigation';
+	import { gotoLocalized } from '$lib/navigation';
 	import { resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import { getLocale, localizeHref } from '$lib/paraglide/runtime';
@@ -57,7 +57,7 @@
 				price: String(price).trim(),
 				size: size.trim()
 			});
-			await goto(localizeHref(resolve('/admin/produkty/[slug]', { slug: created.slug })));
+			await gotoLocalized(resolve('/admin/produkty/[slug]', { slug: created.slug }));
 		} catch (err) {
 			formError = err instanceof AdminApiError ? err.message : m.admin_catalog_save_error();
 		} finally {

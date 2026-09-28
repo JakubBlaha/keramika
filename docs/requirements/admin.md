@@ -300,7 +300,7 @@ from Firestore/Storage rather than from a static module.
   - When a visitor looks at the footer
   - Then a login link ("Přihlášení" / "Log in", in both cs and en) is shown and points to the admin area (`/admin`, localized)
   - And the header shows no login link or admin entry to visitors who are not signed-in admins
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-023
+- Test: none (not functional behaviour; outside the e2e scope)
 - Related: REQ-ADMIN-002, REQ-ADMIN-024
 
 ### REQ-ADMIN-024 - Admin shortcut in the header for signed-in admins

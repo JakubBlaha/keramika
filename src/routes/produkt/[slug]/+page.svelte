@@ -79,6 +79,7 @@
 			selectedId = instance.id;
 			activeImage = 0;
 		});
+		justAdded = false;
 	}
 
 	// Confirmation shown under the button after adding (reset per product).
@@ -88,10 +89,14 @@
 		justAdded = false;
 	});
 
+	// Each piece can be in the cart only once (REQ-CART-004): once the
+	// selected piece is in the cart, the button switches to a disabled
+	// "In your cart" state instead of offering to add it again.
+	const selectedInCart = $derived(!!selected && cart.has(selected.id));
+
 	// A specific available instance must be selected to add to the cart.
-	// Adding an instance already in the cart is a no-op (REQ-CART-004).
 	function addToCart() {
-		if (!selected || !selected.available) return;
+		if (!selected || !selected.available || selectedInCart) return;
 		cart.add(selected.id, product.slug);
 		justAdded = true;
 	}
@@ -210,7 +215,11 @@
 									class:text-ink-soft={inst.available}
 									class:text-accent-dark={!inst.available}
 								>
-									{inst.available ? inst.label : m.product_instance_sold()}
+									{!inst.available
+										? m.product_instance_sold()
+										: cart.has(inst.id)
+											? m.product_in_cart()
+											: inst.label}
 								</span>
 							</button>
 						{/each}
@@ -223,10 +232,27 @@
 				<button
 					type="button"
 					class="btn grow btn-primary disabled:cursor-not-allowed disabled:opacity-50"
-					disabled={soldOut || !selected || !selected.available}
+					disabled={soldOut || !selected || !selected.available || selectedInCart}
 					onclick={addToCart}
 				>
-					{soldOut ? m.product_sold_out() : m.product_add_to_cart()}
+					{#if soldOut}
+						{m.product_sold_out()}
+					{:else if selectedInCart}
+						<svg
+							width="18"
+							height="18"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.8"
+							aria-hidden="true"
+						>
+							<path d="M5 12.5l4.5 4.5L19 7.5" />
+						</svg>
+						{m.product_in_cart()}
+					{:else}
+						{m.product_add_to_cart()}
+					{/if}
 				</button>
 				<p class="min-h-[1.6em] text-[0.85rem]" aria-live="polite">
 					{#if justAdded}
@@ -243,6 +269,15 @@
 								<path d="M5 12.5l4.5 4.5L19 7.5" />
 							</svg>
 							{m.product_added_to_cart()}
+							<a
+								href={localizeHref('/cart')}
+								class="text-accent-dark underline transition-colors hover:text-accent"
+								>{m.product_view_cart()}</a
+							>
+						</span>
+					{:else if selectedInCart}
+						<span class="inline-flex items-center gap-2 text-ink-soft">
+							{m.product_already_in_cart()}
 							<a
 								href={localizeHref('/cart')}
 								class="text-accent-dark underline transition-colors hover:text-accent"

@@ -100,6 +100,8 @@
 	"product_out_of_stock": "Vyprodáno",
 	"product_add_to_cart": "Přidat do košíku",
 	"product_added_to_cart": "Přidáno do košíku.",
+	"product_in_cart": "V košíku",
+	"product_already_in_cart": "Tento kus už máte v košíku.",
 	"product_view_cart": "Zobrazit košík",
 	"product_related_heading": "Mohlo by se vám líbit",
 	"product_back_to_category": "Zpět do kategorie",

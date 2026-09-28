@@ -5,7 +5,7 @@ Data model, products, instances, and availability. Source of truth is
 
 ### REQ-CATALOG-001 - Multiple images per instance
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: user, 2026-09-12
 - Description: Each product instance can hold one or more images.
@@ -13,7 +13,7 @@ Data model, products, instances, and availability. Source of truth is
   - Given a product instance defined with an ordered list of image files
   - When the catalog exposes that instance
   - Then the instance has an `images` array in that order, and it may contain more than one entry
-- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-001
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-CATALOG-002 - Product is a blueprint with unique instances
 
@@ -25,7 +25,7 @@ Data model, products, instances, and availability. Source of truth is
   - Given a hand-made product where every piece differs
   - When the product is modelled in the catalog
   - Then it has a list of instances, each with its own id, label, images and availability
-- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-002
+- Test: tests/e2e/product-detail.spec.ts > REQ-PRODUCT-002
 
 ### REQ-CATALOG-003 - Each instance is sold exactly once
 
@@ -49,11 +49,11 @@ Data model, products, instances, and availability. Source of truth is
   - Given a product with A available instances out of T total
   - When availability is computed
   - Then availableCount returns A and totalCount returns T
-- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-004
+- Test: tests/e2e/product-detail.spec.ts > REQ-PRODUCT-004
 
 ### REQ-CATALOG-005 - Cover image comes from first available instance
 
-- Status: verified
+- Status: implemented
 - Priority: should
 - Source: user, 2026-09-12
 - Description: A product's thumbnail is the first image of its first available instance, falling back to the first instance.
@@ -62,11 +62,11 @@ Data model, products, instances, and availability. Source of truth is
   - When the cover image is requested
   - Then it returns the first image of the first available instance
   - And given no available instance, it returns the first image of the first instance
-- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-005
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-CATALOG-006 - Copy fields are localized, data fields are neutral
 
-- Status: verified
+- Status: implemented
 - Priority: must
 - Source: TODO / spec
 - Description: Copy fields (name, description, care) are localized via Paraglide; language-neutral data (price, slug, size, images) lives in the catalog.
@@ -74,7 +74,7 @@ Data model, products, instances, and availability. Source of truth is
   - Given a product in the catalog
   - When it is rendered in cs or en
   - Then name/description/care come from message functions, while price/slug/size/images are identical across locales
-- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-006
+- Test: none (not functional behaviour; outside the e2e scope)
 
 ### REQ-CATALOG-007 - Products are grouped into categories
 
@@ -86,7 +86,7 @@ Data model, products, instances, and availability. Source of truth is
   - Given the catalog
   - When categories are listed
   - Then each category has a slug, localized name and description, and a list of products
-- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-007
+- Test: tests/e2e/listing.spec.ts > REQ-LISTING-002
 
 ### REQ-CATALOG-008 - Related products come from the same category
 

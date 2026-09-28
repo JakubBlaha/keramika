@@ -33,11 +33,13 @@ function loadInitial(): CartLine[] {
 		const parsed = JSON.parse(raw);
 		if (!Array.isArray(parsed)) return [];
 		return parsed.filter(
-			(l): l is CartLine =>
+			(l, index): l is CartLine =>
 				l &&
 				typeof l === 'object' &&
 				typeof l.instanceId === 'string' &&
-				typeof l.productSlug === 'string'
+				typeof l.productSlug === 'string' &&
+				// Drop duplicates a stored cart might contain (REQ-CART-004).
+				parsed.findIndex((o) => o?.instanceId === l.instanceId) === index
 		);
 	} catch {
 		return [];
@@ -51,6 +53,17 @@ class CartStore {
 	// the cart page can offer a multi-step undo (REQ-CART-005). Not persisted:
 	// undo is only meaningful within the current session/page.
 	#removed = $state<{ line: CartLine; index: number }[]>([]);
+
+	constructor() {
+		// Keep every open tab on the same cart: another tab's change arrives as
+		// a storage event. Without this, a tab with a stale cart could overwrite
+		// the stored one or offer to add a piece another tab already added.
+		if (browser) {
+			window.addEventListener('storage', (event) => {
+				if (event.key === STORAGE_KEY) this.lines = loadInitial();
+			});
+		}
+	}
 
 	#persist() {
 		if (!browser) return;

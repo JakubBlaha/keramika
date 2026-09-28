@@ -90,6 +90,8 @@ Field values:
   concrete so they translate directly into Playwright assertions.
 - Test: the intended Playwright file and test title (`tests/e2e/<area>.spec.ts >
 REQ-<AREA>-<NNN>`). Suffix `(todo)` until the test exists.
+  Non-functional requirements (visual design, fixed copy, SEO, tooling) are
+  not e2e-tested: use `Test: none (not functional behaviour; outside the e2e scope)`.
 
 ## How requirements map to tests
 

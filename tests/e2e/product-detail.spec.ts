@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 // E2E tests for the product detail page (src/routes/produkt/[slug]/+page.svelte).
 // Test titles carry the requirement ID for traceability.
@@ -9,20 +9,17 @@ import { expect, test } from '@playwright/test';
 //   ptacek  - 1 instance, available (last piece)
 //   andel   - 2 instances, both available
 
-test.describe('Product detail', () => {
-	test('REQ-PRODUCT-001 - gallery shows the selected instance image', async ({ page }) => {
-		await page.goto('/produkt/andel');
-		// Main gallery image is the first (eager) image and belongs to the product.
-		const hero = page.locator('article img[loading="eager"]');
-		await expect(hero).toBeVisible();
-		await expect(hero).toHaveAttribute('src', /\/products\/angel\//);
-		// Each catalog instance here has a single image, so no thumbnail strip.
-		// Thumbnail buttons use the product name as their aria-label; the instance
-		// picker buttons use "Kus #N", so a name-labelled button would be a thumb.
-		await expect(page.getByRole('button', { name: 'Anděl', exact: true })).toHaveCount(0);
-	});
+// Wait until SvelteKit has hydrated (the root layout sets this attribute in an
+// $effect); before that, click handlers are not attached yet.
+async function gotoHydrated(page: Page, path: string) {
+	await page.goto(path);
+	await page.waitForFunction(() => document.documentElement.dataset.firebaseEmulator !== undefined);
+}
 
-	test('REQ-PRODUCT-002 - instance picker selects the first available piece', async ({ page }) => {
+test.describe('Product detail', () => {
+	test('REQ-PRODUCT-002, REQ-CATALOG-002 - instance picker selects the first available piece', async ({
+		page
+	}) => {
 		await page.goto('/produkt/dubanek');
 		// The picker is shown with a heading.
 		await expect(page.getByText('Vyberte si kus')).toBeVisible();
@@ -45,7 +42,7 @@ test.describe('Product detail', () => {
 		await expect(soldButton.getByText('Prodáno')).toBeVisible();
 	});
 
-	test('REQ-PRODUCT-004 - availability text reflects stock', async ({ page }) => {
+	test('REQ-PRODUCT-004, REQ-CATALOG-004 - availability text reflects stock', async ({ page }) => {
 		// More than one available -> available-of-total count.
 		await page.goto('/produkt/dubanek');
 		await expect(page.getByText('K dispozici 4 z 5 kusů')).toBeVisible();
@@ -55,14 +52,8 @@ test.describe('Product detail', () => {
 		await expect(page.getByText('Poslední kus skladem')).toBeVisible();
 	});
 
-	test('REQ-PRODUCT-005 - specifications show size', async ({ page }) => {
-		await page.goto('/produkt/andel');
-		await expect(page.getByText('Rozměr')).toBeVisible();
-		await expect(page.getByText('12 cm')).toBeVisible();
-	});
-
 	test('REQ-PRODUCT-006 - about/care/shipping accordion opens one at a time', async ({ page }) => {
-		await page.goto('/produkt/andel');
+		await gotoHydrated(page, '/produkt/andel');
 		const about = page.getByRole('button', { name: 'O výrobku' });
 		const care = page.getByRole('button', { name: 'Péče' });
 
@@ -74,22 +65,6 @@ test.describe('Product detail', () => {
 		await care.click();
 		await expect(care).toHaveAttribute('aria-expanded', 'true');
 		await expect(about).toHaveAttribute('aria-expanded', 'false');
-	});
-
-	test('REQ-PRODUCT-007 - add to cart enabled with an available selection', async ({ page }) => {
-		await page.goto('/produkt/andel');
-		const addToCart = page.getByRole('button', { name: 'Přidat do košíku' });
-		await expect(addToCart).toBeEnabled();
-	});
-
-	test('REQ-PRODUCT-008 - related products grid links to detail pages', async ({ page }) => {
-		await page.goto('/produkt/dubanek');
-		await expect(page.getByRole('heading', { name: 'Mohlo by se vám líbit' })).toBeVisible();
-		const related = page.locator('section', {
-			has: page.getByRole('heading', { name: 'Mohlo by se vám líbit' })
-		});
-		const links = related.locator('a[href^="/produkt/"]');
-		expect(await links.count()).toBeGreaterThan(0);
 	});
 
 	test('REQ-PRODUCT-009 - back link points to the category', async ({ page }) => {

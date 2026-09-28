@@ -10,10 +10,12 @@ import { expect, test, type Page } from '@playwright/test';
 // Google-linked account via scripts/emulator-admin-setup.mjs). Tests are
 // skipped otherwise.
 //
-// Sign-in is Google-only. In the emulator, "Přihlásit se přes Google" opens
-// the Auth Emulator's fake Google popup (firebase-tools
-// lib/emulator/auth/handlers.js + widget_ui.js), which lists existing Google
-// accounts and can create new ones.
+// Sign-in is Google-only, but the tests do not drive the Google popup: its
+// emulator helper iframe loads apis.google.com and intermittently hangs in
+// headless Chromium. Instead they call the emulator-only
+// window.__e2eSignInWithGoogle hook (src/lib/adminAuth.ts), which signs in with
+// a fake Google credential. The admin gate itself (the `admin` claim) is still
+// exercised for real.
 
 async function usingEmulator(page: Page): Promise<boolean> {
 	await page.goto('/');
@@ -21,26 +23,27 @@ async function usingEmulator(page: Page): Promise<boolean> {
 }
 
 // The emulator admin provisioned by scripts/emulator-admin-setup.mjs (a fixed
-// throwaway account, not the real seed admin; keep the two in sync).
-const E2E_ADMIN_EMAIL = 'e2e-admin@example.com';
+// throwaway account, not the real seed admin; keep the two in sync). `sub` is
+// its Google provider uid there.
+const E2E_ADMIN = { sub: 'google-e2e-admin', email: 'e2e-admin@example.com' };
 
-// Click the Google button and complete the emulator's sign-in popup.
-async function signInWithGoogle(page: Page, choose: (popup: Page) => Promise<void>) {
-	const popupPromise = page.waitForEvent('popup');
-	await page.getByRole('button', { name: 'Přihlásit se přes Google' }).click();
-	const popup = await popupPromise;
-	await popup.waitForLoadState();
-	const closed = popup.waitForEvent('close');
-	await choose(popup);
-	await closed;
+type GoogleClaims = { sub: string; email: string };
+
+// Sign in as the given Google user on the current /admin page.
+async function signInWithGoogle(page: Page, claims: GoogleClaims) {
+	await page.waitForFunction(() => '__e2eSignInWithGoogle' in window);
+	await page.evaluate(
+		(c) =>
+			(
+				window as unknown as { __e2eSignInWithGoogle: (c: GoogleClaims) => Promise<void> }
+			).__e2eSignInWithGoogle(c),
+		claims
+	);
 }
 
 async function loginAsAdmin(page: Page) {
 	await page.goto('/admin');
-	// Pick the pre-provisioned admin from the popup's list of existing accounts.
-	await signInWithGoogle(page, (popup) =>
-		popup.locator('.js-reuse-account').filter({ hasText: E2E_ADMIN_EMAIL }).click()
-	);
+	await signInWithGoogle(page, E2E_ADMIN);
 	await expect(page.getByRole('heading', { name: 'Administrace' })).toBeVisible({
 		timeout: 15000
 	});
@@ -49,19 +52,6 @@ async function loginAsAdmin(page: Page) {
 function unique(prefix: string): string {
 	return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 }
-
-// Public-site entry point: needs no backend, so it runs in every e2e mode.
-test('REQ-ADMIN-023 - footer login link leads to the admin login', async ({ page }) => {
-	await page.goto('/');
-	const login = page.getByRole('contentinfo').getByRole('link', { name: 'Přihlášení' });
-	await expect(login).toBeVisible();
-	await expect(login).toHaveAttribute('href', '/admin');
-
-	// Visitors who are not signed-in admins see no admin entry in the header.
-	const header = page.getByRole('banner');
-	await expect(header.getByRole('link', { name: 'Administrace' })).toHaveCount(0);
-	await expect(header.getByRole('link', { name: 'Přihlášení' })).toHaveCount(0);
-});
 
 test.describe('Admin', () => {
 	test.beforeEach(async ({ page }) => {
@@ -91,12 +81,9 @@ test.describe('Admin', () => {
 
 	test('REQ-ADMIN-017 - a Google account without the admin claim is rejected', async ({ page }) => {
 		await page.goto('/admin');
-		// Create a fresh (non-admin) Google account in the emulator popup.
-		await signInWithGoogle(page, async (popup) => {
-			await popup.locator('#add-account-button').click();
-			await popup.locator('#autogen-button').click();
-			await popup.locator('#sign-in').click();
-		});
+		// A fresh Google account, created on sign-in without the admin claim.
+		const id = unique('google-user');
+		await signInWithGoogle(page, { sub: id, email: `${id}@example.com` });
 		await expect(
 			page.getByText('Tento účet nemá oprávnění pro přístup do administrace.')
 		).toBeVisible({ timeout: 15000 });

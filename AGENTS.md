@@ -61,9 +61,12 @@ count of available instances. Firestore layout: `categories/{slug}`,
 - **Server** (`src/lib/server/firebaseAdmin.ts`): `getAdmin()` Admin SDK
   singleton. `$lib/server` is server-only by SvelteKit; importing it from the
   browser is a build error (that's the intended guard). Never import it client-side.
-- **Keyless credentials**: no service-account key file is committed. Both the
-  Admin SDK and the scripts resolve credentials as ADC first, else the Firebase
-  CLI refresh token from `firebase login`. Requires `firebase login` locally.
+- **Credentials**: no service-account key file is committed. Locally both the
+  Admin SDK and the scripts are keyless: ADC first, else the Firebase CLI
+  refresh token from `firebase login` (required locally). Deployed servers
+  (Vercel) get a service-account key via the private env var
+  `FIREBASE_SERVICE_ACCOUNT_KEY`, which the Admin SDK prefers when set; see
+  `docs/deployment.md`.
 
 ### Auth flow
 
@@ -120,5 +123,7 @@ new claim to take effect.
 
 Playwright e2e only, under `tests/e2e/` — one file per requirement area. Test
 titles embed the `REQ-*` ID for greppable traceability. A requirement is
-`verified` only once a passing test references its ID. `build.spec.ts` runs
-`pnpm check` and `eslint` as a test, so keep those green.
+`verified` only once a passing test references its ID. Tests cover functional
+behaviour only (state, logic, navigation, forms, auth, locale routing) - no
+tests for styling, animations, fixed copy, SEO metadata, static links or
+tooling; run `pnpm check` / `pnpm lint` directly instead.
