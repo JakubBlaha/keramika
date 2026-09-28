@@ -15,7 +15,7 @@ Package manager is **pnpm** (see `pnpm-workspace.yaml`).
 - `pnpm build` — production build (prerenders the static content pages; needs no database).
 - `pnpm test` / `pnpm test:e2e` — Playwright e2e inside a fresh, throwaway Firebase emulator suite (`scripts/with-emulators.mjs`; fails if `pnpm emulators` is running). Builds and serves the preview itself unless `PLAYWRIGHT_BASE_URL` is set. Extra args go to Playwright (`pnpm test tests/e2e/admin.spec.ts`).
 - `pnpm emulators` — local Firebase emulators (Auth, Firestore, Storage) for development; data persists in `.emulator-data/`. Needs Java 21+ and a global `firebase-tools`.
-- `pnpm seed` — seed the emulators with the catalog in `scripts/seed-data/` (copy + photos) via the dev server's API, and provision the local admin (`scripts/seed.mjs`). `pnpm test` seeds automatically (`tests/global-setup.ts`).
+- `pnpm seed` — seed the emulators with the catalog in `scripts/seed-data/` (copy + photos) via the dev server's API, and provision the local admin (`scripts/seed.mjs`). `pnpm test` seeds automatically (`tests/global-setup.ts`). `node scripts/seed.mjs --production --api https://<site>` seeds the real project through the deployed API (see `docs/deployment.md`).
 - `pnpm grant-admin <email> [--revoke] [--production]` — grant/revoke the `admin` custom claim (emulator by default).
 
 **Never run `pnpm dev`, `pnpm preview`, or any serving command.** The user runs
@@ -77,7 +77,8 @@ count of available instances. Firestore layout: `categories/{slug}`,
   (`vite.config.ts`), read via `src/lib/firebaseEmulator.ts` — deliberately
   not an `.env` value. `scripts/lib/emulator.mjs` mirrors the emulator
   constants and the local admin (`admin@example.com`) for the Node scripts.
-  The only production operation is `pnpm grant-admin … --production`.
+  The only production operations are `--production` on `scripts/grant-admin.mjs`
+  and `scripts/seed.mjs` (`scripts/lib/production.mjs`).
 - **Credentials** (deployed only): no service-account key file is committed.
   Vercel gets one via the private env var `FIREBASE_SERVICE_ACCOUNT_KEY`
   (else ADC); see `docs/deployment.md`.

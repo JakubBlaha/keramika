@@ -15,7 +15,7 @@ passed in the private env var `FIREBASE_SERVICE_ACCOUNT_KEY`
 
 Use Firebase's built-in Admin SDK service account. Every Firebase project has
 one, and it already has the access the API needs (Firestore read/write,
-Storage upload including `makePublic()`, verifying ID tokens).
+Storage uploads, verifying ID tokens).
 
 1. Open the [Firebase console](https://console.firebase.google.com/) → project
    **keramika-4864859** → ⚙ **Project settings** → **Service accounts**.
@@ -74,8 +74,37 @@ Sign in to `/admin` by picking `admin@example.com` in the emulator's Google
 popup. `pnpm test` starts its own throwaway emulators (stop `pnpm emulators`
 first). The emulators need Java 21+ and a global `firebase-tools`.
 
-The one deliberate exception is granting the admin claim to a real user:
-`pnpm grant-admin you@example.com --production` (uses your `firebase login`).
+The deliberate exceptions, both explicit `--production` operations from your
+machine (`scripts/lib/production.mjs`):
+
+- Granting the admin claim to a real user:
+  `pnpm grant-admin you@example.com --production` (uses your `firebase login`).
+- Seeding the real catalog (below).
+
+## Seeding production
+
+`scripts/seed.mjs --production` uploads the photos from
+`scripts/seed-data/images/` and imports `scripts/seed-data/catalog.json`
+through the **deployed** site's API, so the deployment must be up and have
+`FIREBASE_SERVICE_ACCOUNT_KEY`. The import upserts by slug/id: seeded
+categories, products and pieces are overwritten with the seed data; anything
+else is left alone.
+
+The admin area is Google-only, so the script signs in as a temporary admin (a
+custom token with the `admin` claim, deleted afterwards). Signing that token
+needs the service-account key; download one as in step 1 above, then:
+
+```sh
+FIREBASE_SERVICE_ACCOUNT_KEY="$(base64 -i ~/Downloads/keramika-4864859-firebase-adminsdk-*.json)" \
+  node scripts/seed.mjs --production --api https://keramika-snowy.vercel.app
+rm ~/Downloads/keramika-4864859-firebase-adminsdk-*.json
+```
+
+Then delete that extra key in the Google Cloud console (IAM & Admin → Service
+accounts → `firebase-adminsdk-…` → Keys), keeping the one Vercel uses. The web
+API key comes from `PUBLIC_FIREBASE_API_KEY` in `.env` (or `--api-key`).
+Without a key file, the script falls back to signing through IAM, which needs
+the Service Account Token Creator role on your account.
 
 ## Least-privilege alternative
 
@@ -84,7 +113,7 @@ account (Google Cloud console → **IAM & Admin** → **Service accounts** →
 **Create**) with only:
 
 - **Cloud Datastore User** (Firestore read/write)
-- **Storage Object Admin** (uploads, and `makePublic()` on uploaded images)
+- **Storage Object Admin** (image uploads with download tokens)
 
 Verifying sign-in ID tokens needs no role. Then create a JSON key for it
 (**Keys** → **Add key** → **JSON**) and continue from step 2.

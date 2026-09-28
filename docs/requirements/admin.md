@@ -317,3 +317,15 @@ from Firestore/Storage rather than from a static module.
   - And regular visitors do not download the Firebase Auth code just to decide this
 - Test: tests/e2e/admin.spec.ts > REQ-ADMIN-024 (runs under the Firebase emulator, `pnpm test`)
 - Related: REQ-ADMIN-017
+
+### REQ-ADMIN-025 - Photos are downscaled before upload
+
+- Status: verified
+- Priority: must
+- Source: user, 2026-09-28
+- Description: Photos added to a product instance are scaled down in the browser to at most 2000 px on the longer side and re-encoded as JPEG before upload, one photo per request, so large phone photos stay within the hosting's request size limit (4.5 MB on Vercel).
+- Acceptance:
+  - Given an admin adds a photo larger than the upload limit to an instance
+  - When the upload completes
+  - Then it succeeds, and the stored photo is at most 2000 px on its longer side
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-025

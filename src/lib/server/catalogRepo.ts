@@ -16,6 +16,7 @@
 //   products/{slug}
 //   products/{slug}/instances/{instanceId}
 
+import { randomUUID } from 'node:crypto';
 import { getAdmin } from '$lib/server/firebaseAdmin';
 import { useFirebaseEmulator, emulatorStorageUrl } from '$lib/firebaseEmulator';
 import { ApiError } from '$lib/server/apiAuth';
@@ -293,9 +294,14 @@ export async function bulkImport(doc: CatalogDocument): Promise<ImportReport> {
 // ---------------------------------------------------------------------------
 // Instance image upload to Firebase Storage (REQ-API-007, REQ-ADMIN-019)
 //
-// Files are stored under products/<slug>/<instanceId>/<filename> and made
-// publicly readable so the public product detail page can load them. Returns
-// the ordered public URLs; the caller records them on the instance.
+// Files are stored under products/<slug>/<instanceId>/<filename>. Returns
+// their ordered public URLs; the caller records them on the instance.
+//
+// Deployed, each file gets a Firebase download token and the URL carries it,
+// like the client SDK's getDownloadURL(): readable by anyone with the URL,
+// with no dependency on object ACLs (which uniform bucket-level access
+// forbids) or on the deployed storage.rules. Re-uploading a file replaces its
+// token, so older URLs for it stop working.
 // ---------------------------------------------------------------------------
 
 export type UploadFile = {
@@ -314,19 +320,17 @@ export async function uploadInstanceImages(
 
 	for (const file of files) {
 		const path = `products/${productSlug}/${instanceId}/${file.filename}`;
-		const blob = bucket.file(path);
-		await blob.save(file.data, {
+		const token = randomUUID();
+		await bucket.file(path).save(file.data, {
 			contentType: file.contentType,
-			resumable: false
+			resumable: false,
+			metadata: { metadata: { firebaseStorageDownloadTokens: token } }
 		});
-		if (useFirebaseEmulator) {
-			// The Storage emulator has no ACLs; storage.rules already allow public
-			// reads under products/.
-			urls.push(emulatorStorageUrl(bucket.name, path));
-		} else {
-			await blob.makePublic();
-			urls.push(`https://storage.googleapis.com/${bucket.name}/${encodeURI(path)}`);
-		}
+		urls.push(
+			useFirebaseEmulator
+				? emulatorStorageUrl(bucket.name, path)
+				: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(path)}?alt=media&token=${token}`
+		);
 	}
 
 	return urls;

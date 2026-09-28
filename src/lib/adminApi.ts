@@ -9,6 +9,7 @@
 // (via getAdminIdToken), matching src/lib/adminAuth.ts.
 
 import { getAdminIdToken } from '$lib/adminAuth';
+import { downscaleImage } from '$lib/imageResize';
 import type {
 	CategoryRecord,
 	InstanceRecord,
@@ -165,17 +166,23 @@ export async function deleteInstance(productSlug: string, instanceId: string): P
 
 // Uploads one or more image files for an instance and returns their ordered
 // public URLs (REQ-ADMIN-019). The server stores them in Firebase Storage.
+// Each photo is downscaled first and sent in its own request, so no request
+// exceeds the hosting's body size limit (REQ-ADMIN-025).
 export async function uploadInstanceImages(
 	productSlug: string,
 	instanceId: string,
 	files: File[]
 ): Promise<string[]> {
-	const form = new FormData();
-	for (const file of files) form.append('files', file);
-	const res = await fetch(`/api/products/${productSlug}/instances/${instanceId}/images`, {
-		method: 'POST',
-		headers: await authHeaders(),
-		body: form
-	});
-	return (await parse<{ urls: string[] }>(res)).urls;
+	const urls: string[] = [];
+	for (const file of files) {
+		const form = new FormData();
+		form.append('files', await downscaleImage(file));
+		const res = await fetch(`/api/products/${productSlug}/instances/${instanceId}/images`, {
+			method: 'POST',
+			headers: await authHeaders(),
+			body: form
+		});
+		urls.push(...(await parse<{ urls: string[] }>(res)).urls);
+	}
+	return urls;
 }

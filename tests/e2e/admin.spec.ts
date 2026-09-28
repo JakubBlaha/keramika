@@ -412,4 +412,63 @@ test.describe('Admin', () => {
 			timeout: 10000
 		});
 	});
+
+	test('REQ-ADMIN-025, REQ-ADMIN-019 - a large photo is downscaled and stored', async ({
+		page
+	}) => {
+		await loginAsAdmin(page);
+		await page.goto('/admin/kategorie');
+		const catSlug = unique('kat-foto');
+		const catForm = page.locator('form').filter({ hasText: 'Nová kategorie' });
+		await page.locator('input[placeholder="andele"]').fill(catSlug);
+		await catForm.getByLabel('Název (čeština)').fill('Kategorie');
+		await catForm.getByLabel('Název (angličtina)').fill('Category');
+		await catForm.getByLabel('Popis (čeština)').fill('Popis.');
+		await catForm.getByLabel('Popis (angličtina)').fill('Description.');
+		await catForm.getByRole('button', { name: 'Vytvořit kategorii' }).click();
+		await expect(page.getByText(catSlug)).toBeVisible({ timeout: 10000 });
+
+		await page.goto('/admin/produkty/novy');
+		await page.getByLabel('Slug').fill(unique('foto'));
+		await page.getByLabel('Kategorie').selectOption(catSlug);
+		await page.getByLabel('Název (čeština)').fill('Produkt s fotkou');
+		await page.getByLabel('Název (angličtina)').fill('Product with a photo');
+		await page.getByLabel('Krátký popisek (čeština)').fill('Popisek');
+		await page.getByLabel('Krátký popisek (angličtina)').fill('Tagline');
+		await page.getByLabel('Cena (Kč)').fill('300');
+		await page.getByLabel('Velikost').fill('20 cm');
+		await page.getByLabel('Popis (čeština)').fill('Popis.');
+		await page.getByLabel('Popis (angličtina)').fill('Description.');
+		await page.getByLabel('Péče (čeština)').fill('Péče.');
+		await page.getByLabel('Péče (angličtina)').fill('Care.');
+		await page.getByRole('button', { name: 'Vytvořit produkt' }).click();
+		await expect(page.getByRole('heading', { name: 'Upravit produkt' })).toBeVisible({
+			timeout: 10000
+		});
+
+		// A 4000x3000 noisy JPEG, well over the hosting's 4.5 MB request limit.
+		const base64 = await page.evaluate(() => {
+			const canvas = document.createElement('canvas');
+			canvas.width = 4000;
+			canvas.height = 3000;
+			const ctx = canvas.getContext('2d')!;
+			const pixels = ctx.createImageData(canvas.width, canvas.height);
+			for (let i = 0; i < pixels.data.length; i++) pixels.data[i] = Math.random() * 256;
+			ctx.putImageData(pixels, 0, 0);
+			return canvas.toDataURL('image/jpeg', 1).split(',')[1];
+		});
+		const photo = Buffer.from(base64, 'base64');
+		expect(photo.length).toBeGreaterThan(4.5 * 1024 * 1024);
+
+		await page.getByLabel('Označení kusu').fill('#1');
+		await page
+			.getByLabel('Fotografie')
+			.setInputFiles({ name: 'photo.jpg', mimeType: 'image/jpeg', buffer: photo });
+		await page.getByRole('button', { name: 'Přidat kus' }).click();
+
+		// Stored (REQ-ADMIN-019) at most 2000 px on the longer side (REQ-ADMIN-025).
+		const thumb = page.getByRole('img', { name: '#1' });
+		await expect(thumb).toBeVisible({ timeout: 15000 });
+		await expect.poll(() => thumb.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(2000);
+	});
 });

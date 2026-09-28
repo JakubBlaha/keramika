@@ -7,10 +7,9 @@
 //
 // Custom claims can only be set server-side with the Admin SDK. By default this
 // targets the local Auth emulator (like everything local; see
-// src/lib/firebaseEmulator.ts). Granting a real admin is the one deliberate
-// production operation: pass --production, which uses Application Default
-// Credentials or else the Firebase CLI refresh token from `firebase login`, and
-// the project from .firebaserc.
+// src/lib/firebaseEmulator.ts). Granting a real admin is a deliberate
+// production operation: pass --production, which uses your `firebase login`
+// and the project from .firebaserc (scripts/lib/production.mjs).
 //
 // Usage:
 //   node scripts/grant-admin.mjs you@example.com [--revoke]               (emulator)
@@ -19,43 +18,9 @@
 // After running, the user must sign out and sign in again (or wait for their
 // ID token to refresh) so the new claim is picked up by the browser session.
 
-import { existsSync, readFileSync } from 'node:fs';
-import { homedir } from 'node:os';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
-import { initializeApp, applicationDefault, refreshToken } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { assertEmulatorsRunning, emulatorAdminApp } from './lib/emulator.mjs';
-
-// Public Firebase CLI OAuth client. Lets the script run with the developer's
-// `firebase login` credentials, no key file.
-const FIREBASE_CLI_CLIENT_ID =
-	'563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com';
-const FIREBASE_CLI_CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi';
-
-function resolveCredential() {
-	const hasAdc =
-		!!process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-		existsSync(join(homedir(), '.config/gcloud/application_default_credentials.json'));
-	if (hasAdc) return applicationDefault();
-
-	const cliPath = join(homedir(), '.config/configstore/firebase-tools.json');
-	if (existsSync(cliPath)) {
-		const cli = JSON.parse(readFileSync(cliPath, 'utf8'));
-		const rt = cli?.tokens?.refresh_token;
-		if (rt) {
-			return refreshToken({
-				type: 'authorized_user',
-				client_id: FIREBASE_CLI_CLIENT_ID,
-				client_secret: FIREBASE_CLI_CLIENT_SECRET,
-				refresh_token: rt
-			});
-		}
-	}
-	return applicationDefault();
-}
-
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+import { productionAdminApp, productionProjectId } from './lib/production.mjs';
 
 // --- args ------------------------------------------------------------------
 const args = process.argv.slice(2);
@@ -67,24 +32,12 @@ if (!email) {
 	process.exit(1);
 }
 
-async function productionApp() {
-	const rc = JSON.parse(readFileSync(join(root, '.firebaserc'), 'utf8'));
-	const projectId = rc.projects?.default;
-	if (!projectId) {
-		console.error('No default project in .firebaserc');
-		process.exit(1);
-	}
-	console.log(`Targeting the PRODUCTION project ${projectId}.`);
-	// Clear any emulator hosts so the Admin SDK cannot silently hit an emulator.
-	delete process.env.FIREBASE_AUTH_EMULATOR_HOST;
-	return initializeApp({ credential: resolveCredential(), projectId });
-}
-
 // --- run --------------------------------------------------------------------
 async function main() {
 	let app;
 	if (production) {
-		app = await productionApp();
+		console.log(`Targeting the PRODUCTION project ${productionProjectId()}.`);
+		app = productionAdminApp();
 	} else {
 		await assertEmulatorsRunning();
 		app = emulatorAdminApp();

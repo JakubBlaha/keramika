@@ -148,12 +148,13 @@ When one test covers several requirements, its title lists all their IDs.
 | REQ-ADMIN-016 | Delete a category | verified | tests/e2e/admin.spec.ts (emulator) |
 | REQ-ADMIN-017 | Authentication via Firebase Authentication | verified | tests/e2e/admin.spec.ts (emulator) |
 | REQ-ADMIN-018 | Catalog data stored in Cloud Firestore | verified | tests/e2e/admin.spec.ts (emulator) |
-| REQ-ADMIN-019 | Instance images stored in Firebase Storage | verified | tests/e2e/admin.spec.ts (emulator) |
+| REQ-ADMIN-019 | Instance images stored in Firebase Storage | verified | tests/e2e/admin.spec.ts |
 | REQ-ADMIN-020 | List orders in admin | implemented | todo |
 | REQ-ADMIN-021 | View an order's detail | implemented | todo |
 | REQ-ADMIN-022 | Mark an order as resolved or cancelled | implemented | todo |
 | REQ-ADMIN-023 | Footer login link | implemented | - |
 | REQ-ADMIN-024 | Admin shortcut in the header for signed-in admins | implemented | tests/e2e/admin.spec.ts (emulator) |
+| REQ-ADMIN-025 | Photos are downscaled before upload | verified | tests/e2e/admin.spec.ts |
 | REQ-API-001 | Single catalog write API shared by UI and seeding | implemented | todo |
 | REQ-API-002 | Write endpoints require an authenticated admin | implemented | todo |
 | REQ-API-003 | List and read endpoints for catalog entities | implemented | todo |
