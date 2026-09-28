@@ -37,8 +37,10 @@ export default defineConfig({
 			// functions.
 			// The runtime is pinned explicitly because adapter-vercel otherwise
 			// infers it from the local Node version at build time, which breaks
-			// on Node versions newer than what Vercel currently supports.
-			adapter: adapter({ runtime: 'nodejs22.x' }),
+			// on Node versions newer than what Vercel currently supports. It must
+			// be Node 24: firebase-admin's jwks-rsa require()s the ESM-only jose,
+			// which Vercel's Node 22 functions reject with ERR_REQUIRE_ESM.
+			adapter: adapter({ runtime: 'nodejs24.x' }),
 
 			prerender: {
 				// Every prerenderable route in Czech, plus their English versions
