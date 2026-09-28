@@ -36,7 +36,13 @@ export default defineConfig({
 				// Build then serve the production preview. We intentionally do NOT
 				// use the dev server here (the user runs that separately). To test
 				// against a running dev server, set PLAYWRIGHT_BASE_URL instead.
-				command: `pnpm build && pnpm preview --port ${PORT}`,
+				//
+				// Vite is invoked directly, not via `pnpm preview`: pnpm starts the
+				// script in its own process group, so Playwright's shutdown (which
+				// kills the web server's process group) misses it. The orphaned
+				// preview then keeps the output pipe open, Playwright never exits,
+				// and the stale server squats the port for the next run.
+				command: `node_modules/.bin/vite build && node_modules/.bin/vite preview --port ${PORT} --strictPort`,
 				url: baseURL,
 				reuseExistingServer: !process.env.CI,
 				timeout: 120_000
