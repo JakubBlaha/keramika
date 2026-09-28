@@ -1,9 +1,13 @@
 # Deployment: server credentials
 
+Only builds on Vercel (which sets `VERCEL=1`) talk to the real Firebase
+project; every local run uses the emulator suite (see "Local development"
+below). The Vercel project therefore needs the `PUBLIC_FIREBASE_*` web app
+config from `.env.example` in its environment variables.
+
 The public site is static, but the admin area's write API (`/api/*`) runs
 server-side with the Firebase Admin SDK and needs Google Cloud credentials for
-Firestore and Storage. Locally it uses your `firebase login` (or gcloud ADC).
-A deployed server (Vercel) has neither, so it needs a **service-account key**,
+Firestore and Storage. Vercel has none, so it needs a **service-account key**,
 passed in the private env var `FIREBASE_SERVICE_ACCOUNT_KEY`
 (see `src/lib/server/firebaseAdmin.ts`).
 
@@ -54,9 +58,24 @@ Delete a key immediately if it may have leaked.
 
 ## Local development
 
-Not needed: locally the API uses your `firebase login`. If you do set
-`FIREBASE_SERVICE_ACCOUNT_KEY` in `.env`, it takes precedence over the local
-fallbacks.
+Not needed. Everything run locally (dev server, preview, e2e tests, scripts)
+uses the Firebase emulator suite under the offline `demo-keramika` project, so
+it needs no credentials and cannot reach production data. This is fixed at
+build time (`__USE_FIREBASE_EMULATOR__` in `vite.config.ts`), not an `.env`
+switch.
+
+```sh
+pnpm emulators   # terminal 1: Auth, Firestore, Storage; data kept in .emulator-data/
+pnpm dev         # terminal 2
+pnpm seed        # once per fresh .emulator-data: catalog + local admin
+```
+
+Sign in to `/admin` by picking `admin@example.com` in the emulator's Google
+popup. `pnpm test` starts its own throwaway emulators (stop `pnpm emulators`
+first). The emulators need Java 21+ and a global `firebase-tools`.
+
+The one deliberate exception is granting the admin claim to a real user:
+`pnpm grant-admin you@example.com --production` (uses your `firebase login`).
 
 ## Least-privilege alternative
 

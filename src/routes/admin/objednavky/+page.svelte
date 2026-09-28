@@ -19,7 +19,8 @@
 			.then((result) => {
 				if (!cancelled) orders = result;
 			})
-			.catch(() => {
+			.catch((err) => {
+				console.error('Loading orders failed:', err);
 				if (!cancelled) error = true;
 			})
 			.finally(() => {

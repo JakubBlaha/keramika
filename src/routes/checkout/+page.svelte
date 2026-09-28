@@ -4,11 +4,13 @@
 	// happens in store on pickup, so submitting this form places a
 	// *reservation*, not a paid order (REQ-CHECKOUT-007..009).
 	import { cart } from '$lib/cart.svelte';
-	import { getProduct, coverImage } from '$lib/catalog';
+	import { coverImage } from '$lib/catalog';
 	import type { Product, ProductInstance } from '$lib/catalog';
 	import { placeOrder, type OrderItem } from '$lib/orders';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
+
+	let { data } = $props();
 
 	type ResolvedLine = {
 		instance: ProductInstance;
@@ -20,11 +22,10 @@
 	const resolvedLines = $derived(
 		cart.lines
 			.map((line): ResolvedLine | null => {
-				const found = getProduct(line.productSlug);
-				if (!found) return null;
-				const instance = found.product.instances.find((i) => i.id === line.instanceId);
-				if (!instance) return null;
-				return { instance, product: found.product };
+				const product = data.products.find((p) => p.slug === line.productSlug);
+				const instance = product?.instances.find((i) => i.id === line.instanceId);
+				if (!product || !instance) return null;
+				return { instance, product };
 			})
 			.filter((l): l is ResolvedLine => l !== null)
 	);
@@ -76,7 +77,7 @@
 		try {
 			const items: OrderItem[] = resolvedLines.map((l) => ({
 				instanceId: l.instance.id,
-				title: l.product.name(),
+				title: l.product.name,
 				label: l.instance.label,
 				price: String(unitPrice(l))
 			}));
@@ -251,13 +252,13 @@
 								<div class="aspect-square w-14 shrink-0 overflow-hidden rounded-[4px] bg-white">
 									<img
 										src={line.instance.images[0] ?? coverImage(line.product)}
-										alt={line.product.name()}
+										alt={line.product.name}
 										class="h-full w-full object-cover"
 										loading="lazy"
 									/>
 								</div>
 								<div class="flex flex-1 flex-col gap-[0.1rem]">
-									<span class="text-[0.9rem] font-medium">{line.product.name()}</span>
+									<span class="text-[0.9rem] font-medium">{line.product.name}</span>
 									<span class="text-[0.78rem] text-ink-soft">
 										{m.product_instance_label({ label: line.instance.label })}
 									</span>

@@ -1,12 +1,5 @@
 <script lang="ts">
-	import {
-		getProduct,
-		getRelated,
-		availableCount,
-		totalCount,
-		coverImage,
-		type ProductInstance
-	} from '$lib/catalog';
+	import { availableCount, totalCount, coverImage, type ProductInstance } from '$lib/catalog';
 	import { cart } from '$lib/cart.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
@@ -16,11 +9,9 @@
 
 	let { data } = $props();
 
-	// Resolve product/category from the language-neutral slug provided by load().
-	const found = $derived(getProduct(data.slug)!);
-	const product = $derived(found.product);
-	const category = $derived(found.category);
-	const related = $derived(getRelated(data.slug));
+	const product = $derived(data.product);
+	const category = $derived(data.category);
+	const related = $derived(data.related);
 
 	const available = $derived(availableCount(product));
 	const total = $derived(totalCount(product));
@@ -34,7 +25,7 @@
 
 	$effect(() => {
 		// React to product changes on client-side navigation.
-		void data.slug;
+		void product.slug;
 		const firstAvailable = product.instances.find((i) => i.available);
 		selectedId = firstAvailable ? firstAvailable.id : (product.instances[0]?.id ?? null);
 		activeImage = 0;
@@ -85,7 +76,7 @@
 	// Confirmation shown under the button after adding (reset per product).
 	let justAdded = $state(false);
 	$effect(() => {
-		void data.slug;
+		void product.slug;
 		justAdded = false;
 	});
 
@@ -103,8 +94,8 @@
 </script>
 
 <svelte:head>
-	<title>{product.name()} · {m.brand_name()}</title>
-	<meta name="description" content={product.description()} />
+	<title>{product.name} · {m.brand_name()}</title>
+	<meta name="description" content={product.description} />
 </svelte:head>
 
 <article class="mx-auto max-w-site px-4 pt-10 pb-16">
@@ -123,7 +114,7 @@
 					<img
 						bind:this={heroEl}
 						src={heroImage}
-						alt={product.name()}
+						alt={product.name}
 						class="h-full w-full object-cover"
 						style:view-transition-name="product-{product.slug}"
 						loading="eager"
@@ -139,11 +130,11 @@
 							class="aspect-square w-16 cursor-pointer overflow-hidden rounded-[4px] border-2 transition"
 							class:border-accent={activeImage === i}
 							class:border-transparent={activeImage !== i}
-							aria-label={product.name()}
+							aria-label={product.name}
 							aria-pressed={activeImage === i}
 							onclick={() => showImage(() => (activeImage = i))}
 						>
-							<img src={img} alt={product.name()} class="h-full w-full object-cover" />
+							<img src={img} alt={product.name} class="h-full w-full object-cover" />
 						</button>
 					{/each}
 				</div>
@@ -153,8 +144,8 @@
 		<!-- Product info -->
 		<div class="flex rise-children flex-col gap-4 md:w-1/2">
 			<div class="flex flex-col gap-[0.4rem]">
-				<span class="eyebrow">{category.name()}</span>
-				<h1 class="text-[2rem] leading-tight">{product.name()}</h1>
+				<span class="eyebrow">{category.name}</span>
+				<h1 class="text-[2rem] leading-tight">{product.name}</h1>
 				<span class="text-[1.4rem] text-accent-dark">
 					{m.price_czk({ amount: currentPrice })}
 				</span>
@@ -171,7 +162,7 @@
 				{/if}
 			</p>
 
-			<p class="text-ink-soft">{product.description()}</p>
+			<p class="text-ink-soft">{product.description}</p>
 
 			<!-- Specifications -->
 			<dl class="flex flex-col gap-1 border-y border-line py-4 text-[0.9rem]">
@@ -306,7 +297,7 @@
 					</button>
 					{#if openSection === 'about'}
 						<p transition:slide={{ duration: 350 }} class="pb-4 text-[0.9rem] text-ink-soft">
-							{product.description()}
+							{product.description}
 						</p>
 					{/if}
 				</section>
@@ -327,7 +318,7 @@
 					</button>
 					{#if openSection === 'care'}
 						<p transition:slide={{ duration: 350 }} class="pb-4 text-[0.9rem] text-ink-soft">
-							{product.care()}
+							{product.care}
 						</p>
 					{/if}
 				</section>

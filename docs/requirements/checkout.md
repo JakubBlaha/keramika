@@ -77,7 +77,7 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given a valid, submitted order
   - When submission succeeds
   - Then a confirmation page is shown to the buyer
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-006 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-006 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-CHECKOUT-007 - Pickup in store is the only fulfillment
 
@@ -125,4 +125,4 @@ no shipping. See REQ-CHECKOUT-007..010. REQ-CHECKOUT-003 and REQ-CHECKOUT-004
   - Given a non-empty cart, valid contact details (REQ-CHECKOUT-002) and accepted terms (REQ-CHECKOUT-005)
   - When the buyer submits the checkout
   - Then the reservation is placed, the reserved instances become unavailable to others (REQ-CATALOG-003, REQ-CART-004), and the confirmation page (REQ-CHECKOUT-006) is shown
-- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-010 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/checkout.spec.ts > REQ-CHECKOUT-010 (runs under the Firebase emulator, `pnpm test`)

@@ -19,18 +19,27 @@ import {
 	PUBLIC_FIREBASE_PROJECT_ID,
 	PUBLIC_FIREBASE_STORAGE_BUCKET,
 	PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-	PUBLIC_FIREBASE_APP_ID,
-	PUBLIC_FIREBASE_EMULATOR
+	PUBLIC_FIREBASE_APP_ID
 } from '$env/static/public';
+import {
+	useFirebaseEmulator,
+	EMULATOR_HOST,
+	EMULATOR_PORTS,
+	EMULATOR_WEB_CONFIG
+} from '$lib/firebaseEmulator';
 
-const firebaseConfig = {
-	apiKey: PUBLIC_FIREBASE_API_KEY,
-	authDomain: PUBLIC_FIREBASE_AUTH_DOMAIN,
-	projectId: PUBLIC_FIREBASE_PROJECT_ID,
-	storageBucket: PUBLIC_FIREBASE_STORAGE_BUCKET,
-	messagingSenderId: PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-	appId: PUBLIC_FIREBASE_APP_ID
-};
+// Local builds use the offline demo project on the emulators and never see the
+// real PUBLIC_FIREBASE_* config (see src/lib/firebaseEmulator.ts).
+const firebaseConfig = useFirebaseEmulator
+	? EMULATOR_WEB_CONFIG
+	: {
+			apiKey: PUBLIC_FIREBASE_API_KEY,
+			authDomain: PUBLIC_FIREBASE_AUTH_DOMAIN,
+			projectId: PUBLIC_FIREBASE_PROJECT_ID,
+			storageBucket: PUBLIC_FIREBASE_STORAGE_BUCKET,
+			messagingSenderId: PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+			appId: PUBLIC_FIREBASE_APP_ID
+		};
 
 export type FirebaseServices = {
 	app: FirebaseApp;
@@ -58,14 +67,13 @@ export function getFirebase(): FirebaseServices {
 		storage: getStorage(app)
 	};
 
-	// When PUBLIC_FIREBASE_EMULATOR is set (e.g. during e2e tests), point every
-	// service at the local Firebase emulator suite instead of the real backend.
-	// This keeps tests that exercise real writes (checkout -> Firestore) hermetic
-	// and offline. The default ports match firebase.json.
-	if (PUBLIC_FIREBASE_EMULATOR === 'true') {
-		connectAuthEmulator(services.auth, 'http://127.0.0.1:9099', { disableWarnings: true });
-		connectFirestoreEmulator(services.db, '127.0.0.1', 8080);
-		connectStorageEmulator(services.storage, '127.0.0.1', 9199);
+	// Every local build points all services at the emulator suite.
+	if (useFirebaseEmulator) {
+		connectAuthEmulator(services.auth, `http://${EMULATOR_HOST}:${EMULATOR_PORTS.auth}`, {
+			disableWarnings: true
+		});
+		connectFirestoreEmulator(services.db, EMULATOR_HOST, EMULATOR_PORTS.firestore);
+		connectStorageEmulator(services.storage, EMULATOR_HOST, EMULATOR_PORTS.storage);
 	}
 
 	return services;

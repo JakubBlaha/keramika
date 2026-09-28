@@ -19,8 +19,8 @@ import {
 	onIdTokenChanged,
 	type User
 } from 'firebase/auth';
-import { PUBLIC_FIREBASE_EMULATOR } from '$env/static/public';
 import { getFirebase } from '$lib/firebase';
+import { useFirebaseEmulator } from '$lib/firebaseEmulator';
 import { setAdminHint } from '$lib/adminHint.svelte';
 
 // The reactive admin session, consumed by the admin layout and pages.
@@ -65,9 +65,9 @@ function start(): void {
 	}
 	// E2E only: lets tests sign in as a Google user without the sign-in popup,
 	// whose helper iframe is flaky in headless Chromium. The Auth emulator
-	// accepts an unsigned JSON id_token. PUBLIC_FIREBASE_EMULATOR is inlined at
-	// build time, so production builds drop this branch entirely.
-	if (PUBLIC_FIREBASE_EMULATOR === 'true') {
+	// accepts an unsigned JSON id_token. The flag is inlined at build time, so
+	// production builds drop this branch entirely.
+	if (useFirebaseEmulator) {
 		(window as unknown as { __e2eSignInWithGoogle: unknown }).__e2eSignInWithGoogle =
 			async (claims: { sub: string; email: string }) => {
 				const idToken = JSON.stringify({ ...claims, email_verified: true });

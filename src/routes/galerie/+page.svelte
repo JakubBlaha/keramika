@@ -2,26 +2,28 @@
 	// Gallery of every unique piece (instance), grouped by product. The grid is
 	// photos only; stock status and the buy / view-product actions appear only
 	// in the fullscreen view (REQ-GALLERY-002..006).
-	import { allProducts, type Product, type ProductInstance } from '$lib/catalog';
+	import type { Product, ProductInstance } from '$lib/catalog';
 	import { cart } from '$lib/cart.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import { EASE_SOFT, prefersReducedMotion, reveal } from '$lib/motion';
 
+	let { data } = $props();
+
 	type Item = { product: Product; instance: ProductInstance; index: number };
 
 	// Sections per product; `index` is the position in the flat list so the
 	// fullscreen view can step across product boundaries.
-	const sections = (() => {
+	const sections = $derived.by(() => {
 		let index = 0;
-		return allProducts()
+		return data.products
 			.filter((product) => product.instances.length > 0)
 			.map((product) => ({
 				product,
 				items: product.instances.map((instance): Item => ({ product, instance, index: index++ }))
 			}));
-	})();
-	const items = sections.flatMap((s) => s.items);
+	});
+	const items = $derived(sections.flatMap((s) => s.items));
 
 	let dialog = $state<HTMLDialogElement>();
 	let openIndex = $state<number | null>(null);
@@ -55,7 +57,7 @@
 	}
 
 	function label(item: Item): string {
-		return `${item.product.name()} ${item.instance.label}`;
+		return `${item.product.name} ${item.instance.label}`;
 	}
 
 	// Lock page scroll behind the fullscreen view. The teardown also runs when
@@ -105,7 +107,7 @@
 		{#each sections as section (section.product.slug)}
 			<section aria-labelledby="gallery-{section.product.slug}">
 				<h2 id="gallery-{section.product.slug}" class="mb-4 text-[1.6rem]">
-					{section.product.name()}
+					{section.product.name}
 				</h2>
 				<ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4">
 					{#each section.items as item (item.instance.id)}

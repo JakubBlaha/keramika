@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cart } from '$lib/cart.svelte';
-	import { getProduct, coverImage } from '$lib/catalog';
+	import { coverImage } from '$lib/catalog';
 	import type { Product, ProductInstance } from '$lib/catalog';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
@@ -10,6 +10,8 @@
 	// Resolve each cart line to its live product/instance data. Lines that
 	// reference a product/instance that no longer exists are skipped rather
 	// than crashing the page.
+	let { data } = $props();
+
 	type ResolvedLine = {
 		instance: ProductInstance;
 		product: Product;
@@ -18,11 +20,10 @@
 	const resolvedLines = $derived(
 		cart.lines
 			.map((line): ResolvedLine | null => {
-				const found = getProduct(line.productSlug);
-				if (!found) return null;
-				const instance = found.product.instances.find((i) => i.id === line.instanceId);
-				if (!instance) return null;
-				return { instance, product: found.product };
+				const product = data.products.find((p) => p.slug === line.productSlug);
+				const instance = product?.instances.find((i) => i.id === line.instanceId);
+				if (!product || !instance) return null;
+				return { instance, product };
 			})
 			.filter((l): l is ResolvedLine => l !== null)
 	);
@@ -94,7 +95,7 @@
 						>
 							<img
 								src={line.instance.images[0] ?? coverImage(line.product)}
-								alt={line.product.name()}
+								alt={line.product.name}
 								class="h-full w-full object-cover"
 								loading="lazy"
 							/>
@@ -105,7 +106,7 @@
 								href={localizeHref('/produkt/' + line.product.slug)}
 								class="font-medium hover:text-accent-dark"
 							>
-								{line.product.name()}
+								{line.product.name}
 							</a>
 							<span class="text-[0.8rem] text-ink-soft">
 								{m.product_instance_label({ label: line.instance.label })} · {line.product.size}
@@ -118,7 +119,7 @@
 						<button
 							type="button"
 							class="cursor-pointer border-none bg-transparent p-2 text-ink-soft transition-colors hover:text-accent-dark"
-							aria-label={m.cart_remove_line({ title: line.product.name() })}
+							aria-label={m.cart_remove_line({ title: line.product.name })}
 							onclick={() => removeLine(line.instance.id)}
 						>
 							<svg

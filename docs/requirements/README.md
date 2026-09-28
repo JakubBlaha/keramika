@@ -79,10 +79,11 @@ When one test covers several requirements, its title lists all their IDs.
 | REQ-CATALOG-003  | Each instance is sold exactly once                       | approved    | todo                                  |
 | REQ-CATALOG-004  | Product availability equals count of available instances | verified    | tests/e2e/product-detail.spec.ts      |
 | REQ-CATALOG-005  | Cover image comes from first available instance          | implemented | -                                     |
-| REQ-CATALOG-006  | Copy fields are localized, data fields are neutral       | implemented | -                                     |
+| REQ-CATALOG-006  | Copy fields are localized, data fields are neutral       | verified    | tests/e2e/catalog.spec.ts             |
 | REQ-CATALOG-007  | Products are grouped into categories                     | verified    | tests/e2e/listing.spec.ts             |
 | REQ-CATALOG-008  | Related products come from the same category             | verified    | tests/e2e/catalog.spec.ts             |
 | REQ-CATALOG-009  | Product data model fields                                | draft       | todo                                  |
+| REQ-CATALOG-010  | The public site shows the catalog stored in the database | verified    | tests/e2e/admin.spec.ts               |
 | REQ-PRODUCT-001  | Image gallery follows the selected instance              | implemented | -                                     |
 | REQ-PRODUCT-002  | Instance picker lets the buyer choose a piece            | verified    | tests/e2e/product-detail.spec.ts      |
 | REQ-PRODUCT-003  | Sold instances are not selectable                        | verified    | tests/e2e/product-detail.spec.ts      |
@@ -171,7 +172,7 @@ When one test covers several requirements, its title lists all their IDs.
 | REQ-I18N-001 | Czech default, English prefixed | verified | tests/e2e/i18n.spec.ts |
 | REQ-I18N-002 | All copy via message functions in both locales | verified | tests/e2e/i18n.spec.ts |
 | REQ-I18N-003 | Internal links respect the active locale | verified | tests/e2e/i18n.spec.ts |
-| REQ-I18N-004 | Every route prerenders in both locales | verified | tests/e2e/i18n.spec.ts |
+| REQ-I18N-004 | Every route is served in both locales | verified | tests/e2e/i18n.spec.ts |
 | REQ-BUILD-001 | check, lint and build must pass | implemented | - |
 | REQ-BUILD-002 | Do not run the dev server | implemented | n/a |
 | REQ-BUILD-003 | Style with Tailwind CSS v4 | implemented | - |

@@ -1,29 +1,21 @@
 <script lang="ts">
-	import { allProducts, coverImage, getProduct } from '$lib/catalog';
 	import { reveal } from '$lib/motion';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import ProductGrid from '$lib/components/ProductGrid.svelte';
 
-	// Draft homepage - placeholder content, no real data/logic yet.
+	let { data } = $props();
+
 	const values = $derived([
 		{ title: m.value_love_title(), text: m.value_love_text() },
 		{ title: m.value_motifs_title(), text: m.value_motifs_text() },
 		{ title: m.value_original_title(), text: m.value_original_text() }
 	]);
 
-	// Show the first catalog products as "featured" - enough for at least two
-	// rows of the 4-column grid (REQ-HOME-003). These link to their real
-	// detail pages.
-	const featured = $derived(allProducts().slice(0, 8));
-
-	// Real pieces for the hero collage: one large photo, two smaller ones.
-	const heroPieces = $derived(
-		['dubanek', 'andel', 'listek'].flatMap((slug) => {
-			const found = getProduct(slug);
-			return found ? [{ src: coverImage(found.product), alt: found.product.name() }] : [];
-		})
-	);
+	// Featured products (REQ-HOME-003) and the hero collage's pieces (one large
+	// photo, two smaller ones) come from the catalog in the database.
+	const featured = $derived(data.featured);
+	const heroPieces = $derived(data.heroPieces);
 </script>
 
 <svelte:head>

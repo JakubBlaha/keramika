@@ -4,7 +4,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import { EMAIL_REVERSED, PHONE_REVERSED, decodeContact, formatPhone } from '$lib/contact';
-	import { PUBLIC_FIREBASE_EMULATOR } from '$env/static/public';
+	import { useFirebaseEmulator } from '$lib/firebaseEmulator';
 	import MailIcon from '$lib/components/MailIcon.svelte';
 	import PhoneIcon from '$lib/components/PhoneIcon.svelte';
 	import { onNavigate } from '$app/navigation';
@@ -27,12 +27,10 @@
 		});
 	});
 
-	// Expose whether the Firebase client is wired to the local emulator so the
-	// e2e checkout tests (which submit real reservations) can detect it. No
-	// effect in normal use; the flag is empty in production builds.
+	// Expose whether the Firebase client is wired to the local emulator. The e2e
+	// tests also wait for this attribute as a sign that the page has hydrated.
 	$effect(() => {
-		document.documentElement.dataset.firebaseEmulator =
-			PUBLIC_FIREBASE_EMULATOR === 'true' ? 'true' : 'false';
+		document.documentElement.dataset.firebaseEmulator = String(useFirebaseEmulator);
 	});
 
 	// Contact details are only decoded + revealed after an explicit click, so

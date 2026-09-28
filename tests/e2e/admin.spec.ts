@@ -4,11 +4,11 @@ import { expect, test, type Page } from '@playwright/test';
 // instances) under /admin. Test titles carry the requirement ID for
 // traceability. See docs/requirements/admin.md.
 //
-// The admin area is Firebase-backed (Auth + Firestore + Storage), so every
-// test here needs a real backend and runs only against the Firebase emulator
-// suite (`pnpm test:e2e:emulator`, which also provisions the e2e admin as a
-// Google-linked account via scripts/emulator-admin-setup.mjs). Tests are
-// skipped otherwise.
+// The admin area is Firebase-backed (Auth + Firestore + Storage). `pnpm test`
+// runs against a fresh Firebase emulator suite; the global setup's seed
+// provisions the local admin as a Google-linked account (scripts/seed.mjs).
+// These specs run after the public-site ones (see playwright.config.ts), since
+// they change the catalog those assert on.
 //
 // Sign-in is Google-only, but the tests do not drive the Google popup: its
 // emulator helper iframe loads apis.google.com and intermittently hangs in
@@ -17,15 +17,9 @@ import { expect, test, type Page } from '@playwright/test';
 // a fake Google credential. The admin gate itself (the `admin` claim) is still
 // exercised for real.
 
-async function usingEmulator(page: Page): Promise<boolean> {
-	await page.goto('/');
-	return page.evaluate(() => document.documentElement.dataset.firebaseEmulator === 'true');
-}
-
-// The emulator admin provisioned by scripts/emulator-admin-setup.mjs (a fixed
-// throwaway account, not the real seed admin; keep the two in sync). `sub` is
-// its Google provider uid there.
-const E2E_ADMIN = { sub: 'google-e2e-admin', email: 'e2e-admin@example.com' };
+// LOCAL_ADMIN from scripts/lib/emulator.mjs (keep in sync). `sub` is its Google
+// provider uid.
+const E2E_ADMIN = { sub: 'google-local-admin', email: 'admin@example.com' };
 
 type GoogleClaims = { sub: string; email: string };
 
@@ -54,13 +48,6 @@ function unique(prefix: string): string {
 }
 
 test.describe('Admin', () => {
-	test.beforeEach(async ({ page }) => {
-		test.skip(
-			!(await usingEmulator(page)),
-			'Requires the Firebase emulator (pnpm test:e2e:emulator)'
-		);
-	});
-
 	test('REQ-ADMIN-002 - unauthenticated visitors see only the login form', async ({ page }) => {
 		await page.goto('/admin');
 		await expect(page.getByRole('heading', { name: 'Přihlášení' })).toBeVisible();
@@ -162,7 +149,7 @@ test.describe('Admin', () => {
 
 	test('REQ-ADMIN-016 - deleting a category with products is blocked', async ({ page }) => {
 		await loginAsAdmin(page);
-		// "andele" ships in the placeholder catalog and has products once seeded;
+		// "andele" ships in the seed catalog and has products once seeded;
 		// if it is not present yet in this emulator run, this test is a no-op via
 		// the category not being found, so create a category + product pairing
 		// explicitly to make the guard deterministic.
@@ -212,6 +199,51 @@ test.describe('Admin', () => {
 		await loginAsAdmin(page);
 		await page.goto('/admin/produkty');
 		await expect(page.getByRole('heading', { name: 'Produkty' })).toBeVisible();
+	});
+
+	test('REQ-CATALOG-010 - a product created in the admin appears on the public site', async ({
+		page
+	}) => {
+		await loginAsAdmin(page);
+
+		await page.goto('/admin/kategorie');
+		const catSlug = unique('verejna');
+		const catForm = page.locator('form').filter({ hasText: 'Nová kategorie' });
+		await page.locator('input[placeholder="andele"]').fill(catSlug);
+		await catForm.getByLabel('Název (čeština)').fill('Veřejná kategorie');
+		await catForm.getByLabel('Název (angličtina)').fill('Public category');
+		await catForm.getByLabel('Popis (čeština)').fill('Popis.');
+		await catForm.getByLabel('Popis (angličtina)').fill('Description.');
+		await catForm.getByRole('button', { name: 'Vytvořit kategorii' }).click();
+		await expect(page.getByText(catSlug)).toBeVisible({ timeout: 10000 });
+
+		await page.goto('/admin/produkty/novy');
+		const prodSlug = unique('verejny');
+		await page.getByLabel('Slug').fill(prodSlug);
+		await page.getByLabel('Kategorie').selectOption(catSlug);
+		await page.getByLabel('Název (čeština)').fill('Veřejný produkt');
+		await page.getByLabel('Název (angličtina)').fill('Public product');
+		await page.getByLabel('Krátký popisek (čeština)').fill('Popisek');
+		await page.getByLabel('Krátký popisek (angličtina)').fill('Tagline');
+		await page.getByLabel('Cena (Kč)').fill('555');
+		await page.getByLabel('Velikost').fill('7 cm');
+		await page.getByLabel('Popis (čeština)').fill('Popis produktu.');
+		await page.getByLabel('Popis (angličtina)').fill('Product description.');
+		await page.getByLabel('Péče (čeština)').fill('Péče.');
+		await page.getByLabel('Péče (angličtina)').fill('Care.');
+		await page.getByRole('button', { name: 'Vytvořit produkt' }).click();
+		await expect(page.getByRole('heading', { name: 'Upravit produkt' })).toBeVisible({
+			timeout: 10000
+		});
+
+		// The public category listing and product page show it right away.
+		await page.goto('/produkty/' + catSlug);
+		await expect(page.getByRole('heading', { level: 1, name: 'Veřejná kategorie' })).toBeVisible();
+		await expect(page.locator(`a[href="/produkt/${prodSlug}"]`)).toBeVisible();
+
+		await page.goto('/produkt/' + prodSlug);
+		await expect(page.getByRole('heading', { level: 1, name: 'Veřejný produkt' })).toBeVisible();
+		await expect(page.getByText('555 Kč')).toBeVisible();
 	});
 
 	test('REQ-ADMIN-006 - admin can create a product', async ({ page }) => {

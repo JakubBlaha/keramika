@@ -5,30 +5,30 @@
 // proves identity; without this claim the user is
 // authenticated but rejected by the layout gate and stays on the login page.
 //
-// Custom claims can only be set server-side with the Admin SDK. This script
-// does that using the same keyless credential resolution as scripts/seed.mjs
-// and src/lib/server/firebaseAdmin.ts: it prefers Application Default
-// Credentials, otherwise falls back to the Firebase CLI refresh token from
-// `firebase login`. No service-account key file is needed.
+// Custom claims can only be set server-side with the Admin SDK. By default this
+// targets the local Auth emulator (like everything local; see
+// src/lib/firebaseEmulator.ts). Granting a real admin is the one deliberate
+// production operation: pass --production, which uses Application Default
+// Credentials or else the Firebase CLI refresh token from `firebase login`, and
+// the project from .firebaserc.
 //
 // Usage:
-//   node scripts/grant-admin.mjs you@example.com
-//   node scripts/grant-admin.mjs you@example.com --revoke
+//   node scripts/grant-admin.mjs you@example.com [--revoke]               (emulator)
+//   node scripts/grant-admin.mjs you@example.com [--revoke] --production  (real project)
 //
 // After running, the user must sign out and sign in again (or wait for their
 // ID token to refresh) so the new claim is picked up by the browser session.
-//
-// Requires: `firebase login` completed and PUBLIC_FIREBASE_PROJECT_ID in .env.
 
 import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { initializeApp, applicationDefault, refreshToken, getApps } from 'firebase-admin/app';
+import { initializeApp, applicationDefault, refreshToken } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
+import { assertEmulatorsRunning, emulatorAdminApp } from './lib/emulator.mjs';
 
-// Public Firebase CLI OAuth client (same one the API and seed use). Lets the
-// script run with the developer's `firebase login` credentials, no key file.
+// Public Firebase CLI OAuth client. Lets the script run with the developer's
+// `firebase login` credentials, no key file.
 const FIREBASE_CLI_CLIENT_ID =
 	'563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com';
 const FIREBASE_CLI_CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi';
@@ -55,44 +55,40 @@ function resolveCredential() {
 	return applicationDefault();
 }
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, '..');
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 // --- args ------------------------------------------------------------------
 const args = process.argv.slice(2);
 const revoke = args.includes('--revoke');
+const production = args.includes('--production');
 const email = args.find((a) => !a.startsWith('--'));
 if (!email) {
-	console.error('Usage: node scripts/grant-admin.mjs <email> [--revoke]');
+	console.error('Usage: node scripts/grant-admin.mjs <email> [--revoke] [--production]');
 	process.exit(1);
 }
 
-// --- env (.env) ------------------------------------------------------------
-function loadEnv() {
-	const env = {};
-	try {
-		const raw = readFileSync(join(root, '.env'), 'utf8');
-		for (const line of raw.split('\n')) {
-			const m = /^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/.exec(line);
-			if (m) env[m[1]] = m[2].replace(/^["']|["']$/g, '');
-		}
-	} catch {
-		// no .env; fall back to process.env
+async function productionApp() {
+	const rc = JSON.parse(readFileSync(join(root, '.firebaserc'), 'utf8'));
+	const projectId = rc.projects?.default;
+	if (!projectId) {
+		console.error('No default project in .firebaserc');
+		process.exit(1);
 	}
-	return { ...env, ...process.env };
-}
-const env = loadEnv();
-const PROJECT_ID = env.PUBLIC_FIREBASE_PROJECT_ID;
-if (!PROJECT_ID) {
-	console.error('Missing PUBLIC_FIREBASE_PROJECT_ID in .env');
-	process.exit(1);
+	console.log(`Targeting the PRODUCTION project ${projectId}.`);
+	// Clear any emulator hosts so the Admin SDK cannot silently hit an emulator.
+	delete process.env.FIREBASE_AUTH_EMULATOR_HOST;
+	return initializeApp({ credential: resolveCredential(), projectId });
 }
 
 // --- run --------------------------------------------------------------------
 async function main() {
-	const app = getApps().length
-		? getApps()[0]
-		: initializeApp({ credential: resolveCredential(), projectId: PROJECT_ID });
+	let app;
+	if (production) {
+		app = await productionApp();
+	} else {
+		await assertEmulatorsRunning();
+		app = emulatorAdminApp();
+	}
 	const auth = getAuth(app);
 
 	let user;

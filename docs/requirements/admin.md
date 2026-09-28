@@ -72,7 +72,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin
   - When they open the product management view
   - Then every product is listed with its name, category, and available/total instance counts
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-005 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-005 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-006 - Create a product
 
@@ -84,7 +84,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin on the product management view
   - When they create a product with the required fields (name, category, price, and localized copy for cs and en)
   - Then the product is saved as a Firestore document and appears in the product list and on the public site under its category
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-006 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-006 (runs under the Firebase emulator, `pnpm test`)
 - Related: REQ-ADMIN-018
 
 ### REQ-ADMIN-007 - Edit a product
@@ -97,7 +97,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin viewing an existing product
   - When they change its fields (including localized cs and en copy) and save
   - Then the updated values are persisted to the product's Firestore document and reflected on the public site
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-007 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-007 (runs under the Firebase emulator, `pnpm test`)
 - Related: REQ-ADMIN-018
 
 ### REQ-ADMIN-008 - Delete a product
@@ -110,7 +110,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin viewing an existing product
   - When they delete it and confirm
   - Then the product and its instances no longer appear in the admin list or on the public site
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-008 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-008 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-009 - List a product's instances in admin
 
@@ -122,7 +122,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin viewing a product
   - When they open its instances
   - Then each instance is listed with its label, images, and availability status
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-009 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-009 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-010 - Create a product instance
 
@@ -134,7 +134,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin viewing a product
   - When they add an instance with a label and upload one or more images
   - Then the images are stored in Firebase Storage, the instance is saved in Firestore referencing those images in order, and it appears as available on the public product detail page
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-010 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-010 (runs under the Firebase emulator, `pnpm test`)
 - Related: REQ-ADMIN-018, REQ-ADMIN-019
 
 ### REQ-ADMIN-011 - Edit a product instance
@@ -147,7 +147,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin viewing a product instance
   - When they change its label, add or remove images, or change its availability and save
   - Then added images are uploaded to Firebase Storage, the updated instance is persisted in Firestore, and the changes are reflected on the public product detail page
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-011 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-011 (runs under the Firebase emulator, `pnpm test`)
 - Related: REQ-ADMIN-018, REQ-ADMIN-019
 
 ### REQ-ADMIN-012 - Delete a product instance
@@ -160,7 +160,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin viewing a product instance
   - When they delete it and confirm
   - Then the instance no longer appears in the admin list or on the public product detail page, and the product's available/total counts update accordingly
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-012 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-012 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-013 - List categories in admin
 
@@ -172,7 +172,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin
   - When they open the category management view
   - Then every category is listed with its slug, localized name, and product count
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-013 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-013 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-014 - Create a category
 
@@ -197,7 +197,7 @@ from Firestore/Storage rather than from a static module.
   - Given an authenticated admin viewing an existing category
   - When they change its slug or localized name/description and save
   - Then the updated values are persisted and reflected on the public site
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-015 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-015 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-016 - Delete a category
 
@@ -210,7 +210,7 @@ from Firestore/Storage rather than from a static module.
   - When they delete it and confirm
   - Then the category no longer appears in the admin list or on the public site
   - And given a category that still has products, deletion is prevented with an explanatory message
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-016 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-016 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-017 - Authentication via Firebase Authentication
 
@@ -236,7 +236,7 @@ from Firestore/Storage rather than from a static module.
   - When products, instances, or categories are read or written
   - Then the data is read from and written to Cloud Firestore
   - And the public listing, product detail, and category pages render from the Firestore data rather than a hardcoded static module
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-018 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-018 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-019 - Instance images stored in Firebase Storage
 
@@ -249,7 +249,7 @@ from Firestore/Storage rather than from a static module.
   - When the upload completes
   - Then each image file is stored in Firebase Storage and the instance record holds the ordered public URLs of those files
   - And the public product detail page loads the images from those URLs
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-019 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-019 (runs under the Firebase emulator, `pnpm test`)
 
 ### REQ-ADMIN-020 - List orders in admin
 
@@ -315,5 +315,5 @@ from Firestore/Storage rather than from a static module.
   - Then a visually prominent "Administrace" / "Administration" button is shown next to the language switcher (inside the mobile menu on small screens) and links to `/admin`
   - And the button is not shown to signed-out visitors or to signed-in accounts without the admin claim
   - And regular visitors do not download the Firebase Auth code just to decide this
-- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-024 (runs under the Firebase emulator, `pnpm test:e2e:emulator`)
+- Test: tests/e2e/admin.spec.ts > REQ-ADMIN-024 (runs under the Firebase emulator, `pnpm test`)
 - Related: REQ-ADMIN-017

@@ -1,21 +1,17 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-
 	"brand_name": "Lada Bartoníková",
 	"brand_tagline": "keramika",
 	"brand_tagline_full": "Keramika tvořená s láskou",
-
 	"nav_home": "Domů",
 	"nav_products": "Produkty",
 	"nav_gallery": "Galerie",
 	"nav_about": "O mně",
 	"nav_contact": "Kontakt",
 	"nav_admin": "Administrace",
-
 	"a11y_menu": "Menu",
 	"a11y_menu_close": "Zavřít menu",
 	"a11y_cart": "Košík",
-
 	"gallery_title": "Galerie · Lada Bartoníková",
 	"gallery_meta_description": "Galerie všech ručně tvořených kusů keramiky - každý kus je originál.",
 	"gallery_eyebrow": "Z ateliéru",
@@ -30,27 +26,22 @@
 	"gallery_buy": "Koupit tento kus",
 	"gallery_view_cart": "Zobrazit v košíku",
 	"gallery_view_product": "Zobrazit produkt",
-
 	"home_title": "Lada Bartoníková · Keramika tvořená s láskou",
 	"home_meta_description": "Ruční keramika z Brna - andělé, zvířátka, postavičky a další kousky tvořené s láskou.",
-
 	"hero_eyebrow": "Z ateliéru v Brně",
 	"hero_heading_line1": "Keramika, která",
 	"hero_heading_line2": "vznikla s láskou",
 	"hero_text": "Andělé, zvířátka, postavičky a další kousky do domácnosti. Každý kus tvořím ručně ve svém malém ateliéru v Brně - pro radost, jako dárek i pro potěšení duše.",
 	"hero_cta": "Prohlédnout produkty",
-
 	"value_love_title": "Tvořeno s láskou",
 	"value_love_text": "Každý kus tvořím ručně a s péčí ve svém ateliéru v Brně. Žádná sériová výroba.",
 	"value_motifs_title": "Vlastní tvorba",
 	"value_motifs_text": "Andělé, zvířátka i postavičky podle vlastních návrhů.",
 	"value_original_title": "Originální kusy",
 	"value_original_text": "Díky ruční práci je každý kus jedinečný. Žádné dva nejsou stejné. Pořiďte si i vy svůj unikátní kousek.",
-
 	"featured_eyebrow": "Vybrané kousky",
 	"featured_heading": "Novinky z ateliéru",
 	"featured_cta": "Všechny produkty",
-
 	"products_title": "Produkty · Lada Bartoníková",
 	"products_meta_description": "Prohlédněte si kategorie ruční keramiky - andělé, zvířátka, postavičky a dekorace.",
 	"products_eyebrow": "Kategorie",
@@ -61,36 +52,6 @@
 	"category_back_to_products": "Zpět na kategorie",
 	"category_switcher_label": "Kategorie",
 	"category_empty": "V této kategorii zatím nic není.",
-
-	"category_angels_name": "Andělé",
-	"category_angels_desc": "Keramičtí andělé pro radost i jako dárek.",
-	"category_animals_name": "Zvířátka",
-	"category_animals_desc": "Ptáčci, kočičky, rybky a další zvířátka.",
-	"category_figures_name": "Postavičky",
-	"category_figures_desc": "Dubánci a další postavičky s vlastním charakterem.",
-	"category_decor_name": "Dekorace",
-	"category_decor_desc": "Drobné dekorace do domácnosti.",
-
-	"product_angel_name": "Anděl",
-	"product_bird_name": "Ptáček",
-	"product_cat_name": "Kočička",
-	"product_fish_name": "Rybka",
-	"product_dubanek_name": "Dubánek",
-	"product_guy_name": "Panáček",
-	"product_leaf_name": "Lístek",
-
-	"product_meta_figure": "Kamenina · ruční práce",
-	"product_meta_decor": "Kamenina · dekorace",
-
-	"product_desc_angel": "Keramický anděl strážce - malý dárek pro radost i pro štěstí do domácnosti. Každý kus je originál.",
-	"product_desc_bird": "Malý keramický ptáček, který rozveselí poličku i okenní parapet.",
-	"product_desc_cat": "Keramická kočička s vlastním výrazem. Ideální dárek pro milovníky koček.",
-	"product_desc_fish": "Keramická rybka v jemných odstínech. Krásná jako dekorace i jako dárek.",
-	"product_desc_dubanek": "Keramický dubánek - roztomilá postavička inspirovaná podzimní přírodou.",
-	"product_desc_guy": "Keramický panáček s vlastním charakterem. Každý je jiný a jedinečný.",
-	"product_desc_leaf": "Keramický lístek - drobná dekorace na zeď, poličku i jako miska na drobnosti.",
-	"product_care_default": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
-
 	"product_spec_size": "Rozměr",
 	"product_detail_about": "O výrobku",
 	"product_detail_care": "Péče",
@@ -105,7 +66,6 @@
 	"product_view_cart": "Zobrazit košík",
 	"product_related_heading": "Mohlo by se vám líbit",
 	"product_back_to_category": "Zpět do kategorie",
-
 	"product_instances_heading": "Vyberte si kus",
 	"product_instances_intro": "Každý kus je originál. Vyberte si ten svůj.",
 	"product_available_count": "K dispozici {count} z {total} kusů",
@@ -115,14 +75,11 @@
 	"product_instance_sold": "Prodáno",
 	"badge_last_piece": "Poslední kus",
 	"badge_sold_out": "Vyprodáno",
-
 	"price_czk": "{amount} Kč",
-
 	"about_eyebrow": "O mně",
 	"about_heading": "Ahoj, jsem Lada",
 	"about_text": "Keramice se věnuji řadu let a nejvíc mě baví tvořit dekorativní kousky. Fascinuje mě, jak z kusu hlíny vznikne věc s vlastním charakterem. Každý kus tvořím ručně ve svém ateliéru v Brně.",
 	"about_cta": "Můj příběh",
-
 	"about_page_title": "O mně · Lada Bartoníková",
 	"about_page_meta_description": "Poznejte Ladu Bartoníkovou a její ateliér ruční keramiky v Brně.",
 	"about_page_story_heading": "Můj příběh",
@@ -133,20 +90,15 @@
 	"about_page_values_heading": "Co je pro mě důležité",
 	"about_page_cta_heading": "Chcete se podívat na hotové kousky?",
 	"about_page_cta_text": "Prohlédněte si aktuální nabídku andělů, zvířátek, postaviček a dekorací.",
-
 	"footer_col_info": "Informace",
-
 	"footer_link_about": "O mně",
 	"footer_link_terms": "Obchodní podmínky",
 	"footer_link_login": "Přihlášení",
 	"footer_col_contact": "Kontakt",
-
 	"footer_show_email": "Zobrazit e-mail",
 	"footer_show_phone": "Zobrazit telefon",
 	"footer_location": "Brno, Česká republika",
-
 	"footer_copy": "© {year} Lada Bartoníková · Brno",
-
 	"admin_title": "Administrace",
 	"admin_subtitle": "Lada Bartoníková",
 	"admin_nav_dashboard": "Přehled",
@@ -156,14 +108,12 @@
 	"admin_saving": "Ukládání…",
 	"admin_logout": "Odhlásit se",
 	"admin_logout_pending": "Odhlašování…",
-
 	"admin_login_heading": "Přihlášení",
 	"admin_login_intro": "Přihlaste se do administrace.",
 	"admin_login_error": "Přihlášení se nezdařilo. Zkuste to prosím znovu.",
 	"admin_login_not_admin": "Tento účet nemá oprávnění pro přístup do administrace.",
 	"admin_login_google": "Přihlásit se přes Google",
 	"admin_login_google_pending": "Přihlašování…",
-
 	"admin_dashboard_heading": "Administrace",
 	"admin_dashboard_intro": "Vyberte oblast, kterou chcete spravovat.",
 	"admin_card_coming_soon": "Připravujeme",
@@ -173,7 +123,6 @@
 	"admin_card_products_desc": "Správa produktů a jejich kusů.",
 	"admin_card_categories_title": "Kategorie",
 	"admin_card_categories_desc": "Správa kategorií produktů.",
-
 	"admin_orders_heading": "Objednávky",
 	"admin_orders_intro": "Přehled rezervací zadaných přes web. Platba a vyzvednutí probíhá v obchodě.",
 	"admin_orders_empty": "Zatím žádné objednávky.",
@@ -185,11 +134,9 @@
 	"admin_orders_col_total": "Celkem",
 	"admin_orders_col_status": "Stav",
 	"admin_orders_items_count": "{count} ks",
-
 	"admin_order_status_new": "Nová",
 	"admin_order_status_resolved": "Vyřízená",
 	"admin_order_status_cancelled": "Zrušená",
-
 	"admin_order_heading": "Objednávka",
 	"admin_order_back": "Zpět na objednávky",
 	"admin_order_error": "Objednávku se nepodařilo načíst.",
@@ -205,7 +152,6 @@
 	"admin_order_mark_cancelled": "Zrušit objednávku",
 	"admin_order_save_error": "Stav se nepodařilo uložit.",
 	"admin_order_cancel_hint": "Zrušením objednávky se rezervované kusy uvolní a budou opět k dispozici.",
-
 	"admin_nav_products": "Produkty",
 	"admin_nav_categories": "Kategorie",
 	"admin_edit": "Upravit",
@@ -214,7 +160,6 @@
 	"admin_delete": "Smazat",
 	"admin_catalog_load_error": "Data se nepodařilo načíst.",
 	"admin_catalog_save_error": "Uložení se nezdařilo. Zkuste to znovu.",
-
 	"admin_categories_heading": "Kategorie",
 	"admin_categories_intro": "Správa kategorií produktů.",
 	"admin_categories_empty": "Zatím žádné kategorie.",
@@ -225,7 +170,6 @@
 	"admin_categories_back": "Zpět na kategorie",
 	"admin_categories_not_found": "Kategorie nebyla nalezena.",
 	"admin_categories_delete_confirm": "Opravdu chcete tuto kategorii smazat?",
-
 	"admin_products_heading": "Produkty",
 	"admin_products_intro": "Správa produktů a jejich kusů.",
 	"admin_products_empty": "Zatím žádné produkty.",
@@ -237,7 +181,6 @@
 	"admin_products_edit_heading": "Upravit produkt",
 	"admin_products_not_found": "Produkt nebyl nalezen.",
 	"admin_products_delete_confirm": "Opravdu chcete tento produkt smazat?",
-
 	"admin_field_slug": "Slug",
 	"admin_field_name_cs": "Název (čeština)",
 	"admin_field_name_en": "Název (angličtina)",
@@ -253,7 +196,6 @@
 	"admin_field_label": "Označení kusu",
 	"admin_field_price_override": "Vlastní cena (nepovinné)",
 	"admin_field_images": "Fotografie",
-
 	"admin_instances_heading": "Kusy",
 	"admin_instances_empty": "Tento produkt zatím nemá žádné kusy.",
 	"admin_instances_available": "K dispozici",
@@ -261,10 +203,8 @@
 	"admin_instances_add_images": "Přidat fotografie",
 	"admin_instances_create_cta": "Přidat kus",
 	"admin_instances_delete_confirm": "Opravdu chcete tento kus smazat?",
-
 	"lang_switch_to_en": "English",
 	"lang_switch_to_cs": "Čeština",
-
 	"cart_title": "Košík · Lada Bartoníková",
 	"cart_meta_description": "Prohlédněte si vybrané kusy ve svém košíku a přejděte k rezervaci.",
 	"cart_eyebrow": "Váš výběr",
@@ -280,7 +220,6 @@
 	"cart_summary_shipping_pickup": "Osobní odběr",
 	"cart_summary_total": "Celkem",
 	"cart_checkout_cta": "Přejít k rezervaci",
-
 	"checkout_title": "Rezervace · Lada Bartoníková",
 	"checkout_meta_description": "Dokončete rezervaci vybraných kusů. Platba i vyzvednutí probíhá osobně v ateliéru.",
 	"checkout_eyebrow": "Dokončení rezervace",
@@ -305,19 +244,16 @@
 	"checkout_field_required": "Toto pole je povinné.",
 	"checkout_field_email_invalid": "Zadejte platnou e-mailovou adresu.",
 	"checkout_terms_required": "Pro odeslání rezervace musíte souhlasit s obchodními podmínkami.",
-
 	"checkout_confirmation_title": "Rezervace přijata · Lada Bartoníková",
 	"checkout_confirmation_heading": "Děkujeme za rezervaci!",
 	"checkout_confirmation_text": "Vaše rezervace č. {reference} byla přijata. Ozveme se vám na uvedený e-mail či telefon. Platba i vyzvednutí probíhá osobně v ateliéru.",
 	"checkout_confirmation_back_cta": "Zpět na produkty",
-
 	"terms_title": "Obchodní podmínky · Lada Bartoníková",
 	"terms_meta_description": "Obchodní podmínky rezervací a osobního odběru ruční keramiky.",
 	"terms_eyebrow": "Právní informace",
 	"terms_heading": "Obchodní podmínky",
 	"terms_placeholder_text": "Tato stránka je zatím pouze zástupná. Plné znění obchodních podmínek zde bude doplněno.",
 	"terms_reservation_note": "Rezervací přes web si vybraný kus rezervujete k osobnímu odběru. Platba probíhá až při vyzvednutí v ateliéru, online platba není vyžadována.",
-
 	"contact_title": "Kontakt · Lada Bartoníková",
 	"contact_meta_description": "Kontaktní údaje na ateliér Lady Bartoníkové a informace o osobním odběru v Brně.",
 	"contact_eyebrow": "Ozvěte se",

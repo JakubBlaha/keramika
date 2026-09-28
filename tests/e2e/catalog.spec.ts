@@ -1,10 +1,21 @@
 import { expect, test } from '@playwright/test';
 
-// E2E tests for the catalog data model (src/lib/catalog.ts), verified through
-// the rendered pages that surface that data. Test titles carry the requirement
-// ID for traceability. See docs/requirements/catalog.md.
+// E2E tests for the catalog data model, verified through the rendered pages
+// that surface that data. The catalog comes from the database, seeded from
+// scripts/seed-data/ by the global setup. Test titles carry the requirement ID
+// for traceability. See docs/requirements/catalog.md.
 
 test.describe('Catalog', () => {
+	test('REQ-CATALOG-006 - copy follows the locale, data fields do not', async ({ page }) => {
+		await page.goto('/produkt/andel');
+		await expect(page.getByRole('heading', { level: 1, name: 'Anděl' })).toBeVisible();
+		await expect(page.getByText('12 cm')).toBeVisible();
+
+		await page.goto('/en/produkt/andel');
+		await expect(page.getByRole('heading', { level: 1, name: 'Angel' })).toBeVisible();
+		await expect(page.getByText('12 cm')).toBeVisible();
+	});
+
 	test('REQ-CATALOG-008, REQ-PRODUCT-008 - related products come from the same category', async ({
 		page
 	}) => {

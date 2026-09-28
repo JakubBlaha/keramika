@@ -3,10 +3,13 @@
 	// grid: each category is an editorial "chapter" - a collage of real pieces
 	// on a tinted clay shape (echoing the homepage hero) beside a large
 	// numbered title - alternating sides on wider screens.
-	import { categories, type Category } from '$lib/catalog';
+	import type { Category } from '$lib/catalog';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import { reveal } from '$lib/motion';
+
+	let { data } = $props();
+	const categories = $derived(data.categories);
 
 	// Up to three photos for a category's collage: each product's cover first
 	// (available pieces before sold ones), then further pieces, so the collage
@@ -81,7 +84,7 @@
 						{#each collage(c) as src, t (src)}
 							<img
 								{src}
-								alt={t === 0 ? c.name() : ''}
+								alt={t === 0 ? c.name : ''}
 								class={[
 									'absolute rounded-[4px] object-cover shadow-[0_1.5rem_3rem_-1.5rem_rgb(61_53_48/0.55)] ring-4 ring-bg transition-transform duration-700 ease-(--ease-soft)',
 									t === 0 ? 'aspect-[4/5]' : 'aspect-square',
@@ -103,9 +106,9 @@
 						<h2
 							class="text-[2.2rem] font-medium transition-colors group-hover:text-accent-dark md:text-[2.8rem]"
 						>
-							{c.name()}
+							{c.name}
 						</h2>
-						<p class="max-w-[26rem] text-ink-soft">{c.description()}</p>
+						<p class="max-w-[26rem] text-ink-soft">{c.description}</p>
 						<span class="text-[0.8rem] tracking-[0.12em] text-accent-dark uppercase">
 							{m.category_count_products({ count: c.products.length })}
 						</span>

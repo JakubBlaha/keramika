@@ -1,8 +1,9 @@
 # AGENTS.md
 
 E-shop for the ceramicist Lada Bartoníková. SvelteKit (Svelte 5 runes) +
-Tailwind v4 + Paraglide i18n. The public site is prerendered static; the admin
-area and catalog write API are Firebase-backed.
+Tailwind v4 + Paraglide i18n. The whole catalog lives in Firebase (Firestore +
+Storage): the public site reads it per request, the admin area and catalog
+write API edit it. There are no built-in products.
 
 ## Commands
 
@@ -11,10 +12,11 @@ Package manager is **pnpm** (see `pnpm-workspace.yaml`).
 - `pnpm check` — `svelte-kit sync` + `svelte-check` (types + Svelte). Primary way to verify changes.
 - `pnpm lint` — `prettier --check .` then `eslint .`
 - `pnpm format` — `prettier --write .`
-- `pnpm build` — production build (prerenders the public site).
-- `pnpm test` / `pnpm test:e2e` — Playwright e2e. Builds and serves the preview itself unless `PLAYWRIGHT_BASE_URL` is set.
-- `pnpm seed` — seed catalog into Firestore via the API (`scripts/seed.mjs`).
-- `pnpm grant-admin <email> [--revoke]` — grant/revoke the `admin` custom claim.
+- `pnpm build` — production build (prerenders the static content pages; needs no database).
+- `pnpm test` / `pnpm test:e2e` — Playwright e2e inside a fresh, throwaway Firebase emulator suite (`scripts/with-emulators.mjs`; fails if `pnpm emulators` is running). Builds and serves the preview itself unless `PLAYWRIGHT_BASE_URL` is set. Extra args go to Playwright (`pnpm test tests/e2e/admin.spec.ts`).
+- `pnpm emulators` — local Firebase emulators (Auth, Firestore, Storage) for development; data persists in `.emulator-data/`. Needs Java 21+ and a global `firebase-tools`.
+- `pnpm seed` — seed the emulators with the catalog in `scripts/seed-data/` (copy + photos) via the dev server's API, and provision the local admin (`scripts/seed.mjs`). `pnpm test` seeds automatically (`tests/global-setup.ts`).
+- `pnpm grant-admin <email> [--revoke] [--production]` — grant/revoke the `admin` custom claim (emulator by default).
 
 **Never run `pnpm dev`, `pnpm preview`, or any serving command.** The user runs
 the dev server (`http://localhost:5173`) separately. To verify, use `pnpm check`,
@@ -32,21 +34,28 @@ requirements uses the `requirements-authoring` skill in `.verorules/skills/`.
 
 Two distinct worlds sharing one route tree:
 
-1. **Public site** — fully prerendered (`prerender = true`), driven by the
-   **placeholder catalog** in `src/lib/catalog.ts` (no backend read yet). Routes:
-   `/` (home), `/produkty` (categories), `/produkty/[category]`, `/produkt/[slug]`.
+1. **Public site** — catalog pages (`/`, `/produkty`, `/produkty/[category]`,
+   `/produkt/[slug]`, `/galerie`, `/cart`, `/checkout`) are server-rendered per
+   request: each `+page.server.ts` calls `loadCatalog()`
+   (`src/lib/server/publicCatalog.ts`), which reads Firestore via the Admin SDK
+   and localizes it. Only the static content pages (`/kontakt`, `/o-nas`,
+   `/obchodni-podminky`) are prerendered.
 2. **Admin + write API** — Firebase-backed, dynamic. Admin UI under
    `/admin/*` (`prerender = false`, `ssr = false` — client-only). Write API under
    `/api/*` (`prerender = false`), the single trusted write path.
 
-### Two catalog models (do not confuse them)
+### Two catalog shapes (do not confuse them)
 
-- `src/lib/catalog.ts` — the **public placeholder** data. Localized copy is
-  Paraglide **message functions** (`name: () => m.product_angel_name()`), i.e.
-  compile-time code. Drives the prerendered pages.
-- `src/lib/catalog-model.ts` — the **Firestore-facing** types. Localized copy is
-  a stored `{ cs, en }` map (Firestore can't hold functions). Includes payload
-  validators (`validateCategory/Product/Instance`) returning `ValidationError[]`.
+- `src/lib/catalog-model.ts` — the **stored** (Firestore) types. Localized copy
+  is a `{ cs, en }` map. Includes payload validators
+  (`validateCategory/Product/Instance`) returning `ValidationError[]`.
+- `src/lib/catalog.ts` — the **public view** types (copy already localized to
+  plain strings, serializable through `load`) plus pure helpers
+  (`getProduct`, `coverImage`, `getRelated`, ...). It holds no data.
+
+Product and category copy is data, not Paraglide messages: never add product
+keys to `messages/*.json`. Categories and products are shown sorted by
+localized name (there is no display-order field).
 
 Domain model: a **Product** is a blueprint (e.g. "Angel"); each physical piece is
 a unique **Instance** that exists exactly once (available or sold). Availability =
@@ -61,12 +70,17 @@ count of available instances. Firestore layout: `categories/{slug}`,
 - **Server** (`src/lib/server/firebaseAdmin.ts`): `getAdmin()` Admin SDK
   singleton. `$lib/server` is server-only by SvelteKit; importing it from the
   browser is a build error (that's the intended guard). Never import it client-side.
-- **Credentials**: no service-account key file is committed. Locally both the
-  Admin SDK and the scripts are keyless: ADC first, else the Firebase CLI
-  refresh token from `firebase login` (required locally). Deployed servers
-  (Vercel) get a service-account key via the private env var
-  `FIREBASE_SERVICE_ACCOUNT_KEY`, which the Admin SDK prefers when set; see
-  `docs/deployment.md`.
+- **Local = emulators, always.** Every local run (dev server, preview, e2e,
+  scripts) uses the Firebase emulator suite under the offline `demo-keramika`
+  project with no credentials; only builds on Vercel (`VERCEL=1`) use the real
+  project. The switch is the build-time constant `__USE_FIREBASE_EMULATOR__`
+  (`vite.config.ts`), read via `src/lib/firebaseEmulator.ts` — deliberately
+  not an `.env` value. `scripts/lib/emulator.mjs` mirrors the emulator
+  constants and the local admin (`admin@example.com`) for the Node scripts.
+  The only production operation is `pnpm grant-admin … --production`.
+- **Credentials** (deployed only): no service-account key file is committed.
+  Vercel gets one via the private env var `FIREBASE_SERVICE_ACCOUNT_KEY`
+  (else ADC); see `docs/deployment.md`.
 
 ### Auth flow
 
@@ -78,10 +92,10 @@ it in `src/lib/server/apiAuth.ts` (`requireAdmin`, 401/403). All write invariant
 (slug uniqueness, category-delete guard, product-delete cascade, instance count
 sync, idempotent bulk import) live in `src/lib/server/catalogRepo.ts` only.
 
-The seed (`scripts/seed.mjs`) creates a dedicated admin account, signs in, and
-POSTs to `/api/import` — deliberately exercising the same auth+write path the UI
-uses. `scripts/grant-admin.mjs` sets the claim; the user must re-sign-in for the
-new claim to take effect.
+The seed (`scripts/seed.mjs`) provisions the local admin in the Auth emulator,
+signs in as it, and POSTs to `/api/import` — deliberately exercising the same
+auth+write path the UI uses. `scripts/grant-admin.mjs` sets the claim; the user
+must re-sign-in for the new claim to take effect.
 
 ## i18n (Paraglide)
 
@@ -100,16 +114,14 @@ new claim to take effect.
 - **Svelte 5 runes are forced** everywhere except `node_modules` (see
   `vite.config.ts`). Use runes (`$state`, `$derived`, `$effect`), not stores.
 - SvelteKit config lives **inline in `vite.config.ts`**, not a `svelte.config.js`.
-- **`prerender`/`ssr` flags are load-time critical**: public pages set
-  `prerender = true` and use `entries` (EntryGenerator) to enumerate slugs; API
-  and admin set `prerender = false` (admin also `ssr = false`).
-- Loaders return only **language-neutral slugs**; components resolve the product
-  and its message functions from `catalog.ts` because functions can't be
-  serialized across the load boundary.
-- Prerender crawler starts at `/`; `/en` is seeded manually in `vite.config.ts`.
-  Missing links (unbuilt shop/legal routes) 404s are ignored during prerender.
-- Product images: public site serves from `static/products/<product>/<piece>/<file>`;
-  the seed rewrites these to Firebase Storage `storage.googleapis.com` URLs.
+- **`prerender`/`ssr` flags are load-time critical**: only the static content
+  pages set `prerender = true`; catalog pages must not (they read the database
+  per request, and the build has no database). Admin sets `ssr = false`.
+- Prerender entries (`vite.config.ts`) are `*` plus the English content pages.
+  Missing links (404s) are ignored during prerender.
+- Product images live in Firebase Storage (the Storage emulator locally,
+  `storage.googleapis.com` deployed); the seed uploads the photos from
+  `scripts/seed-data/images/`. Nothing product-related is in `static/`.
 - Styling: **Tailwind v4** utilities preferred over bespoke CSS. Design tokens
   are CSS custom properties in `src/routes/layout.css` (imported via
   `@import 'tailwindcss'`). Fonts: Cormorant Garamond (headings), Jost (body).
@@ -117,7 +129,9 @@ new claim to take effect.
   internal `<a href>` uses `localizeHref()`; programmatic navigation still needs
   `resolve()`.
 - `PUBLIC_FIREBASE_*` env values are **not secret** (safe in the browser);
-  Firestore/Storage rules + Auth enforce access. Copy `.env.example` to `.env`.
+  Firestore/Storage rules + Auth enforce access. They configure the deployed
+  site only (Vercel env); locally `.env` can keep them empty. Copy
+  `.env.example` to `.env`.
 
 ## Testing
 

@@ -1,24 +1,23 @@
-import { m } from '$lib/paraglide/messages';
-
-// Placeholder catalog data. No backend yet - this drives the category and
-// product listing/detail pages. Names/descriptions go through Paraglide
-// messages so they stay translatable. The `slug` is the language-neutral URL
-// segment. Language-neutral data (price, size, images) lives here directly.
+// The public site's view of the catalog, and pure helpers over it.
+//
+// There are no built-in products: the catalog is read from Firestore on each
+// request by src/lib/server/publicCatalog.ts, localized to the request's
+// locale, and handed to pages through their server load functions. Copy is
+// therefore plain strings here (unlike the stored { cs, en } maps of
+// src/lib/catalog-model.ts), and everything is serializable across the load
+// boundary.
 //
 // Domain model: a Product is a "blueprint" (e.g. "Angel"). Because each piece
 // is hand made, the actual stock is a set of unique ProductInstances. Each
 // instance exists exactly once (available or already sold) and has its own
 // photos. The number of still-available instances is the product's availability.
-//
-// Images live under static/products/<product>/<instance>/<file> and are served
-// from /products/<product>/<instance>/<file>.
 
 export type ProductInstance = {
 	// Unique id for this single physical piece (e.g. "angel-01").
 	id: string;
 	// Short human label shown to the buyer (e.g. "#1").
 	label: string;
-	// One or more photos of this exact piece (served from /products/...).
+	// One or more photos of this exact piece.
 	images: string[];
 	// Per-instance price override in CZK; falls back to the product price.
 	price?: string;
@@ -28,12 +27,13 @@ export type ProductInstance = {
 
 export type Product = {
 	slug: string;
-	name: () => string;
-	meta: () => string;
+	categorySlug: string;
+	name: string;
+	meta: string;
 	// Longer marketing description shown on the detail page.
-	description: () => string;
+	description: string;
 	// Care instructions shown in an accordion on the detail page.
-	care: () => string;
+	care: string;
 	// Base price in CZK (used when an instance has no own price).
 	price: string;
 	// Human-readable dimension/volume, language-neutral (e.g. "14 cm").
@@ -44,151 +44,19 @@ export type Product = {
 
 export type Category = {
 	slug: string;
-	name: () => string;
-	description: () => string;
+	name: string;
+	description: string;
 	products: Product[];
 };
 
-// Build the instances for a product from a folder listing. `pieces` maps an
-// instance folder name (under /products/<dir>/) to its ordered image files and
-// availability. This mirrors the on-disk structure in static/products.
-type PieceDef = { dir: string; files: string[]; available: boolean };
-
-function makeInstances(productDir: string, pieces: PieceDef[]): ProductInstance[] {
-	return pieces.map((piece, i) => ({
-		id: `${productDir}-${piece.dir}`,
-		label: `#${i + 1}`,
-		images: piece.files.map((f) => `/products/${productDir}/${piece.dir}/${f}`),
-		available: piece.available
-	}));
-}
-
-export const categories: Category[] = [
-	{
-		slug: 'andele',
-		name: () => m.category_angels_name(),
-		description: () => m.category_angels_desc(),
-		products: [
-			{
-				slug: 'andel',
-				name: () => m.product_angel_name(),
-				meta: () => m.product_meta_figure(),
-				description: () => m.product_desc_angel(),
-				care: () => m.product_care_default(),
-				price: '390',
-				size: '12 cm',
-				instances: makeInstances('angel', [
-					{ dir: '01', files: ['01.jpg'], available: true },
-					{ dir: '02', files: ['01.jpg'], available: true }
-				])
-			}
-		]
-	},
-	{
-		slug: 'zviratka',
-		name: () => m.category_animals_name(),
-		description: () => m.category_animals_desc(),
-		products: [
-			{
-				slug: 'ptacek',
-				name: () => m.product_bird_name(),
-				meta: () => m.product_meta_figure(),
-				description: () => m.product_desc_bird(),
-				care: () => m.product_care_default(),
-				price: '320',
-				size: '9 cm',
-				instances: makeInstances('bird', [{ dir: '01', files: ['01.jpg'], available: true }])
-			},
-			{
-				slug: 'kocicka',
-				name: () => m.product_cat_name(),
-				meta: () => m.product_meta_figure(),
-				description: () => m.product_desc_cat(),
-				care: () => m.product_care_default(),
-				price: '340',
-				size: '10 cm',
-				instances: makeInstances('cat', [
-					{ dir: '01', files: ['01.jpg'], available: true },
-					{ dir: '02', files: ['01.jpg'], available: true }
-				])
-			},
-			{
-				slug: 'rybka',
-				name: () => m.product_fish_name(),
-				meta: () => m.product_meta_figure(),
-				description: () => m.product_desc_fish(),
-				care: () => m.product_care_default(),
-				price: '300',
-				size: '11 cm',
-				instances: makeInstances('fish', [{ dir: '01', files: ['01.jpg'], available: true }])
-			}
-		]
-	},
-	{
-		slug: 'postavicky',
-		name: () => m.category_figures_name(),
-		description: () => m.category_figures_desc(),
-		products: [
-			{
-				slug: 'dubanek',
-				name: () => m.product_dubanek_name(),
-				meta: () => m.product_meta_figure(),
-				description: () => m.product_desc_dubanek(),
-				care: () => m.product_care_default(),
-				price: '450',
-				size: '14 cm',
-				instances: makeInstances('dubanek', [
-					{ dir: '01', files: ['01.jpg'], available: true },
-					{ dir: '02', files: ['01.jpg'], available: true },
-					{ dir: '03', files: ['01.jpg'], available: false },
-					{ dir: '04', files: ['01.jpg'], available: true },
-					{ dir: '05', files: ['01.jpg'], available: true }
-				])
-			},
-			{
-				slug: 'panacek',
-				name: () => m.product_guy_name(),
-				meta: () => m.product_meta_figure(),
-				description: () => m.product_desc_guy(),
-				care: () => m.product_care_default(),
-				price: '420',
-				size: '13 cm',
-				instances: makeInstances('guy', [
-					{ dir: '01', files: ['01.jpg'], available: true },
-					{ dir: '02', files: ['01.jpg'], available: true }
-				])
-			}
-		]
-	},
-	{
-		slug: 'dekorace',
-		name: () => m.category_decor_name(),
-		description: () => m.category_decor_desc(),
-		products: [
-			{
-				slug: 'listek',
-				name: () => m.product_leaf_name(),
-				meta: () => m.product_meta_decor(),
-				description: () => m.product_desc_leaf(),
-				care: () => m.product_care_default(),
-				price: '260',
-				size: '16 cm',
-				instances: makeInstances('leaf', [
-					{ dir: '01', files: ['01.jpg'], available: true },
-					{ dir: '02', files: ['01.jpg'], available: true },
-					{ dir: '03', files: ['01.jpg'], available: true },
-					{ dir: '04', files: ['01.jpg'], available: false }
-				])
-			}
-		]
-	}
-];
-
-export function getCategory(slug: string): Category | undefined {
+export function getCategory(categories: Category[], slug: string): Category | undefined {
 	return categories.find((c) => c.slug === slug);
 }
 
-export function getProduct(slug: string): { product: Product; category: Category } | undefined {
+export function getProduct(
+	categories: Category[],
+	slug: string
+): { product: Product; category: Category } | undefined {
 	for (const category of categories) {
 		const product = category.products.find((p) => p.slug === slug);
 		if (product) {
@@ -218,8 +86,8 @@ export function coverImage(product: Product): string {
 // Up to `limit` other products from the same category (for the "related"
 // section on the detail page). Falls back to products from other categories
 // if the current category does not have enough.
-export function getRelated(slug: string, limit = 4): Product[] {
-	const found = getProduct(slug);
+export function getRelated(categories: Category[], slug: string, limit = 4): Product[] {
+	const found = getProduct(categories, slug);
 	if (!found) return [];
 
 	const sameCategory = found.category.products.filter((p) => p.slug !== slug);
@@ -235,6 +103,6 @@ export function getRelated(slug: string, limit = 4): Product[] {
 }
 
 // Flat list of every product across all categories.
-export function allProducts(): Product[] {
+export function allProducts(categories: Category[]): Product[] {
 	return categories.flatMap((c) => c.products);
 }

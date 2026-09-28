@@ -1,21 +1,17 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-
 	"brand_name": "Lada Bartoníková",
 	"brand_tagline": "ceramics",
 	"brand_tagline_full": "Ceramics made with love",
-
 	"nav_home": "Home",
 	"nav_products": "Products",
 	"nav_gallery": "Gallery",
 	"nav_about": "About me",
 	"nav_contact": "Contact",
 	"nav_admin": "Administration",
-
 	"a11y_menu": "Menu",
 	"a11y_menu_close": "Close menu",
 	"a11y_cart": "Cart",
-
 	"gallery_title": "Gallery · Lada Bartoníková",
 	"gallery_meta_description": "A gallery of every handmade ceramic piece - each one is one of a kind.",
 	"gallery_eyebrow": "From the studio",
@@ -30,27 +26,22 @@
 	"gallery_buy": "Buy this piece",
 	"gallery_view_cart": "View in cart",
 	"gallery_view_product": "View product",
-
 	"home_title": "Lada Bartoníková · Ceramics made with love",
 	"home_meta_description": "Handmade ceramics from Brno - angels, animals, figures and other pieces made with love.",
-
 	"hero_eyebrow": "From a studio in Brno",
 	"hero_heading_line1": "Ceramics made",
 	"hero_heading_line2": "with love",
 	"hero_text": "Angels, animals, figures and other pieces for your home. I make each piece by hand in my small studio in Brno - for joy, as a gift, and for the pleasure of the soul.",
 	"hero_cta": "Browse products",
-
 	"value_love_title": "Made with love",
 	"value_love_text": "I make every piece by hand, with care, in my studio in Brno. No mass production.",
 	"value_motifs_title": "My own designs",
 	"value_motifs_text": "Angels, animals and figures from my own designs.",
 	"value_original_title": "One-of-a-kind pieces",
 	"value_original_text": "Thanks to the handwork, each piece is unique. No two are the same. Find a one-of-a-kind piece of your own.",
-
 	"featured_eyebrow": "Selected pieces",
 	"featured_heading": "New from the studio",
 	"featured_cta": "All products",
-
 	"products_title": "Products · Lada Bartoníková",
 	"products_meta_description": "Browse the handmade ceramics categories - angels, animals, figures and decor.",
 	"products_eyebrow": "Categories",
@@ -61,36 +52,6 @@
 	"category_back_to_products": "Back to categories",
 	"category_switcher_label": "Categories",
 	"category_empty": "There is nothing in this category yet.",
-
-	"category_angels_name": "Angels",
-	"category_angels_desc": "Ceramic angels for joy or as a gift.",
-	"category_animals_name": "Animals",
-	"category_animals_desc": "Birds, cats, fish and other little animals.",
-	"category_figures_name": "Figures",
-	"category_figures_desc": "Acorn folk and other figures with their own character.",
-	"category_decor_name": "Decor",
-	"category_decor_desc": "Small decorative pieces for the home.",
-
-	"product_angel_name": "Angel",
-	"product_bird_name": "Bird",
-	"product_cat_name": "Cat",
-	"product_fish_name": "Fish",
-	"product_dubanek_name": "Acorn Folk",
-	"product_guy_name": "Little Guy",
-	"product_leaf_name": "Leaf",
-
-	"product_meta_figure": "Stoneware · handmade",
-	"product_meta_decor": "Stoneware · decor",
-
-	"product_desc_angel": "A ceramic guardian angel - a small gift for joy and a little luck around the home. Each piece is one of a kind.",
-	"product_desc_bird": "A small ceramic bird to brighten up a shelf or a windowsill.",
-	"product_desc_cat": "A ceramic cat with its own expression. A perfect gift for cat lovers.",
-	"product_desc_fish": "A ceramic fish in soft tones. Lovely as decor or as a gift.",
-	"product_desc_dubanek": "A ceramic acorn folk - a cute little figure inspired by autumn nature.",
-	"product_desc_guy": "A ceramic little guy with his own character. Each one is different and unique.",
-	"product_desc_leaf": "A ceramic leaf - a small decoration for the wall, a shelf, or as a dish for trinkets.",
-	"product_care_default": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece.",
-
 	"product_spec_size": "Size",
 	"product_detail_about": "About",
 	"product_detail_care": "Care",
@@ -105,7 +66,6 @@
 	"product_view_cart": "View cart",
 	"product_related_heading": "You might also like",
 	"product_back_to_category": "Back to category",
-
 	"product_instances_heading": "Choose a piece",
 	"product_instances_intro": "Every piece is one of a kind. Pick the one for you.",
 	"product_available_count": "{count} of {total} pieces available",
@@ -115,14 +75,11 @@
 	"product_instance_sold": "Sold",
 	"badge_last_piece": "Last piece",
 	"badge_sold_out": "Sold out",
-
 	"price_czk": "{amount} CZK",
-
 	"about_eyebrow": "About me",
 	"about_heading": "Hi, I'm Lada",
 	"about_text": "I have been working with ceramics for many years, and what I enjoy most is making decorative pieces. I am fascinated by how a thing with its own character emerges from a lump of clay. I make each piece by hand in my studio in Brno.",
 	"about_cta": "My story",
-
 	"about_page_title": "About me · Lada Bartoníková",
 	"about_page_meta_description": "Meet Lada Bartoníková and her handmade ceramics studio in Brno.",
 	"about_page_story_heading": "My story",
@@ -133,20 +90,15 @@
 	"about_page_values_heading": "What matters to me",
 	"about_page_cta_heading": "Want to see the finished pieces?",
 	"about_page_cta_text": "Browse the current selection of angels, animals, figures and decor.",
-
 	"footer_col_info": "Information",
-
 	"footer_link_about": "About me",
 	"footer_link_terms": "Terms and conditions",
 	"footer_link_login": "Log in",
 	"footer_col_contact": "Contact",
-
 	"footer_show_email": "Show email",
 	"footer_show_phone": "Show phone number",
 	"footer_location": "Brno, Czech Republic",
-
 	"footer_copy": "© {year} Lada Bartoníková · Brno",
-
 	"admin_title": "Administration",
 	"admin_subtitle": "Lada Bartoníková",
 	"admin_nav_dashboard": "Overview",
@@ -156,14 +108,12 @@
 	"admin_saving": "Saving…",
 	"admin_logout": "Log out",
 	"admin_logout_pending": "Logging out…",
-
 	"admin_login_heading": "Sign in",
 	"admin_login_intro": "Sign in to the administration.",
 	"admin_login_error": "Sign-in failed. Please try again.",
 	"admin_login_not_admin": "This account is not authorized to access the administration.",
 	"admin_login_google": "Sign in with Google",
 	"admin_login_google_pending": "Signing in…",
-
 	"admin_dashboard_heading": "Administration",
 	"admin_dashboard_intro": "Choose an area to manage.",
 	"admin_card_coming_soon": "Coming soon",
@@ -173,7 +123,6 @@
 	"admin_card_products_desc": "Manage products and their instances.",
 	"admin_card_categories_title": "Categories",
 	"admin_card_categories_desc": "Manage product categories.",
-
 	"admin_orders_heading": "Orders",
 	"admin_orders_intro": "Reservations placed through the site. Payment and pickup happen in store.",
 	"admin_orders_empty": "No orders yet.",
@@ -185,11 +134,9 @@
 	"admin_orders_col_total": "Total",
 	"admin_orders_col_status": "Status",
 	"admin_orders_items_count": "{count} pcs",
-
 	"admin_order_status_new": "New",
 	"admin_order_status_resolved": "Resolved",
 	"admin_order_status_cancelled": "Cancelled",
-
 	"admin_order_heading": "Order",
 	"admin_order_back": "Back to orders",
 	"admin_order_error": "Could not load the order.",
@@ -205,7 +152,6 @@
 	"admin_order_mark_cancelled": "Cancel order",
 	"admin_order_save_error": "Could not save the status.",
 	"admin_order_cancel_hint": "Cancelling an order releases its reserved pieces so they become available again.",
-
 	"admin_nav_products": "Products",
 	"admin_nav_categories": "Categories",
 	"admin_edit": "Edit",
@@ -214,7 +160,6 @@
 	"admin_delete": "Delete",
 	"admin_catalog_load_error": "Could not load the data.",
 	"admin_catalog_save_error": "Save failed. Please try again.",
-
 	"admin_categories_heading": "Categories",
 	"admin_categories_intro": "Manage the product categories.",
 	"admin_categories_empty": "No categories yet.",
@@ -225,7 +170,6 @@
 	"admin_categories_back": "Back to categories",
 	"admin_categories_not_found": "Category not found.",
 	"admin_categories_delete_confirm": "Delete this category?",
-
 	"admin_products_heading": "Products",
 	"admin_products_intro": "Manage products and their pieces.",
 	"admin_products_empty": "No products yet.",
@@ -237,7 +181,6 @@
 	"admin_products_edit_heading": "Edit product",
 	"admin_products_not_found": "Product not found.",
 	"admin_products_delete_confirm": "Delete this product?",
-
 	"admin_field_slug": "Slug",
 	"admin_field_name_cs": "Name (Czech)",
 	"admin_field_name_en": "Name (English)",
@@ -253,7 +196,6 @@
 	"admin_field_label": "Piece label",
 	"admin_field_price_override": "Custom price (optional)",
 	"admin_field_images": "Photos",
-
 	"admin_instances_heading": "Pieces",
 	"admin_instances_empty": "This product has no pieces yet.",
 	"admin_instances_available": "Available",
@@ -261,10 +203,8 @@
 	"admin_instances_add_images": "Add photos",
 	"admin_instances_create_cta": "Add piece",
 	"admin_instances_delete_confirm": "Delete this piece?",
-
 	"lang_switch_to_en": "English",
 	"lang_switch_to_cs": "Čeština",
-
 	"cart_title": "Cart · Lada Bartoníková",
 	"cart_meta_description": "Review the pieces in your cart and proceed to your reservation.",
 	"cart_eyebrow": "Your selection",
@@ -280,7 +220,6 @@
 	"cart_summary_shipping_pickup": "Personal pickup",
 	"cart_summary_total": "Total",
 	"cart_checkout_cta": "Proceed to reservation",
-
 	"checkout_title": "Reservation · Lada Bartoníková",
 	"checkout_meta_description": "Complete your reservation for the selected pieces. Payment and pickup happen in person at the studio.",
 	"checkout_eyebrow": "Complete your reservation",
@@ -305,19 +244,16 @@
 	"checkout_field_required": "This field is required.",
 	"checkout_field_email_invalid": "Enter a valid email address.",
 	"checkout_terms_required": "You must agree to the terms and conditions to submit the reservation.",
-
 	"checkout_confirmation_title": "Reservation received · Lada Bartoníková",
 	"checkout_confirmation_heading": "Thank you for your reservation!",
 	"checkout_confirmation_text": "Your reservation #{reference} has been received. We will contact you at the email or phone you provided. Payment and pickup happen in person at the studio.",
 	"checkout_confirmation_back_cta": "Back to products",
-
 	"terms_title": "Terms and conditions · Lada Bartoníková",
 	"terms_meta_description": "Terms and conditions for reservations and personal pickup of handmade ceramics.",
 	"terms_eyebrow": "Legal information",
 	"terms_heading": "Terms and conditions",
 	"terms_placeholder_text": "This page is currently a placeholder. The full terms and conditions will be added here.",
 	"terms_reservation_note": "Reserving through the website reserves the selected piece for personal pickup. Payment happens only on pickup at the studio; no online payment is required.",
-
 	"contact_title": "Contact · Lada Bartoníková",
 	"contact_meta_description": "Contact details for Lada Bartoníková's studio and personal pickup information in Brno.",
 	"contact_eyebrow": "Get in touch",

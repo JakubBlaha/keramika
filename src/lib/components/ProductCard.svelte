@@ -82,7 +82,7 @@
 	>
 		<img
 			src={cover}
-			alt={product.name()}
+			alt={product.name}
 			class={[
 				'h-full w-full object-cover transition-transform duration-[1.2s] ease-(--ease-soft)',
 				!hasPreview && 'group-hover:scale-105'
@@ -141,9 +141,9 @@
 	</div>
 	<div class="flex flex-col gap-[0.15rem] px-[0.1rem] py-[0.6rem]">
 		<h3 class="text-[1.05rem] font-medium transition-colors group-hover:text-accent-dark">
-			{product.name()}
+			{product.name}
 		</h3>
-		<span class="text-[0.78rem] tracking-[0.02em] text-ink-soft">{product.meta()}</span>
+		<span class="text-[0.78rem] tracking-[0.02em] text-ink-soft">{product.meta}</span>
 		<span class="mt-[0.2rem] text-[0.95rem] text-accent-dark">
 			{m.price_czk({ amount: product.price })}
 		</span>

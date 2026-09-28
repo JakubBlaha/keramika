@@ -18,14 +18,27 @@ export default defineConfig({
 	fullyParallel: true,
 	reporter: process.env.CI ? [['html', { open: 'never' }], ['list']] : 'list',
 
+	// Seeds the catalog into the fresh emulators before any test runs.
+	globalSetup: './tests/global-setup.ts',
+
 	use: {
 		baseURL,
 		trace: 'on-first-retry'
 	},
 
+	// The public-site specs assert on the seeded catalog, while the admin specs
+	// add and remove catalog data. Running the admin specs only after the rest
+	// keeps those counts stable.
 	projects: [
 		{
-			name: 'chromium',
+			name: 'site',
+			testIgnore: /admin\.spec\.ts/,
+			use: { ...devices['Desktop Chrome'] }
+		},
+		{
+			name: 'admin',
+			testMatch: /admin\.spec\.ts/,
+			dependencies: ['site'],
 			use: { ...devices['Desktop Chrome'] }
 		}
 	],

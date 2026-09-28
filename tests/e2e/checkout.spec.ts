@@ -6,20 +6,10 @@ import { expect, test, type Page } from '@playwright/test';
 //
 // Checkout is client-side: the cart lives in localStorage and submitting a
 // reservation writes an order to Firestore via src/lib/orders.ts. The tests
-// that only exercise rendering/validation need no backend. The two that submit
-// a valid reservation (REQ-CHECKOUT-006, REQ-CHECKOUT-010) require a real
-// Firestore write, so they run only against the Firebase emulator suite (see
-// `pnpm test:e2e:emulator`). They are skipped otherwise.
+// that submit a valid reservation (REQ-CHECKOUT-006, REQ-CHECKOUT-010) write to
+// the Firebase emulator suite that `pnpm test` starts.
 
 const PRODUCT = '/produkt/andel';
-
-// Whether the preview under test points the Firebase client at the local
-// emulator suite (set by `pnpm test:e2e:emulator`). Detected from the page so
-// the tests stay in sync with how the server was built.
-async function usingEmulator(page: Page): Promise<boolean> {
-	await page.goto('/');
-	return page.evaluate(() => document.documentElement.dataset.firebaseEmulator === 'true');
-}
 
 async function addOneToCart(page: Page) {
 	await page.goto(PRODUCT);
@@ -88,10 +78,6 @@ test.describe('Checkout', () => {
 	test('REQ-CHECKOUT-006 - shows a confirmation after a successful reservation', async ({
 		page
 	}) => {
-		test.skip(
-			!(await usingEmulator(page)),
-			'Requires the Firebase emulator (pnpm test:e2e:emulator)'
-		);
 		await addOneToCart(page);
 		await page.goto('/checkout');
 		await fillValidContact(page);
@@ -103,10 +89,6 @@ test.describe('Checkout', () => {
 	});
 
 	test('REQ-CHECKOUT-010 - placing the reservation clears the cart', async ({ page }) => {
-		test.skip(
-			!(await usingEmulator(page)),
-			'Requires the Firebase emulator (pnpm test:e2e:emulator)'
-		);
 		await addOneToCart(page);
 		await page.goto('/checkout');
 		await fillValidContact(page);

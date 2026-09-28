@@ -1,0 +1,320 @@
+{
+	"categories": [
+		{
+			"slug": "andele",
+			"name": {
+				"cs": "Andělé",
+				"en": "Angels"
+			},
+			"description": {
+				"cs": "Keramičtí andělé pro radost i jako dárek.",
+				"en": "Ceramic angels for joy or as a gift."
+			}
+		},
+		{
+			"slug": "zviratka",
+			"name": {
+				"cs": "Zvířátka",
+				"en": "Animals"
+			},
+			"description": {
+				"cs": "Ptáčci, kočičky, rybky a další zvířátka.",
+				"en": "Birds, cats, fish and other little animals."
+			}
+		},
+		{
+			"slug": "postavicky",
+			"name": {
+				"cs": "Postavičky",
+				"en": "Figures"
+			},
+			"description": {
+				"cs": "Dubánci a další postavičky s vlastním charakterem.",
+				"en": "Acorn folk and other figures with their own character."
+			}
+		},
+		{
+			"slug": "dekorace",
+			"name": {
+				"cs": "Dekorace",
+				"en": "Decor"
+			},
+			"description": {
+				"cs": "Drobné dekorace do domácnosti.",
+				"en": "Small decorative pieces for the home."
+			}
+		}
+	],
+	"products": [
+		{
+			"slug": "andel",
+			"categorySlug": "andele",
+			"name": {
+				"cs": "Anděl",
+				"en": "Angel"
+			},
+			"meta": {
+				"cs": "Kamenina · ruční práce",
+				"en": "Stoneware · handmade"
+			},
+			"description": {
+				"cs": "Keramický anděl strážce - malý dárek pro radost i pro štěstí do domácnosti. Každý kus je originál.",
+				"en": "A ceramic guardian angel - a small gift for joy and a little luck around the home. Each piece is one of a kind."
+			},
+			"care": {
+				"cs": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
+				"en": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece."
+			},
+			"price": "390",
+			"size": "12 cm",
+			"instances": [
+				{
+					"id": "angel-01",
+					"label": "#1",
+					"available": true,
+					"images": ["angel/01/01.jpg"]
+				},
+				{
+					"id": "angel-02",
+					"label": "#2",
+					"available": true,
+					"images": ["angel/02/01.jpg"]
+				}
+			]
+		},
+		{
+			"slug": "ptacek",
+			"categorySlug": "zviratka",
+			"name": {
+				"cs": "Ptáček",
+				"en": "Bird"
+			},
+			"meta": {
+				"cs": "Kamenina · ruční práce",
+				"en": "Stoneware · handmade"
+			},
+			"description": {
+				"cs": "Malý keramický ptáček, který rozveselí poličku i okenní parapet.",
+				"en": "A small ceramic bird to brighten up a shelf or a windowsill."
+			},
+			"care": {
+				"cs": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
+				"en": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece."
+			},
+			"price": "320",
+			"size": "9 cm",
+			"instances": [
+				{
+					"id": "bird-01",
+					"label": "#1",
+					"available": true,
+					"images": ["bird/01/01.jpg"]
+				}
+			]
+		},
+		{
+			"slug": "kocicka",
+			"categorySlug": "zviratka",
+			"name": {
+				"cs": "Kočička",
+				"en": "Cat"
+			},
+			"meta": {
+				"cs": "Kamenina · ruční práce",
+				"en": "Stoneware · handmade"
+			},
+			"description": {
+				"cs": "Keramická kočička s vlastním výrazem. Ideální dárek pro milovníky koček.",
+				"en": "A ceramic cat with its own expression. A perfect gift for cat lovers."
+			},
+			"care": {
+				"cs": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
+				"en": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece."
+			},
+			"price": "340",
+			"size": "10 cm",
+			"instances": [
+				{
+					"id": "cat-01",
+					"label": "#1",
+					"available": true,
+					"images": ["cat/01/01.jpg"]
+				},
+				{
+					"id": "cat-02",
+					"label": "#2",
+					"available": true,
+					"images": ["cat/02/01.jpg"]
+				}
+			]
+		},
+		{
+			"slug": "rybka",
+			"categorySlug": "zviratka",
+			"name": {
+				"cs": "Rybka",
+				"en": "Fish"
+			},
+			"meta": {
+				"cs": "Kamenina · ruční práce",
+				"en": "Stoneware · handmade"
+			},
+			"description": {
+				"cs": "Keramická rybka v jemných odstínech. Krásná jako dekorace i jako dárek.",
+				"en": "A ceramic fish in soft tones. Lovely as decor or as a gift."
+			},
+			"care": {
+				"cs": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
+				"en": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece."
+			},
+			"price": "300",
+			"size": "11 cm",
+			"instances": [
+				{
+					"id": "fish-01",
+					"label": "#1",
+					"available": true,
+					"images": ["fish/01/01.jpg"]
+				}
+			]
+		},
+		{
+			"slug": "dubanek",
+			"categorySlug": "postavicky",
+			"name": {
+				"cs": "Dubánek",
+				"en": "Acorn Folk"
+			},
+			"meta": {
+				"cs": "Kamenina · ruční práce",
+				"en": "Stoneware · handmade"
+			},
+			"description": {
+				"cs": "Keramický dubánek - roztomilá postavička inspirovaná podzimní přírodou.",
+				"en": "A ceramic acorn folk - a cute little figure inspired by autumn nature."
+			},
+			"care": {
+				"cs": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
+				"en": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece."
+			},
+			"price": "450",
+			"size": "14 cm",
+			"instances": [
+				{
+					"id": "dubanek-01",
+					"label": "#1",
+					"available": true,
+					"images": ["dubanek/01/01.jpg"]
+				},
+				{
+					"id": "dubanek-02",
+					"label": "#2",
+					"available": true,
+					"images": ["dubanek/02/01.jpg"]
+				},
+				{
+					"id": "dubanek-03",
+					"label": "#3",
+					"available": false,
+					"images": ["dubanek/03/01.jpg"]
+				},
+				{
+					"id": "dubanek-04",
+					"label": "#4",
+					"available": true,
+					"images": ["dubanek/04/01.jpg"]
+				},
+				{
+					"id": "dubanek-05",
+					"label": "#5",
+					"available": true,
+					"images": ["dubanek/05/01.jpg"]
+				}
+			]
+		},
+		{
+			"slug": "panacek",
+			"categorySlug": "postavicky",
+			"name": {
+				"cs": "Panáček",
+				"en": "Little Guy"
+			},
+			"meta": {
+				"cs": "Kamenina · ruční práce",
+				"en": "Stoneware · handmade"
+			},
+			"description": {
+				"cs": "Keramický panáček s vlastním charakterem. Každý je jiný a jedinečný.",
+				"en": "A ceramic little guy with his own character. Each one is different and unique."
+			},
+			"care": {
+				"cs": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
+				"en": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece."
+			},
+			"price": "420",
+			"size": "13 cm",
+			"instances": [
+				{
+					"id": "guy-01",
+					"label": "#1",
+					"available": true,
+					"images": ["guy/01/01.jpg"]
+				},
+				{
+					"id": "guy-02",
+					"label": "#2",
+					"available": true,
+					"images": ["guy/02/01.jpg"]
+				}
+			]
+		},
+		{
+			"slug": "listek",
+			"categorySlug": "dekorace",
+			"name": {
+				"cs": "Lístek",
+				"en": "Leaf"
+			},
+			"meta": {
+				"cs": "Kamenina · dekorace",
+				"en": "Stoneware · decor"
+			},
+			"description": {
+				"cs": "Keramický lístek - drobná dekorace na zeď, poličku i jako miska na drobnosti.",
+				"en": "A ceramic leaf - a small decoration for the wall, a shelf, or as a dish for trinkets."
+			},
+			"care": {
+				"cs": "Ručně tvořená keramika. Doporučujeme mýt ručně vlažnou vodou a zacházet s ní opatrně - jde o dekorativní kus.",
+				"en": "Handmade ceramics. We recommend hand washing in lukewarm water and handling with care - this is a decorative piece."
+			},
+			"price": "260",
+			"size": "16 cm",
+			"instances": [
+				{
+					"id": "leaf-01",
+					"label": "#1",
+					"available": true,
+					"images": ["leaf/01/01.jpg"]
+				},
+				{
+					"id": "leaf-02",
+					"label": "#2",
+					"available": true,
+					"images": ["leaf/02/01.jpg"]
+				},
+				{
+					"id": "leaf-03",
+					"label": "#3",
+					"available": true,
+					"images": ["leaf/03/01.jpg"]
+				},
+				{
+					"id": "leaf-04",
+					"label": "#4",
+					"available": false,
+					"images": ["leaf/04/01.jpg"]
+				}
+			]
+		}
+	]
+}

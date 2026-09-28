@@ -17,6 +17,7 @@
 //   products/{slug}/instances/{instanceId}
 
 import { getAdmin } from '$lib/server/firebaseAdmin';
+import { useFirebaseEmulator, emulatorStorageUrl } from '$lib/firebaseEmulator';
 import { ApiError } from '$lib/server/apiAuth';
 import type {
 	CatalogDocument,
@@ -318,8 +319,14 @@ export async function uploadInstanceImages(
 			contentType: file.contentType,
 			resumable: false
 		});
-		await blob.makePublic();
-		urls.push(`https://storage.googleapis.com/${bucket.name}/${encodeURI(path)}`);
+		if (useFirebaseEmulator) {
+			// The Storage emulator has no ACLs; storage.rules already allow public
+			// reads under products/.
+			urls.push(emulatorStorageUrl(bucket.name, path));
+		} else {
+			await blob.makePublic();
+			urls.push(`https://storage.googleapis.com/${bucket.name}/${encodeURI(path)}`);
+		}
 	}
 
 	return urls;

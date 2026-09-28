@@ -140,9 +140,9 @@ Authentication admin identities (see REQ-ADMIN-017).
 - Status: implemented
 - Priority: should
 - Source: user, 2026-09-13
-- Description: The current placeholder catalog (from src/lib/catalog.ts) is loaded into Firestore via the bulk import endpoint, not by writing to the database directly.
+- Description: The seed catalog (scripts/seed-data/) is loaded into the local emulator database via the API (image upload and bulk import endpoints), not by writing to the database directly.
 - Acceptance:
-  - Given the existing placeholder catalog data
+  - Given the seed catalog data
   - When it is seeded
   - Then it is inserted by calling the API's bulk import endpoint (REQ-API-010) as an authenticated admin, so the seed exercises the same write path the admins use
   - And afterwards the public site can render that catalog from Firestore

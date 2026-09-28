@@ -2,9 +2,8 @@
 //
 // The cart only ever references instances by id + their product slug; the
 // product/instance data itself (image, title, size, price) is resolved live
-// from the catalog (src/lib/catalog.ts) whenever the cart is rendered. This
-// keeps the cart free of stale/duplicated copy and matches how the product
-// detail page already resolves data from a language-neutral slug.
+// against the catalog the cart/checkout pages load from the database. This
+// keeps the cart free of stale/duplicated copy.
 //
 // Because each instance is a unique physical piece (REQ-CATALOG-002), a cart
 // line has an implicit quantity of one and an instance can only ever appear

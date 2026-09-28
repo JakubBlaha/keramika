@@ -25,7 +25,7 @@ nikoli firmy.
 - **Framework:** SvelteKit (Svelte 5, runes)
 - **Styling:** Tailwind CSS v4 (design tokeny v `src/routes/layout.css`)
 - **i18n:** Paraglide JS — čeština (výchozí, bez prefixu) a angličtina (`/en`)
-- **Data:** zatím statická (bez backendu) — placeholder katalog v `src/lib/catalog.ts`
+- **Data:** celý katalog je ve Firebase (Firestore + Storage); web ho čte při každém požadavku. Lokálně vše běží proti emulátorům Firebase, nikdy proti produkci.
 - **Písma:** Cormorant Garamond (nadpisy) + Jost (text)
 
 ## Aktuální stav
@@ -39,17 +39,22 @@ jazykových mutacích (cs/en).
 
 ```bash
 pnpm install
-pnpm run dev
+pnpm emulators   # terminál 1: emulátory Firebase (vyžaduje Javu 21+ a globální firebase-tools)
+pnpm dev         # terminál 2
+pnpm seed        # jednou: nahraje katalog ze scripts/seed-data/ a lokálního admina
 ```
 
-Web poběží na `http://localhost:5173`.
+Web poběží na `http://localhost:5173`. Do `/admin` se přihlásíte výběrem
+`admin@example.com` v Google okně emulátoru. Data emulátorů se ukládají do
+`.emulator-data/`.
 
 Užitečné příkazy:
 
 ```bash
 pnpm check    # svelte-check
-pnpm build    # produkční build (prerender)
-pnpm preview  # náhled produkčního buildu
+pnpm lint     # prettier + eslint
+pnpm build    # produkční build
+pnpm test     # e2e testy (vlastní čisté emulátory; nejdřív zastavte pnpm emulators)
 ```
 
 ### Struktura
@@ -62,7 +67,8 @@ src/
   hooks.server.ts          # Paraglide middleware (locale)
   hooks.ts                 # reroute (de-lokalizace URL)
   lib/
-    catalog.ts             # placeholder katalog (kategorie a produkty)
+    catalog.ts             # typy a pomocné funkce veřejného katalogu (bez dat)
+    server/publicCatalog.ts # čtení katalogu z Firestore pro veřejný web
     paraglide/             # generovaný výstup Paraglide (git-ignored)
   routes/
     +layout.svelte         # obal stránek + patička

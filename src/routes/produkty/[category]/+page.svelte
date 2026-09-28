@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { categories, getCategory } from '$lib/catalog';
 	import { m } from '$lib/paraglide/messages';
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import ProductGrid from '$lib/components/ProductGrid.svelte';
 
 	let { data } = $props();
 
-	// Resolve the category from the language-neutral slug provided by load().
-	const category = $derived(getCategory(data.slug)!);
+	const category = $derived(data.category);
+	const categories = $derived(data.categories);
 	const products = $derived(category.products);
 
 	// Category switcher (REQ-LISTING-009). On narrow screens the pills scroll
@@ -21,8 +20,8 @@
 </script>
 
 <svelte:head>
-	<title>{category.name()} · {m.brand_name()}</title>
-	<meta name="description" content={category.description()} />
+	<title>{category.name} · {m.brand_name()}</title>
+	<meta name="description" content={category.description} />
 </svelte:head>
 
 <section class="mx-auto max-w-site px-4 pt-10 pb-16">
@@ -35,8 +34,8 @@
 
 	<header class="mb-8 flex rise-children flex-col gap-[0.4rem]">
 		<span class="eyebrow">{m.products_eyebrow()}</span>
-		<h1 class="text-[2rem]">{category.name()}</h1>
-		<p class="max-w-[34rem] text-ink-soft">{category.description()}</p>
+		<h1 class="text-[2rem]">{category.name}</h1>
+		<p class="max-w-[34rem] text-ink-soft">{category.description}</p>
 	</header>
 
 	<!-- noscroll: switching keeps the visitor where they are, so the pills
@@ -61,7 +60,7 @@
 								: 'border-line text-ink-soft hover:border-accent hover:text-accent-dark'
 						]}
 					>
-						{c.name()}
+						{c.name}
 						<span class={['text-[0.72rem]', current ? 'text-bg/70' : 'text-accent']}
 							>{c.products.length}</span
 						>

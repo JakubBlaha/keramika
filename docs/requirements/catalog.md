@@ -1,7 +1,10 @@
 # CATALOG requirements
 
-Data model, products, instances, and availability. Source of truth is
-`src/lib/catalog.ts`.
+Data model, products, instances, and availability. The catalog is stored in
+Cloud Firestore (model: `src/lib/catalog-model.ts`); the public site reads it
+per request (`src/lib/server/publicCatalog.ts`) into the view types of
+`src/lib/catalog.ts`. There are no built-in products: local databases get
+their catalog from `pnpm seed` (`scripts/seed-data/`).
 
 ### REQ-CATALOG-001 - Multiple images per instance
 
@@ -66,15 +69,15 @@ Data model, products, instances, and availability. Source of truth is
 
 ### REQ-CATALOG-006 - Copy fields are localized, data fields are neutral
 
-- Status: implemented
+- Status: verified
 - Priority: must
-- Source: TODO / spec
-- Description: Copy fields (name, description, care) are localized via Paraglide; language-neutral data (price, slug, size, images) lives in the catalog.
+- Source: TODO / spec; updated user, 2026-09-28
+- Description: Copy fields (name, meta, description, care) are stored per locale ({ cs, en }) and shown in the active locale; language-neutral data (price, slug, size, images) is shared.
 - Acceptance:
   - Given a product in the catalog
   - When it is rendered in cs or en
-  - Then name/description/care come from message functions, while price/slug/size/images are identical across locales
-- Test: none (not functional behaviour; outside the e2e scope)
+  - Then name/meta/description/care are shown in that locale, while price/slug/size/images are identical across locales
+- Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-006
 
 ### REQ-CATALOG-007 - Products are grouped into categories
 
@@ -111,3 +114,15 @@ Data model, products, instances, and availability. Source of truth is
   - When a product is defined
   - Then it can carry optional glaze, weight, care and featured attributes in addition to name/slug/description/price/images/category/size
 - Test: tests/e2e/catalog.spec.ts > REQ-CATALOG-009 (todo)
+
+### REQ-CATALOG-010 - The public site shows the catalog stored in the database
+
+- Status: verified
+- Priority: must
+- Source: user, 2026-09-28
+- Description: Every public page that shows categories, products or instances reads them from the database at request time; the site has no built-in catalog.
+- Acceptance:
+  - Given an admin creates a category and a product in it
+  - When a visitor then opens that category's listing and the product's detail page
+  - Then both show the new category and product, without a rebuild or redeploy
+- Test: tests/e2e/admin.spec.ts > REQ-CATALOG-010

@@ -4,7 +4,17 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { defineConfig } from 'vite';
 
+// Which Firebase backend the app talks to, fixed at build time. Everything run
+// locally (dev server, preview, e2e tests) uses the local emulator suite; only
+// builds on Vercel (which sets VERCEL=1) use the real project. Deliberately not
+// an .env switch, so a local setup can never read or write production data.
+// See src/lib/firebaseEmulator.ts.
+const useFirebaseEmulator = !process.env.VERCEL;
+
 export default defineConfig({
+	define: {
+		__USE_FIREBASE_EMULATOR__: JSON.stringify(useFirebaseEmulator)
+	},
 	plugins: [
 		tailwindcss(),
 		paraglideVitePlugin({
@@ -19,23 +29,24 @@ export default defineConfig({
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 
-			// Deploying to Vercel. Most public routes are prerendered (see
-			// `export const prerender = true` in their +page.ts); the write API
-			// under /api/* and the admin UI under /admin/* are dynamic
-			// (prerender = false) and run as Vercel serverless functions.
+			// Deploying to Vercel. The static content pages are prerendered (see
+			// `export const prerender = true` in their +page.ts). Everything that
+			// shows catalog data reads it from Firestore per request (their
+			// +page.server.ts), and the write API under /api/* and the admin UI
+			// under /admin/* are dynamic too; they run as Vercel serverless
+			// functions.
 			// The runtime is pinned explicitly because adapter-vercel otherwise
 			// infers it from the local Node version at build time, which breaks
 			// on Node versions newer than what Vercel currently supports.
 			adapter: adapter({ runtime: 'nodejs22.x' }),
 
 			prerender: {
-				// The crawler starts from "/" (Czech). Seed the English locale root so
-				// the /en/* pages are discovered and prerendered as well.
-				entries: ['*', '/en'],
+				// Every prerenderable route in Czech, plus their English versions
+				// (the /en root itself is a dynamic catalog page).
+				entries: ['*', '/en/kontakt', '/en/o-nas', '/en/obchodni-podminky'],
 
-				// The homepage links to shop/legal routes that are not built yet
-				// (o-nas, obchodni-podminky, ...). Ignore those missing links during
-				// prerender instead of failing the build.
+				// Ignore links to routes that are not built yet instead of failing
+				// the build.
 
 				handleHttpError: ({ status, path, referrer, message }) => {
 					if (status === 404) return;
